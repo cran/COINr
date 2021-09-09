@@ -7,7 +7,7 @@ knitr::include_graphics("images/ASEM_structure-min.png")
 ## ---- message=F, warning=F----------------------------------------------------
 library(COINr)
 ASEM <- COINr::build_ASEM()
-class(ASEM) |> print()
+print(class(ASEM))
 
 ## ----COINdiag, echo=F, fig.align = 'center', out.width = "100%", fig.cap = "Inside a COIN"----
 knitr::include_graphics("images/COIN_contents_tree-min.png")
@@ -44,9 +44,8 @@ knitr::include_graphics("images/inddash_screenshot-min.png")
 ASEM <- COINr::getStats(ASEM, dset = "Raw", out2 = "COIN")
 
 # display stats table, first few columns/rows only
-ASEM$Analysis$Raw$StatTable[1:8] |>
-  head(5) |>
-  roundDF()
+stat_tab <- ASEM$Analysis$Raw$StatTable[1:8]
+roundDF(head(stat_tab, 5))
 
 ## -----------------------------------------------------------------------------
 # create denominated data set
@@ -102,10 +101,10 @@ knitr::include_graphics("images/resultsDash_screenshot-min.png")
 knitr::include_graphics("images/stacked_bar-min.png")
 
 ## ---- eval=F------------------------------------------------------------------
-#  COINr::iplotIndDist2(ASEM, dsets = "Aggregated",
-#                       icodes = c("Conn", "Sust"), aglevs = 3) |>
-#    plotly::layout(xaxis = list(title = "Connectivity"),
-#                       yaxis = list(title = "Sustainability"))
+#  plt <- COINr::iplotIndDist2(ASEM, dsets = "Aggregated",
+#                       icodes = c("Conn", "Sust"), aglevs = 3)
+#  plotly::layout(plt, xaxis = list(title = "Connectivity"),
+#                    yaxis = list(title = "Sustainability"))
 
 ## ----consusScat, echo=F, fig.align = 'center', out.width = "80%", fig.cap = "Connectivity and sustainability sub-indexes."----
 knitr::include_graphics("images/conn_sus_scat-min.png")
@@ -117,8 +116,8 @@ knitr::include_graphics("images/conn_sus_scat-min.png")
 knitr::include_graphics("images/choropleth-min.png")
 
 ## -----------------------------------------------------------------------------
-COINr::getResults(ASEM, tab_type = "Summary") |>
-  head(10)
+rslts <- COINr::getResults(ASEM, tab_type = "Summary")
+head(rslts, 10)
 
 ## ---- eval=F------------------------------------------------------------------
 #  # Export entire COIN to Excel
@@ -128,9 +127,8 @@ COINr::getResults(ASEM, tab_type = "Summary") |>
 ASEM <- checkData(ASEM, dset = "Raw")
 
 # view missing data by group (last few rows/cols)
-ASEM$Analysis$Raw$MissDatByGroup[1:8] |>
-  tail(10) |>
-  roundDF()
+missdat <- ASEM$Analysis$Raw$MissDatByGroup[1:8]
+roundDF(tail(missdat, 10))
 
 ## ----PolDists, message=F, warning=F, fig.width=7, fig.cap="Indicator distributions in the Political pillar."----
 COINr::plotIndDist(ASEM, dset = "Raw", icodes = "Political",
@@ -173,9 +171,9 @@ ASEMAltNorm$Method$normalise$ntype <- "borda"
 ASEMAltNorm <- COINr::regen(ASEMAltNorm, quietly = TRUE)
 
 ## -----------------------------------------------------------------------------
-COINr::compTable(ASEM, ASEMAltNorm, dset = "Aggregated",
-                 isel = "Index") |>
-  head(10)
+comptab <- COINr::compTable(ASEM, ASEMAltNorm, dset = "Aggregated",
+                 isel = "Index")
+head(comptab, 10)
 
 ## ----SAspecs, eval=F----------------------------------------------------------
 #  # define noise to be applied to weights
