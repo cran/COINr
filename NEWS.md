@@ -1,3 +1,19 @@
+# COINr 0.6
+
+* New plot function `plotIndDot()` for plotting single indicators with possibility to label units
+* Added `print` method for COIN class. More methods to come.
+* Extended support for panel data in `assemble()`. This can now output multiple COINs structured into a tibble. The idea of working with multiple COINs will be extended in future versions.
+* Improved bug trapping in Winsorisation function
+* Added data availability thresholds during aggregation - see `aggregate()` function.
+* Better NA colour for `plotCorr()` plus fixed variable ordering
+* Further colour options in `plotCorr()`
+* Variable/aggregate ordering in `plotCorr()` now matches grouping in higher levels
+* Add option to do PCA not in groups in `getPCA()`
+* Colour options for `plotSARanks()`
+* Added dominance pairs calculation to `ourankMatrix()`
+* Stopped max tab length exceeding in Excel export.
+* [Online book](https://bluefoxr.github.io/COINrDoc/) now pretty much up to date with COINr 0.6.
+
 # COINr 0.5.5
 
 * COINr now requires R version 4.0.0 or above - this is following some issues on some distributions during CRAN checks.

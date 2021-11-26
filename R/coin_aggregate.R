@@ -4,6 +4,20 @@
 #' specified in `IndMeta`. Uses a variety of aggregation methods as specified by `agtype`, which can be different for
 #' each level of aggregation (see `agtype_by_level`).
 #'
+#' This function aggregates indicators according to the index structure specified in `IndMeta`. It will either use a single
+#' aggregation method for all aggregation levels (by specifying `agtype`) or can use a different aggregation method for each
+#' level of the index (see `agtype_by_level`). Aggregation methods are typically weighted (e.g. weighted means), and the weights
+#' for the aggregation are specified using the `agweights` argument.
+#'
+#' By default, this function will aggregate wherever possible - generally this means that if at least one value is available
+#' for a given unit inside an aggregation group, it will return an aggregated score. Optionally, you can also specify a data
+#' availability threshold which will instead return `NA` if the data availability (within group and for each unit) falls below
+#' the threshold. For example, you may have four indicators inside a group, and you might want to only produce an aggregated
+#' score if data availability is at least 50% - this would be specified by `avail_limit = 0.5`. It is also possible to specify
+#' different data availability thresholds for different levels of the index, by specifying `avail_limit` as a vector which has
+#' one value for every aggregation level (the first value gives the threshold for the first aggregation, and so on up to the
+#' final level).
+#'
 #' @param COIN COIN object
 #' @param agtype The type of aggregation method. One of either:
 #' * `"arith_mean"` - weighted arithmetic mean
@@ -25,6 +39,11 @@
 #' @param agfunc A custom function to use for aggregation if `agtype = "custom"`, of the type \eqn{y = f(x,w)},
 #' where \eqn{y} is a scalar aggregated value and \eqn{x} and \eqn{w} are vectors of indicator values and weights respectively.
 #' Ensure that `NA`s are handled (e.g. set `na.rm = T`) if your data has missing values.
+#' @param avail_limit A data availability threshold, below which aggregation returns NA. This parameter is the fraction of data
+#' availability needed in a given aggregation group to return an aggregated score. Specified as either `NULL` (default, aggregation
+#' values are always returned if possible) or a value between 0 and 1 (below this value of data availability, `NA` will be
+#' returned). See Details.
+#' are ignored during aggregation, so that as long as there is at least one value in an aggregation group
 #' @param out2 Where to output the results. If `"COIN"` (default for COIN input), appends to updated COIN,
 #' otherwise if `"df"` outputs to data frame.
 #'
@@ -53,7 +72,7 @@
 #' @export
 
 aggregate <- function(COIN, agtype = "arith_mean", agweights = NULL, dset = NULL,
-                      agtype_bylevel = NULL, agfunc = NULL, out2 = NULL){
+                      agtype_bylevel = NULL, agfunc = NULL, avail_limit = NULL, out2 = NULL){
 
   # Check for dset. If not specified, exit.
   if (is.null(dset)){
@@ -74,6 +93,7 @@ aggregate <- function(COIN, agtype = "arith_mean", agweights = NULL, dset = NULL
   COIN$Method$aggregate$dset <- dset
   COIN$Method$aggregate$agtype_bylevel <- agtype_bylevel
   COIN$Method$aggregate$agfunc <- agfunc
+  COIN$Method$aggregate$avail_limit <- avail_limit
 
   # get weights - if not explicitly specified, we assume it is in the obj
   if (is.null(agweights)){
@@ -101,6 +121,17 @@ aggregate <- function(COIN, agtype = "arith_mean", agweights = NULL, dset = NULL
     }
   }
   agtypes <- agtype_bylevel
+
+  # prepare data availability thresholds, if they exist
+  if(!is.null(avail_limit)){
+    if(length(avail_limit)==1){
+      # if only one value, use for all levels
+      avail_limit <- rep(avail_limit, COIN$Parameters$Nlevels - 1)
+    } else if (length(avail_limit) != COIN$Parameters$Nlevels - 1){
+      # trap error if any other length spefified
+      stop("Length of avail_limit must be equal to 1 or the number of levels minus 1.")
+    }
+  }
 
   # the columns with aggregation info in them
   agg_cols <- metad %>% dplyr::select(dplyr::starts_with("Agg"))
@@ -167,6 +198,16 @@ aggregate <- function(COIN, agtype = "arith_mean", agweights = NULL, dset = NULL
 
       } else {
         stop("Aggregation type not recognised.")
+      }
+
+      # Missing data reset, if asked
+      if(!is.null(avail_limit)){
+        # we will reset any values that have missing data thresholds below limits specified
+        # get data
+        dat2agg <- ind_data[iselect]
+        # now replace any aggregated vals by NA, if they fall below the limit
+        newcol[rowSums(!is.na(dat2agg))/ncol(dat2agg) < avail_limit[aglev], ] <- NA
+
       }
 
       ind_data <- cbind(ind_data,newcol) # add new col to data set
@@ -358,19 +399,31 @@ harMean <- function(x, w = NULL){
 #' # get a sample of a few indicators
 #' ind_data <- COINr::ASEMIndData[12:16]
 #' # calculate outranking matrix
-#' ORmatrix <- outrankMatrix(ind_data)
-#' # check output
-#' stopifnot(is.matrix(ORmatrix), nrow(ORmatrix) == nrow(ind_data))
+#' outlist <- outrankMatrix(ind_data)
+#' # see fraction of dominant pairs (robustness)
+#' outlist$fracDominant
 #'
-#' @return An outranking matrix with `nrow(ind_data` rows and columns (matrix class).
+#' @return A list with:
+#' * `.$OutRankMatrix` the outranking matrix with `nrow(ind_data)` rows and columns (matrix class).
+#' * `.$nDominant` the number of dominance/robust pairs
+#' * `.$fracDominant` the percentage of dominance/robust pairs
 #'
 #' @export
 
 outrankMatrix <- function(ind_data, w = NULL){
 
+  stopifnot(is.data.frame(ind_data) | is.matrix(ind_data))
+
+  if (!all(apply(ind_data, 2, is.numeric))){
+    stop("Non-numeric columns in input data frame or matrix not allowed.")
+  }
+
+  nInd <- ncol(ind_data)
+  nUnit <- nrow(ind_data)
+
   if(is.null(w)){
     # default equal weights
-    w <- rep(1,ncol(ind_data))
+    w <- rep(1,nUnit)
     message("No weights specified for outranking matrix, using equal weights.")
   }
 
@@ -378,14 +431,14 @@ outrankMatrix <- function(ind_data, w = NULL){
   w = w/sum(w, na.rm = TRUE)
 
   # prep outranking matrix
-  orm <- matrix(NA, nrow = nrow(ind_data), ncol = nrow(ind_data))
+  orm <- matrix(NA, nrow = nUnit, ncol = nUnit)
 
-  for (ii in 1:nrow(orm)){
+  for (ii in 1:nUnit){
 
     # get iith row, i.e. the indicator values of unit ii
     rowii <- ind_data[ii,]
 
-    for (jj in 1:ncol(orm)){
+    for (jj in 1:nUnit){
 
       if (ii==jj){
         # diag vals are zero
@@ -408,7 +461,15 @@ outrankMatrix <- function(ind_data, w = NULL){
     }
   }
 
-  return(orm)
+  # find number of dominance pairs
+  ndom <- sum(orm==1, na.rm = TRUE)
+  npairs <- (nUnit^2 - nUnit)/2
+  prcdom <- ndom/npairs
+
+  return(list(
+    OutRankMatrix = orm,
+    nDominant = ndom,
+    fracDominant = prcdom))
 
 }
 
@@ -437,7 +498,7 @@ outrankMatrix <- function(ind_data, w = NULL){
 copeland <- function(ind_data, w = NULL){
 
   # get outranking matrix
-  orm <- outrankMatrix(ind_data, w)
+  orm <- outrankMatrix(ind_data, w)$OutRankMatrix
 
   # get scores by summing across rows
   scores <- rowSums(orm, na.rm = TRUE)

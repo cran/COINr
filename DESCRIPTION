@@ -1,7 +1,7 @@
 Package: COINr
 Type: Package
 Title: Composite Indicator Construction and Analysis
-Version: 0.5.5
+Version: 0.6.0
 Maintainer: William Becker <william.becker@bluefoxdata.eu>
 Description: A comprehensive high-level package for composite indicator construction and analysis. It is a "development environment"
     for composite indicators and scoreboards, which includes utilities for construction (indicator selection, denomination, imputation,
@@ -24,7 +24,7 @@ Imports: dplyr (>= 1.0.4), magrittr (>= 2.0.1), reshape2 (>= 1.4.4),
         matrixStats (>= 0.58.0), stats, rlang (>= 0.4.10), purrr (>=
         0.3.4), tidyr (>= 1.1.2), stringr (>= 1.4.0), e1071 (>= 1.7-4),
         tibble (>= 3.0.6), shiny (>= 1.6.0), reactable (>= 0.2.3),
-        ggplot2 (>= 3.3.3), readxl (>= 1.3.1), Amelia, rmarkdown
+        ggplot2 (>= 3.3.3), readxl (>= 1.3.1), Amelia, rmarkdown, utils
 Depends: R (>= 4.0.0)
 Suggests: spelling, knitr
 VignetteBuilder: knitr
@@ -32,8 +32,8 @@ Language: en-GB
 Authors@R: person("William", "Becker", email = "william.becker@bluefoxdata.eu",
   role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-6467-4472"))
 NeedsCompilation: no
-Packaged: 2021-09-16 07:54:39 UTC; becke
+Packaged: 2021-11-26 11:17:54 UTC; becke
 Author: William Becker [aut, cre, cph]
     (<https://orcid.org/0000-0002-6467-4472>)
 Repository: CRAN
-Date/Publication: 2021-09-16 08:20:01 UTC
+Date/Publication: 2021-11-26 16:11:37 UTC

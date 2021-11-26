@@ -20,6 +20,7 @@
 #' If `"none"` plots the full correlation matrix.
 #' @param grouplev The aggregation level to group correlations by if `aglev[1] == aglev[2]`. By default, groups correlations into the
 #' aggregation level above. Set to 0 to disable grouping and plot the full matrix.
+#' @param box_level The aggregation level to draw boxes around if `aglev[1] == aglev[2]`.
 #' @param showvals If `TRUE`, shows correlation values. If `FALSE`, no values shown.
 #' @param flagcolours If `TRUE`, uses discrete colour map with thresholds defined by `flagthresh`. If `FALSE` uses continuous colour map.
 #' @param flagthresh A 3-length vector of thresholds for highlighting correlations, if `flagcolours = TRUE`.
@@ -28,7 +29,12 @@
 #' `flagthresh[3]` is the "high" threshold. Anything between `flagthresh[2]` and `flagthresh[3]` is flagged "OK",
 #' and anything above `flagthresh[3]` is flagged "high".
 #' @param pval The significance level for plotting correlations. Correlations with \eqn{p < pval} will be shown,
-#' otherwise they will be plotted as white squares. Set to 0 to disable this.
+#' otherwise they will be plotted as the colour specified by `insig_colour`. Set to 0 to disable this.
+#' @param insig_colour The colour to plot insignificant correlations. Defaults to a light grey.
+#' @param text_colour The colour of the correlation value text (default white).
+#' @param discrete_colours An optional 4-length character vector of colour codes or names to define the discrete
+#' colour map if `flagcolours = TRUE` (from high to low correlation categories). Defaults to a green/blue/grey/purple.
+#' @param box_colour The line colour of grouping boxes, default black.
 #' @param out2 If `"fig"` returns a plot, if `"dflong"` returns the correlation matrix in long form, if `"dfwide"`,
 #' returns the correlation matrix in wide form. The last option here is probably useful if you want to
 #' present a table of the data in a report.
@@ -54,8 +60,9 @@
 #' @export
 
 plotCorr <- function(COIN, dset = "Raw", icodes = NULL, aglevs = 1, cortype = "pearson",
-                     withparent = "parent", grouplev = NULL, showvals = TRUE, flagcolours = FALSE,
-                     flagthresh = c(-0.4, 0.3, 0.9), pval = 0.05, out2 = "fig"){
+                     withparent = "parent", grouplev = NULL, box_level = NULL, showvals = TRUE, flagcolours = FALSE,
+                     flagthresh = c(-0.4, 0.3, 0.9), pval = 0.05, insig_colour = "#F0F0F0",
+                     text_colour = NULL, discrete_colours = NULL, box_colour = NULL, out2 = "fig"){
 
   if (length(icodes) == 1){
     icodes = rep(icodes, 2)
@@ -80,7 +87,7 @@ plotCorr <- function(COIN, dset = "Raw", icodes = NULL, aglevs = 1, cortype = "p
 
   } else if (withparent == "family"){
 
-    # we repeat for all levels above. Start with the lowest agg level specified
+    # we repeat for all levels above. Start with the first agg level specified
     aglev1 <- min(aglevs)
 
     # get index structure
@@ -96,17 +103,42 @@ plotCorr <- function(COIN, dset = "Raw", icodes = NULL, aglevs = 1, cortype = "p
     }
     crtable <- crtable[-1,]
 
+  } else {
+    stop("withfamily should be either 'none', 'parent' or 'family'.")
   }
 
   # remove diags, otherwise plot looks annoying
-  crtable <- crtable[crtable$Var1 != crtable$Var2,]
+  crtable <- crtable[as.character(crtable$Var1) != as.character(crtable$Var2),]
 
   ##- PLOT -----------------------------------------
 
   if(out2 == "fig"){
+
     # get orders (otherwise ggplot reorders)
     ord1 <- unique(crtable$Var1)
     ord2 <- unique(crtable$Var2)
+
+    # sometimes these orderings come out not sorted according to higher aggregation levels
+    # Here we sort them according to the order in IndMeta (which is already sorted)
+    # First get index structure...
+    aggcols <- dplyr::select(COIN$Input$IndMeta, .data$IndCode, dplyr::starts_with("Agg"))
+    # Order first set (unless family plot in which case no, cos messes up)
+    if(withparent != "family"){
+      c1 <- unlist(aggcols[aglevs[1]])
+      ord1 <- unique(c1[c1 %in% ord1])
+    }
+    # Order second set
+    c2 <- unlist(aggcols[aglevs[2]])
+    ord2 <- unique(c2[c2 %in% ord2])
+    if(withparent ==  "family"){
+      ord2 <-rev(ord2)
+    }
+
+    # if we are correlating a set with itself, we make sure the orders match
+    if(setequal(ord1,ord2)){
+      # reversing agrees with the "classical" view of a correlation matrix
+      ord2 <- rev(ord1)
+    }
 
     # for discrete colour map
     hithresh <- 0.9
@@ -121,7 +153,7 @@ plotCorr <- function(COIN, dset = "Raw", icodes = NULL, aglevs = 1, cortype = "p
       crtable$Flag[(crtable$Correlation <= negthresh)] <- "Negative"
 
       # heatmap plot
-      plt <- ggplot2::ggplot(crtable,
+      plt <- ggplot2::ggplot(data = crtable,
                              ggplot2::aes(x = factor(.data$Var1, levels = ord1),
                                           y = factor(.data$Var2, levels = ord2),
                                           fill = .data$Flag,
@@ -133,14 +165,22 @@ plotCorr <- function(COIN, dset = "Raw", icodes = NULL, aglevs = 1, cortype = "p
         ggplot2::scale_x_discrete(expand=c(0,0)) +
         ggplot2::scale_y_discrete(expand=c(0,0))
 
+      if(is.null(discrete_colours)){
+        discrete_colours <- c("#80d67b", "#b8e8b5", "#e2e6e1", "#b25491")
+      } else {
+        stopifnot(is.character(discrete_colours),
+                  length(discrete_colours)==4)
+      }
+
       plt <- plt + ggplot2::scale_fill_manual(
         breaks = c("High", "OK", "Weak", "Negative"),
-        values = c("#62910c", "#9dc0d3", "#bdc9bb", "#b25491")
+        values = discrete_colours,
+        na.value = insig_colour
       )
     } else {
 
       # heatmap plot
-      plt <- ggplot2::ggplot(crtable,
+      plt <- ggplot2::ggplot(data = crtable,
                              ggplot2::aes(x = factor(.data$Var1, levels = ord1),
                                           y = factor(.data$Var2, levels = ord2),
                                           fill = .data$Correlation,
@@ -152,12 +192,100 @@ plotCorr <- function(COIN, dset = "Raw", icodes = NULL, aglevs = 1, cortype = "p
         ggplot2::scale_x_discrete(expand=c(0,0)) +
         ggplot2::scale_y_discrete(expand=c(0,0))
 
-      plt <- plt + ggplot2::scale_fill_gradient2(mid="#FBFEF9",low="#A63446",high="#0C6291", limits=c(-1,1))
+      plt <- plt + ggplot2::scale_fill_gradient2(mid="#FBFEF9",low="#A63446",high="#0C6291", limits=c(-1,1),
+                                                 na.value = insig_colour)
     }
 
     if (showvals){
-      plt <- plt + ggplot2::geom_text(colour = "white", size = 3)
+      if(flagcolours){
+        text_colour <- "#6a6a6a"
+      } else {
+        text_colour <- "white"
+      }
+      plt <- plt + ggplot2::geom_text(colour = text_colour, size = 3, na.rm = TRUE)
     }
+
+    # boxes
+    # the relevant function is ggplot2::annotate
+
+    if(is.null(box_colour)){
+      box_colour <- "#505050"
+    }
+
+    if(withparent=="family"){
+
+      # for family, we always plot boxes
+
+      # isolate cols of things we are correlating. Here all levels above current.
+      acls <- aggcols[min(aglevs):ncol(aggcols)] |> unique()
+      # filter out to current set of indicators
+      acls <- acls[unlist(acls[1]) %in% unlist(unique(crtable[2])), ]
+      # now we need to iterate over columns, excluding the first one
+      for(icol in 2:ncol(acls)){
+        # isolate the column of interest
+        parents <- acls[icol] |> unlist()
+        # starting and ending indices of the rectangles
+        yends <- match(unique(parents), parents)
+        yends <- length(ord2) - yends + 1.5
+        ystarts <- c(yends, 0.5)
+        ystarts <- ystarts[-1]
+        xstarts <- rep(icol - 1.5, length(ystarts))
+        xends <- xstarts  + 1
+
+        plt <- plt + ggplot2::annotate("rect", xmin=xstarts, xmax=xends, ymin=ystarts, ymax=yends,
+                                       fill = NA, color = box_colour)
+        # dark grey: #606060
+      }
+
+    } else if(!is.null(box_level)) {
+
+      if(box_level < aglevs[2]+1){
+        stop("box_level must be at least the aggregation level above aglevs.")
+      }
+
+      # isolate cols of things we are correlating, plus box level
+      acls <- aggcols[c(aglevs[1], box_level)] |> unique()
+      # filter out to current set of indicators
+      acls <- acls[unlist(acls[1]) %in% unlist(unique(crtable[1])), ]
+      # we need four vectors for annotate: xmin, xmax, ymin and ymax
+      # actually xmin=ymin and xmax=ymax
+      parents <- acls[2] |> unlist()
+      # starting indices of the rectangles
+      starts <- match(unique(parents), parents)
+      # ends are the same, but shifted one along and with the last index included
+      ends <- c(starts, length(ord1)+1)
+      # remove the first element
+      ends <- ends[-1]
+      # now we mess around to get the correct positions. Tile boundaries are
+      # at half intervals. But also due to the fact that the y axis is reversed
+      # we have to subtract from the length.
+      xstarts <- starts - 0.5
+      xends <- ends - 0.5
+      if(aglevs[1]==aglevs[2]){
+        yends <- length(ord1) - xends + 1
+        ystarts <- length(ord1) - xstarts + 1
+      } else {
+
+        # isolate cols of things we are correlating, plus box level
+        acls <- aggcols[c(aglevs[2], box_level)] |> unique()
+        # filter out to current set of indicators
+        acls <- acls[unlist(acls[1]) %in% unlist(unique(crtable[2])), ]
+        # get parent codes
+        parents <- acls[2] |> unlist()
+        # starting indices of the rectangles
+        ystarts <- match(unique(parents), parents) - 0.5
+        # ends are the same, but shifted one along and with the last index included
+        yends <- c(ystarts, length(ord2) + 0.5)
+        # remove the first element
+        yends <- yends[-1]
+      }
+
+      # add the rectangles to the plot
+      plt <- plt + ggplot2::annotate("rect", xmin=xstarts, xmax=xends, ymin=ystarts, ymax=yends,
+                                     fill = NA, color = box_colour)
+
+    }
+
     return(plt)
 
   } else if (out2 == "dflong"){
@@ -287,6 +415,10 @@ getCorr <- function(COIN, dset, icodes = NULL, aglevs = NULL, cortype = "pearson
 
     # get index structure
     agcols <- dplyr::select(COIN$Input$IndMeta, .data$IndCode, dplyr::starts_with("Agg"))
+
+    if(grouplev <= aglevs[1]){
+      stop("grouplev must be at least the aggregation level above aglevs.")
+    }
 
     if(grouplev > ncol(agcols)){
       stop("Grouping level is out of range - should be between 2 and ", ncol(agcols), " or zero to turn off.")
