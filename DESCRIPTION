@@ -1,7 +1,7 @@
 Package: COINr
 Type: Package
 Title: Composite Indicator Construction and Analysis
-Version: 0.6.0
+Version: 0.6.1
 Maintainer: William Becker <william.becker@bluefoxdata.eu>
 Description: A comprehensive high-level package for composite indicator construction and analysis. It is a "development environment"
     for composite indicators and scoreboards, which includes utilities for construction (indicator selection, denomination, imputation,
@@ -32,8 +32,8 @@ Language: en-GB
 Authors@R: person("William", "Becker", email = "william.becker@bluefoxdata.eu",
   role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-6467-4472"))
 NeedsCompilation: no
-Packaged: 2021-11-26 11:17:54 UTC; becke
+Packaged: 2021-11-29 20:13:30 UTC; becke
 Author: William Becker [aut, cre, cph]
     (<https://orcid.org/0000-0002-6467-4472>)
 Repository: CRAN
-Date/Publication: 2021-11-26 16:11:37 UTC
+Date/Publication: 2021-11-30 08:10:08 UTC
