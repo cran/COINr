@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Sensitivity Analysis</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Sensitivity Analysis</h1>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Sensitivity analysis is often confused with <em>uncertainty
+analysis</em>. Uncertainty analysis involves estimating the uncertainty
+in the outputs of a system (here, the scores and ranks of the composite
+indicator), given the uncertainties in the inputs (here, methodological
+decisions, weights, etc.). The results of an uncertainty include for
+example confidence intervals over the ranks, median ranks, and so
+on.</p>
+<p>Sensitivity analysis is an extra step after uncertainty analysis, and
+estimates which of the input uncertainties are driving the output
+uncertainty, and by how much. A rule of thumb, known as the <a href="https://en.wikipedia.org/wiki/Pareto_principle">Pareto
+Principle</a> (or the 80/20 Rule) suggests that often, only a small
+proportion of the input uncertainties are causing the majority of the
+output uncertainty. Sensitivity analysis allows us to find which input
+uncertainties are significant (and therefore perhaps worthy of extra
+attention), and which are not important.</p>
+<p>In reality, sensitivity analysis and uncertainty analysis can be
+performed simultaneously. However in both cases, the main technique is
+to use Monte Carlo methods. This essentially involves re-calculating the
+composite indicator many times, each time randomly varying the uncertain
+variables (assumptions, parameters), in order to estimate the output
+distributions.</p>
+<p>COINr implements a flexible variance-based global sensitivity
+analysis approach, which allows almost any assumption to be varied, as
+long as the distribution of alternative values can be described.
+Variance-based “sensitivity indices” are estimated using a Monte Carlo
+design (running the composite indicator many times with a particular
+combination of input values). This follows the methodology described in
+(10.1111/j.1467-985X.2005.00350.x).</p>
+</div>
+<div id="defining-the-problem" class="section level1">
+<h1>Defining the problem</h1>
+<p>The first step in a sensitivity analysis is to identify
+<em>which</em> assumptions to treat as uncertain, and <em>what</em>
+alternative values to assign to each assumption. Let’s begin with the
+“which”: think about all the ingredients that have gone into making the
+composite indicator: the data itself, the selection of indicators, and
+the methodological decisions along the way (which imputation method to
+use, if any; whether to treat outliers and in what way, which
+normalisation method, etc…). We cannot test everything, but we can pick
+a few assumptions that seem important, and where we have plausible
+alternatives that we could assign.</p>
+<p>Here we will work with the familiar in-built example coin. You can
+see exactly how this is built by calling
+<code>edit(build_example_coin)</code> by the way.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># build example coin</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>We will test four assumptions:</p>
+<ol style="list-style-type: decimal">
+<li>The maximum number of Winsorised data points. This is currently set
+at five, but we will let it vary between 1 and 5 points.</li>
+<li>The normalisation method. By default the min-max method is used, but
+we will also consider the z-score as an alternative.</li>
+<li>The weights. We will test perturbing the weights randomly inside a
+set interval.</li>
+<li>The aggregation method. The example uses the arithmetic mean but we
+will also consider the geometric mean as an alternative.</li>
+</ol>
+</div>
+<div id="input-distributions" class="section level1">
+<h1>Input distributions</h1>
+<p>Having now selected <em>which</em> assumptions to vary, we can now
+work on defining the distributions for each assumption. Sensitivity
+analysis is a probabilistic tool, so each input assumption is treated as
+a random variable, which means we have to define a distribution for each
+assumption.</p>
+<p>The function to run a sensitivity in COINr is called
+<code>get_sensitivity()</code>. It takes a little understanding to get
+this set up properly. The argument that defines the input distributions
+is a list called <code>SA_specs</code>. This specifies which assumptions
+to vary, the distributions for each assumption, and where each
+assumption can be found in the coin. Let’s demonstrate by defining one
+part of <code>SA_specs</code>, for our first assumption: the maximum
+number of Winsorised points.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># component of SA_specs for winmax distribution</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>l_winmax <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Address =</span> <span class="st">&quot;$Log$Treat$global_specs$f1_para$winmax&quot;</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">Distribution =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">Type =</span> <span class="st">&quot;discrete&quot;</span>)</span></code></pre></div>
+<p>Each uncertain assumption is defined by a list with three components.
+The “Address” component describes <em>where</em> in the coin the object
+of interest is found. You should look inside the coin to find this:
+notice that you don’t specify the name of the coin itself, i.e. it is
+not <code>coin$Log$Treat$...</code> but rather just
+<code>$Log$Treat$...</code>.</p>
+<p>Next is the “Distribution”, which essentially describes the
+alternatives for the parameter. Here we have entered <code>1:5</code>,
+i.e. any integer between 1 and 5. Finally the “Type” entry should be set
+to either “discrete” or “continuous”. In the former, the distribution is
+assumed to be discrete, so that samples are taken from the alternatives
+given in “Distribution”. In the latter, the distribution is assumed to
+be continuous and uniform, and “Distribution” should be a 2-length
+vector specifying the upper and lower bounds of the parameter. Obviously
+in this latter case, the parameter must be numeric, and must be able to
+take non-integer values.</p>
+<p>In summary, the list above specifies that the winmax parameter should
+be allowed to vary between 1 and 5 (integers). This list will be
+combined with lists for the other assumptions below, and input to
+<code>get_sensitivity()</code>.</p>
+<p>Now let’s see the entry for the normalisation method:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># normalisation method</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># first, we define the two alternatives: minmax or zscore (along with respective parameters)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>norm_alts <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_minmax&quot;</span>, <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">100</span>))),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_zscore&quot;</span>, <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">2</span>)))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># now put this in a list</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>l_norm <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Address =</span> <span class="st">&quot;$Log$Normalise$global_specs&quot;</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">Distribution =</span> norm_alts,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">Type =</span> <span class="st">&quot;discrete&quot;</span>)</span></code></pre></div>
+<p>This is a bit more complicated because when we switch between the
+min-max and z-score methods, we also want to use the corresponding set
+of parameters (<code>f_n_para</code>). That means that the parameter to
+target is the entire “global_specs” argument of
+<code>Normalise()</code>. We define two alternatives: one with min-max
+between 1 and 100, and the other being z-score with mean 10 and standard
+deviation 2. Notice that you need to be careful to wrap things
+appropriately in lists as required by each function.</p>
+<p>Otherwise the rest is straight forward: we define the address and
+attach the <code>norm_alts</code> alternatives to the main list chunk.
+The distribution is discrete. Notice that each specification includes
+the “default” value of the assumption, not just the alternative(s).</p>
+<p>Next is the weights, and this is also a special case. There are
+different ways we could approach changing the weights. First, we might
+have a small number of alternative weight sets, perhaps one is the
+original weights, one is from PCA, and one has been adjusted by hand. In
+that case, we could put these three sets of weights in a list and set
+the address to <code>$Log$Aggregate$w</code>, as a discrete
+distribution.</p>
+<p>A second possibility would be to treat individual weights as
+individual parameters. This might be a good idea if we only want to vary
+a small number of individual weights, e.g. the sub-index weights (of
+which there are two). Then we could define one assumption for one weight
+and set the address as
+e.g. <code>coin$Meta$Weights$Original$Weight[58]</code> which is the
+location of the “Conn” sub-index weight, and similarly for the “Sust”
+sub-index. We would then set <code>Type = &quot;continuous&quot;</code> and set
+the upper and lower bounds as needed, e.g. <code>c(0.5, 1)</code> to
+vary between 0.5 and 1.</p>
+<p>To instead get an overall perturbation of weights, we have to use a
+helper function. The <code>get_noisy_weights()</code> function is
+designed for this purpose: it generates replications of your set of
+weights, where each replication has some random noise added to it
+according to your specifications. Here is how it works. You take your
+nominal weights (those that you would normally use) and feed them into
+the function:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get nominal weights</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>w_nom <span class="ot">&lt;-</span> coin<span class="sc">$</span>Meta<span class="sc">$</span>Weights<span class="sc">$</span>Original</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># build data frame specifying the levels to apply the noise at</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>noise_specs <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">Level =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">NoiseFactor =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.25</span>))</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># get 100 replications</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>noisy_wts <span class="ot">&lt;-</span> <span class="fu">get_noisy_weights</span>(<span class="at">w =</span> w_nom, <span class="at">noise_specs =</span> noise_specs, <span class="at">Nrep =</span> <span class="dv">100</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># examine one of the noisy weight sets</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(noisy_wts[[<span class="dv">1</span>]])</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       iCode Level    Weight</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 55  Environ     2 0.8934235</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 56   Social     2 0.8604058</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 57 SusEcFin     2 0.8161703</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 58     Conn     3 0.9166909</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 59     Sust     3 0.8433148</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 60    Index     4 1.0000000</span></span></code></pre></div>
+<p>The <code>noisy_wts</code> object is a list containing 100 data
+frames, each of which is a set of weights with slightly different
+values. The sample above shows the last few rows of one of these
+weight-sets.</p>
+<p>Now we can feed this into our list chunk:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># component of SA_specs for weights</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>l_weights <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Address =</span> <span class="st">&quot;$Log$Aggregate$w&quot;</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Distribution =</span> noisy_wts,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Type =</span> <span class="st">&quot;discrete&quot;</span>)</span></code></pre></div>
+<p>Notice that the distribution is defined as discrete because in
+practice we have 100 alternative sets of weights, even though we are
+emulating a continuous distribution.</p>
+<p>Last of all we define the list chunk for the aggregation method:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## aggregation</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>l_agg <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">Address =</span> <span class="st">&quot;$Log$Aggregate$f_ag&quot;</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">Distribution =</span> <span class="fu">c</span>(<span class="st">&quot;a_amean&quot;</span>, <span class="st">&quot;a_gmean&quot;</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">Type =</span> <span class="st">&quot;discrete&quot;</span>)</span></code></pre></div>
+<p>This is relatively straightforward.</p>
+<p>Having defined all of our input distributions individually, it’s time
+to put them all together:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create overall specification list</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>SA_specs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Winmax =</span> l_winmax,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Normalisation =</span> l_norm,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Weights =</span> l_weights,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Aggregation =</span> l_agg</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>We simply put our list chunks into a single list. The names of this
+list are used as the names of the assumptions, so we can name them how
+we want.</p>
+</div>
+<div id="uncertainty-analysis" class="section level1">
+<h1>Uncertainty analysis</h1>
+<p>That was all a bit complicated, but this is because defining a
+sensitivity analysis <em>is</em> complicated! Now COINr can take over
+from here. We can now call the <code>get_sensitivity()</code>
+function:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Not run here: will take a few seconds to finish if you run this</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>SA_res <span class="ot">&lt;-</span> <span class="fu">get_sensitivity</span>(coin, <span class="at">SA_specs =</span> SA_specs, <span class="at">N =</span> <span class="dv">100</span>, <span class="at">SA_type =</span> <span class="st">&quot;UA&quot;</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="at">iCode =</span> <span class="st">&quot;Index&quot;</span>)</span></code></pre></div>
+<p>This is not actually run when building this vignette because it can
+take a little while to finish. When it is run you should get a message
+saying that the weights address is not found or <code>NULL</code>. COINr
+checks each address to see if there is already an object at that address
+inside the coin. If there is not, or it is <code>NULL</code> it asks if
+you want to continue anyway. In our case, the fact that it is
+<code>NULL</code> is not because we made a mistake with the address, but
+simply because the <code>w</code> argument of <code>Aggregate()</code>
+was not specified when we build the coin (i.e. it was set to
+<code>NULL</code>), and the default “Original” weights were used.
+Sometimes however, if an address is <code>NULL</code> it might be
+because you have made an error.</p>
+<p>Looking at the syntax of <code>get_sensitivity()</code>: apart from
+passing the coin and <code>SA_specs</code>, we also have to specify how
+many replications to run (<code>N</code> - more replications results in
+a more accurate sensitivity analysis, but also takes longer); whether to
+run an uncertainty analysis (<code>SA_type = &quot;UA&quot;</code>) or a
+sensitivity analysis (<code>SA_type = &quot;SA&quot;</code>); and finally the
+<em>target</em> output of the sensitivity analysis, which in this case
+we have specified as the Index, from the aggregated data set.</p>
+<p>If the type of sensitivity analysis (<code>SA_type</code>) is set to
+<code>&quot;UA&quot;</code>, assumptions will be sampled randomly and the results
+will simply consist of the distribution over the ranks. This takes less
+replications, and may be sufficient if you are just interested in the
+output uncertainty, without attributing it to each input assumption. We
+can directly look at the output uncertainty analysis by calling the
+<code>plot_uncertainty()</code> function:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_uncertainty</span>(SA_res)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Results are contained in the output of <code>get_sensitivity()</code>
+and can also be viewed directly, e.g.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(SA_res<span class="sc">$</span>RankStats)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode Nominal  Mean Median    Q5 Q95</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   AUS      35 35.28     35 34.00  38</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   AUT       7  7.00      7  5.95   9</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   BEL       5  5.15      5  3.00   9</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   BGD      46 45.46     46 41.00  48</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   BGR      30 27.59     28 24.00  30</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6   BRN      40 40.07     40 37.00  45</span></span></code></pre></div>
+<p>This shows the nominal, mean, median, and 5th/95th percentile ranks
+of each unit, as a result of the induced uncertainty.</p>
+</div>
+<div id="sensitivity-analysis" class="section level1">
+<h1>Sensitivity analysis</h1>
+<p>The process for performing a sensitivity analysis is the same, but we
+set <code>SA_type = &quot;SA&quot;</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Not run here: will take a few seconds to finish if you run this</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>SA_res <span class="ot">&lt;-</span> <span class="fu">get_sensitivity</span>(coin, <span class="at">SA_specs =</span> SA_specs, <span class="at">N =</span> <span class="dv">100</span>, <span class="at">SA_type =</span> <span class="st">&quot;SA&quot;</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="at">iCode =</span> <span class="st">&quot;Index&quot;</span>, <span class="at">Nboot =</span> <span class="dv">100</span>)</span></code></pre></div>
+<p>If you run this, you will see an important difference: although we
+set <code>N = 100</code> the coin is replicated 600 times! This is
+because a variance based sensitivity analysis requires a specific
+<em>experimental design</em>, and the actual number of runs is <span class="math inline">\(N(d+2)\)</span>, where <span class="math inline">\(d\)</span> is the number of uncertain
+assumptions.</p>
+<p>Notice also that we have set <code>Nboot = 100</code>, which is the
+number of bootstrap replications to perform, and is used for estimating
+confidence intervals on sensitivity indices.</p>
+<p>Let’s now plot the results using the <code>plot_sensitivity()</code>
+function:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_sensitivity</span>(SA_res)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>By default this returns a bar chart. Each bar gives the sensitivity
+of the results (in this case the average rank change of the Index
+compared to nominal values) to each assumption. Clearly, the most
+sensitive assumption is the aggregation method, and the least sensitive
+is the maximum number of points to Winsorise.</p>
+<p>The same results can be plotted as a pie chart, or as a box plot,
+depending on how we set <code>ptype</code>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_sensitivity</span>(SA_res, <span class="at">ptype =</span> <span class="st">&quot;box&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>The confidence intervals are rather wide here, especially on the
+first order sensitivity indices. By increasing <code>N</code>, the
+precision of these estimates will increase and the confidence intervals
+will narrow. In any case, the right hand plot (total order sensitivity
+indices) is already clear: despite the estimation uncertainty, the order
+of importance of the four assumptions is clearly distinguished.</p>
+</div>
+<div id="discussiontips" class="section level1">
+<h1>Discussion/tips</h1>
+<p>The <code>get_sensitivity()</code> function is very flexible because
+it can target anything inside the coin. However, this comes at the
+expense of carefully specifying the uncertainties in the analysis, and
+having a general understanding of how a coin is regenerated. For this
+latter part, it may also help to read the <a href="adjustments.html">Adjustments and comparisons</a> vignette.</p>
+<p>Some particular points to consider:</p>
+<ul>
+<li>It is your responsibility to get the correct address for each
+parameter and to understand its use.</li>
+<li>It is also your responsibility to make sure that there are no
+conflicts caused by methodological variations, such as negative values
+being fed into a geometric mean.</li>
+<li>You can’t target the same parameter twice in the same sensitivity
+analysis - one specification will just overwrite the other.</li>
+</ul>
+<p>In general it is better to start simple: start with one or two
+assumptions to vary and gradually expand the level of complexity as
+needed. You can also do a test run with a low <code>N</code> to see if
+the results are vaguely sensible.</p>
+<p>Variance based sensitivity analysis is complicated, especially here
+because the assumptions to vary are often not just a single value, but
+could be strings, data frames or lists. Again, an understanding of COINr
+and a basic understanding of sensitivity analysis can help a lot.</p>
+<p>One important point is that in a sensitivity analysis, the target of
+the sensitivity analysis is the <em>mean absolute rank change</em>.
+COINr takes the target output that you specify, and for each replication
+compares the ranks of that variable to the nominal ranks. It then takes
+the difference between these two and takes the mean absolute value of
+these differences: the higher value of this quantity, the more the ranks
+have changed with respect to the nominal. This is done because
+variance-based SA generally requires a univariate output.</p>
+<p>If you want to perform a more complex sensitivity analysis, perhaps
+generating separate sensitivity indices for each unit, you could also do
+this by bypassing <code>get_sensitivity()</code> altogether. If you want
+to venture down this path, check out <code>SA_sample()</code> and
+<code>SA_estimate()</code>, which are called by
+<code>get_sensitivity()</code>. This would definitely require some
+custom coding on your part but if you feel up for the challenge, go for
+it!</p>
+</div>
+<div id="removing-elements" class="section level1">
+<h1>Removing elements</h1>
+<p>Last of all we turn to a separate function which is not
+variance-based sensitivity analysis but is related to sensitivity
+analysis in general. The <code>remove_elements()</code> function tests
+the effect of removing components of the composite indicator one at a
+time. This can be useful to find the impact of each component, in terms
+of “if it I were to remove this, what would happen?”.</p>
+<p>To run this, we input our coin into the function and specify which
+level we want to remove components. For example, specifying
+<code>Level = 2</code> removes each component of level 2 one at a time,
+with replacement, and regenerates the results each time. We also have to
+specify which indicator/aggregate to target as the output:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run function removing elements in level 2</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>l_res <span class="ot">&lt;-</span> <span class="fu">remove_elements</span>(coin, <span class="at">Level =</span> <span class="dv">2</span>, <span class="at">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="at">iCode =</span> <span class="st">&quot;Index&quot;</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Iteration 1 of 8</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Iteration 2 of 8</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Iteration 3 of 8</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Iteration 4 of 8</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Iteration 5 of 8</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Iteration 6 of 8</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Iteration 7 of 8</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Iteration 8 of 8</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># get summary of rank changes</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>l_res<span class="sc">$</span>MeanAbsDiff</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Nominal  Physical  ConEcFin Political    Instit       P2P   Environ    Social </span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  0.000000  1.529412  2.627451  2.901961  1.176471  1.686275  3.098039  3.960784 </span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  SusEcFin </span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2.627451</span></span></code></pre></div>
+<p>The output contains details of ranks and scores, but the
+“MeanAbsDiff” entry is a good summary: it shows the mean absolute rank
+difference between nominal ranks, and ranks with each component removed.
+Here, a higher value means that the ranks are changed more when that
+component is removed and vice versa. Clearly, the impact of removing
+components is not the same, and this can be useful information if you
+are considering whether or not to discard part of an index.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

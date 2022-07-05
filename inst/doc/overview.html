@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Overview</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Overview</h1>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This vignette introduces and gives an overview of the <strong>COINr
+package</strong>. COINr is a high-level R package which is the first
+fully-flexible development and analysis environment for composite
+indicators and scoreboards.</p>
+<p>This vignette is one of quite a few vignettes which document the
+package. Here, the aim is to give a quick introduction and overview of
+the package. The other vignettes deal with specific operations.</p>
+<p>As of COINr v1.0.0 some radical changes have been introduced. Most
+notably for existing users, is the change in syntax. This is an
+unfortunate one-off necessity and the changes (and how to survive them,
+or roll back to the old version of COINr) are described in an extra
+vignette called <a href="v1.html">Changes in v1.0</a>.</p>
+</div>
+<div id="installation" class="section level1">
+<h1>Installation</h1>
+<p>COINr is on CRAN and can be installed by running:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;COINr&quot;</span>)</span></code></pre></div>
+<p>Or simply browsing for the package in R Studio. The CRAN version will
+be updated every 1-2 months or so. If you want the very latest version
+in the meantime (I am usually adding features and fixing bugs as I find
+them), you can install the development version from GitHub. First,
+install the ‘remotes’ package if you don’t already have it, then
+run:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;bluefoxr/COINr&quot;</span>)</span></code></pre></div>
+<p>This should directly install the package from Github, without any
+other steps. You may be asked to update packages. This might not be
+strictly necessary, so you can also try skipping this step if you
+prefer.</p>
+<p>Once the package is installed, it can be loaded as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span></code></pre></div>
+</div>
+<div id="features" class="section level1">
+<h1>Features</h1>
+<p>The main features of the COINr package are those for building the
+composite indicator by performing operations on the data, those for
+analysing/post-processing, and those for visualisation. Here, the main
+functions are briefly listed (this list is not exhaustive):</p>
+<p><strong>Building</strong> functions begin with a capital letter,
+except for <code>new_coin()</code> which is used to initialise a coin
+object</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>new_coin()</code></td>
+<td align="left">Initialise a coin object given indicator data and
+metadata</td>
+</tr>
+<tr class="even">
+<td align="left"><code>Screen()</code></td>
+<td align="left">Screen units based on data availability rules</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>Denominate()</code></td>
+<td align="left">Denominate/scale indicators by other indicators</td>
+</tr>
+<tr class="even">
+<td align="left"><code>Impute()</code></td>
+<td align="left">Impute missing data</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>Treat()</code></td>
+<td align="left">Treat outliers and skewed distributions</td>
+</tr>
+<tr class="even">
+<td align="left"><code>qTreat()</code></td>
+<td align="left">Simplified-syntax version of <code>Treat()</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>Normalise()</code></td>
+<td align="left">Normalise indicators onto a common scale</td>
+</tr>
+<tr class="even">
+<td align="left"><code>qNormalise()</code></td>
+<td align="left">Simplified-syntax version of
+<code>Normalise()</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>Aggregate()</code></td>
+<td align="left">Aggregate indicators using weighted mean</td>
+</tr>
+</tbody>
+</table>
+<p>Building functions are defined as those that modify the data (by
+creating an additional data set). They also keep a record of their
+arguments inside the coin, which allows coins to be
+<em>regenerated</em>. See <a href="adjustments.html">Adjustments and
+Comparisons</a>.</p>
+<p><strong>Analysing</strong> functions include those multivariate
+analysis, weight optimisation and sensitivity analysis, as well as those
+for reporting results:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>get_corr()</code></td>
+<td align="left">Get correlations between any indicator/aggregate
+sets</td>
+</tr>
+<tr class="even">
+<td align="left"><code>get_corr_flags()</code></td>
+<td align="left">Find high or low-correlated indicators within
+groups</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>get_cronbach()</code></td>
+<td align="left">Get Cronbach’s alpha for any set of indicators</td>
+</tr>
+<tr class="even">
+<td align="left"><code>get_data()</code></td>
+<td align="left">Get subsets of indicator data</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>get_data_avail()</code></td>
+<td align="left">Get data availability details of each unit</td>
+</tr>
+<tr class="even">
+<td align="left"><code>get_denom_corr()</code></td>
+<td align="left">Get high correlations between indicators and
+denominators</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>get_eff_weights()</code></td>
+<td align="left">Get effective weights at index level</td>
+</tr>
+<tr class="even">
+<td align="left"><code>get_opt_weights()</code></td>
+<td align="left">Get optimised weights</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>get_results()</code></td>
+<td align="left">Get conveniently-arranged results tables</td>
+</tr>
+<tr class="even">
+<td align="left"><code>get_sensitivity()</code></td>
+<td align="left">Perform a global uncertainty or sensitivity
+analysis</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>get_stats()</code></td>
+<td align="left">Get a table of indicator statistics</td>
+</tr>
+<tr class="even">
+<td align="left"><code>get_str_weak()</code></td>
+<td align="left">Highest and lowest-ranking indicators for a given
+unit</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>get_unit_summary()</code></td>
+<td align="left">Summary of scores and ranks for a given unit</td>
+</tr>
+<tr class="even">
+<td align="left"><code>remove_elements()</code></td>
+<td align="left">Test the effect of removing indicators or
+aggregates</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Plotting</strong> functions generate plots using the ggplot2
+package:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>plot_bar()</code></td>
+<td align="left">Bar chart of a single indicator or aggregate</td>
+</tr>
+<tr class="even">
+<td align="left"><code>plot_corr()</code></td>
+<td align="left">Heat maps of correlations between
+indicators/aggregates</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>plot_dist()</code></td>
+<td align="left">Statistical plots of indicator/aggregate
+distributions</td>
+</tr>
+<tr class="even">
+<td align="left"><code>plot_dot()</code></td>
+<td align="left">Dot plot of an indictaor/aggregate with unit
+highlighting</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>plot_framework()</code></td>
+<td align="left">Sunburst or linear plot of indicator framework</td>
+</tr>
+<tr class="even">
+<td align="left"><code>plot_scatter()</code></td>
+<td align="left">Scatter plot between two indicators/aggregates</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>plot_sensitivity()</code></td>
+<td align="left">Plots of sensitivity indices</td>
+</tr>
+<tr class="even">
+<td align="left"><code>plot_uncertainty()</code></td>
+<td align="left">Plots of confidence intervals on unit ranks</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Adjustment and comparison</strong> functions allow copies,
+adjustments and comparisons to be made between alternative versions of
+the composite indicator:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>Regen()</code></td>
+<td align="left">Regenerate results of a coin object</td>
+</tr>
+<tr class="even">
+<td align="left"><code>change_ind()</code></td>
+<td align="left">Add and remove indicators</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>compare_coins()</code></td>
+<td align="left">Exports all data frames in the COINr object to an Excel
+workbook</td>
+</tr>
+<tr class="even">
+<td align="left"><code>compare_coins_multi()</code></td>
+<td align="left">Convert a COINr class object to a COIN class object,
+for use in the ‘COINr’ package</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Other functions</strong> are useful tools that don’t fit into
+the other categories</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>import_coin_tool()</code></td>
+<td align="left">Import data and metadata from the COIN Tool</td>
+</tr>
+<tr class="even">
+<td align="left"><code>COIN_to_coin()</code></td>
+<td align="left">Convert an older “COIN” class object to a newer “coin”
+class object</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>build_example_coin()</code></td>
+<td align="left">Build the example coin using built-in example data</td>
+</tr>
+<tr class="even">
+<td align="left"><code>build_example_purse()</code></td>
+<td align="left">Build the example purse using built-in example
+data</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>export_to_excel()</code></td>
+<td align="left">Export contents of the coin to Excel</td>
+</tr>
+</tbody>
+</table>
+<p>All functions are fully documented and individual function help can
+be accessed in the usual way by <code>?function_name</code>.</p>
+<p>The COINr package is loosely object oriented, in the sense that the a
+composite indicator is encapsulated in an S3 class object called a
+“coin”, and a time-indexed collection of coins is called a “purse” (see
+<a href="coins.html">Building coins</a>) Most of the main functions
+listed in the previous tables take this “coin” class as the main input
+(and often also as the output) with other function arguments specifying
+how to apply the function. E.g. the syntax is typically:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">COINr_function</span>(coin, function_arguments)</span></code></pre></div>
+<p>Many of the main COINr functions are <em>generics</em>: they have
+methods also for data frames, purses, and in some cases numeric vectors.
+This means that COINr functions can also be used for ad-hoc operations
+without needing to build coins.</p>
+</div>
+<div id="quick-example" class="section level1">
+<h1>Quick example</h1>
+<p>The COINr package contains some example data which is used in most of
+the vignettes to demonstrate the functions, and this comes from the <a href="https://composite-indicators.jrc.ec.europa.eu/asem-sustainable-connectivity/">ASEM
+Sustainable Connectivity Portal</a>. It is a data set of 49 indicators
+covering 51 Asian and European countries, measuring “sustainable
+connectivity”. Here we work through building a composite indicator, and
+link to the other vignettes for more details.</p>
+<p>Before proceeding, let’s clearly define a few terms first to avoid
+confusion later on.</p>
+<ul>
+<li><p>An <em>indicator</em> is a variable which has an observed value
+for each unit. Indicators might be things like life expectancy, CO2
+emissions, number of tertiary graduates, and so on.</p></li>
+<li><p>A <em>unit</em> is one of the entities that you are comparing
+using indicators. Often, units are countries, but they could also be
+regions, universities, individuals or even competing policy options (the
+latter is the realm of multicriteria decision analysis).</p></li>
+</ul>
+<p>We begin by building a new “coin”. To build a coin you need two data
+frames which are inputs to the <code>new_coin()</code> function. See the
+vignette on <a href="coins.html">Building coins</a> for more details on
+this.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">new_coin</span>(ASEM_iData, ASEM_iMeta, <span class="at">level_names =</span> <span class="fu">c</span>(<span class="st">&quot;Indicator&quot;</span>, <span class="st">&quot;Pillar&quot;</span>, <span class="st">&quot;Sub-index&quot;</span>, <span class="st">&quot;Index&quot;</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iData checked and OK.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iMeta checked and OK.</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Raw</span></span></code></pre></div>
+<p>The output of <code>new_coin()</code> is a coin class object with a
+single data set called “Raw”:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ASEM</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A coin with...</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Input:</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Units: 51 (AUS, AUT, BEL, ...)</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Indicators: 49 (Goods, Services, FDI, ...)</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Denominators: 4 (Area, Energy, GDP, ...)</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Groups: 4 (GDP_group, GDPpc_group, Pop_group, ...)</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Structure:</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 1 Indicator: 49 indicators (FDI, ForPort, Goods, ...) </span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 2 Pillar: 8 groups (ConEcFin, Instit, P2P, ...) </span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 3 Sub-index: 2 groups (Conn, Sust) </span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 4 Index: 1 groups (Index) </span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Data sets:</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Raw (51 units)</span></span></code></pre></div>
+<p>Let’s view the structure of the index that we have specified, using
+the <code>plot_framework()</code> function:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_framework</span>(ASEM)</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAHgCAMAAABKCk6nAAACjlBMVEUAv8QAv88Av9gAys8AyuIA1ewzzNAzzNgzzOAz1dgz1egz3fA6v8Q6ysQ64PVazNBa1dBa1eha3fBa5vdmv8Rm2dxm2eJm2ehm4OJm4O5m5uhm5vNm6v9/zNB/zNh/7vd/7v+B2dyB2eKB4NyB4O6B5vOB7fOB7fmQysSQ9P+d2dyd2eKd2eid4O6d5vOd7fOd7fmd8vOd8vmd8v+g1dCg9/Cg9/+21cS24Ny24Oi25u627eK27ei27fm28u629OK2+PO2+Pm2+P+2///B3dDB7vDB9+jB9/DB///P5tzP5ujP7eLP7e7P8u7P8vPP8vnP+O7P+PPP+PnP//PP//nP///b4M/b9OLb9PXh5tjh7uDh9+jh9/fh///n7eLn7ejn8ujn8vPn+O7n+PPn+Pnn//Pn//nn///4dm34dof4dqD4j7n4pqD4ptH5dm35kYr5kZ75kbL5pZ75pcf5uLL5uNr5vej6kYr6pYr6pcf6yu37dm37kYr7raf7rbb7rcX7u7b7u9T7ycX7yeL71Oj72+372//8j238pYr8pm38raf8rbb8rcX8u6f8yeL81+L81/H82+385OL85PH85P/86f/87e387f/8/9H8/+j9uIr9u6f9u7b9u8X9yaf9ydT917b91/H929r95NT95OL95PH97cf98tT98uL98vH98v/9/9r9/+L9/+39//H9///+vYf+yp7+1KD+17b+18X+19T+27L+28f+29r+5MX+5OL+7cf+8tT+8vH+/9r+/+L+//H+////1KD/27L/5MX/6bn/6tj/7cf/7uD/8tT/8uj/9OL/9+j/+O7//9H//9r//+L//+z//+3///D///H///P///X///f///n///9uKiS1AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAgAElEQVR4nO3dj58ex3kQcLcQOUjFAsSri/rGxHKKD67BbXQmudKS2kJQDlPXaeKAkva1kjq12xLOjlBdFL93urzEVd8E9219JSDRI22c2lZMHPGGgFwLED5a67CJiCWq+W+YeWZmd3Z3Znd2dmZndzTPR37vfd/bfW/f/fqZ/TG/bkMxgo7bfG9ADLcRgQOPCBx4RODAIwIHHhE48IjAgUcEDjwicOARgQOPCBx4RODA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" /><!-- --></p>
+<p>See the <a href="visualisation.html">Visualisation</a> vignette for
+the full range of plotting options in COINr.</p>
+<p>At the moment the coin contains only our raw data. To build the
+composite indicator we need to perform operations on the coin. All of
+these operations are optional and can be performed in any order. We
+begin by <em>denominating</em> the raw data: that is, we divide some of
+the indicators by other quantities to make our indicators comparable
+between small and large countries. See the vignette on <a href="denomination.html">Denomination</a>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">Denominate</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span></code></pre></div>
+<p>The only thing we specify here is that the denomination should be
+performed on the “Raw” data set. The other specifications for how to
+denominate the indicators were already contained in the data frames that
+we input to <code>new_coin()</code>. Running <code>Denominate()</code>
+has created a new data set called “Denominated” which is reported in the
+message when we run the function (we can choose another name if we
+wish). This is <em>additional</em> to the “Raw” data set and does not
+overwrite it.</p>
+<p>Next we will screen units (countries) based on data availability. We
+want to ensure that every unit (country) has at least 90% data
+availability across all indicators. Screening is done by the
+<code>Screen()</code> function:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">Screen</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Denominated&quot;</span>, <span class="at">dat_thresh =</span> <span class="fl">0.9</span>, <span class="at">unit_screen =</span> <span class="st">&quot;byNA&quot;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Screened</span></span></code></pre></div>
+<p>The details of this function can be found in the <a href="screening.html">Unit screening</a> vignette. Again, by running
+this function we have created a new data set. Let’s look again at the
+contents of the coin using its <code>print()</code> method:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ASEM</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A coin with...</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Input:</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Units: 51 (AUS, AUT, BEL, ...)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Indicators: 49 (Goods, Services, FDI, ...)</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Denominators: 4 (Area, Energy, GDP, ...)</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Groups: 4 (GDP_group, GDPpc_group, Pop_group, ...)</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Structure:</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 1 Indicator: 49 indicators (FDI, ForPort, Goods, ...) </span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 2 Pillar: 8 groups (ConEcFin, Instit, P2P, ...) </span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 3 Sub-index: 2 groups (Conn, Sust) </span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 4 Index: 1 groups (Index) </span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Data sets:</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Raw (51 units)</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Denominated (51 units)</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Screened (46 units)</span></span></code></pre></div>
+<p>Notice that the “Screened” data set now has 46 units because five
+have been screened out, having less than 90% data availability.</p>
+<p>Next we will impute any remaining missing data points. This can be
+done in a variety of ways, but here we choose to impute using the group
+mean, i.e. if a country is in the “Asia” group, we replace missing
+points by the Asian mean. If a country is in the “Europe” group, we
+replace with the European mean.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">Impute</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Screened&quot;</span>, <span class="at">f_i =</span> <span class="st">&quot;i_mean_grp&quot;</span>, <span class="at">use_group =</span> <span class="st">&quot;EurAsia_group&quot;</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Imputed</span></span></code></pre></div>
+<p>This writes another data set called “Imputed”, which has filled in
+all the missing data points. Again, we have to specify which data set to
+impute, and we have chosen the “Screened” data set. Full details of the
+imputation function can be found in the <a href="imputation.html">Imputation</a> vignette.</p>
+<p>We would next like to treat any outliers. The <code>Treat()</code>
+function gives a number of options, but by default will identify
+outliers using skewness and kurtosis thresholds, then Winsorise or
+log-transform indicators until they are brought within the specified
+thresholds. This function is slightly complicated and full details can
+be found in the <a href="treat.html">Outlier treatment</a> vignette.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">Treat</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Screened&quot;</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span></code></pre></div>
+<p>The details of the data treatment can be found inside the coin. A
+simplified version of <code>Treat()</code> is also available, called
+<code>qTreat()</code>, which may be easier to use in many cases.</p>
+<p>The final step before aggregating is to bring the indicators onto a
+common scale by normalising them. The <code>Normalise()</code> function
+will, by default, scale each indicator onto the <span class="math inline">\([0, 100]\)</span> interval using a “min-max”
+approach.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Treated&quot;</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span></code></pre></div>
+<p>Again, because <code>Normalise()</code> is a slightly complex
+function (unless it is run at defaults, as above), a simplified version
+called <code>qNormalise()</code> is also available. Details on
+normalisation can be found in the <a href="normalise.html">Normalisation</a> vignette.</p>
+<p>To conclude the construction of the composite indicator, we must
+aggregate the normalised indicators up within their aggregation groups.
+In our example, indicators (level 1) are aggregated into “pillars”
+(level 2), which are themselves aggregated up into “sub-indexes” (level
+3), which are finally aggregated into a single index (level 4). The
+<code>Aggregate()</code> function will aggregate following the structure
+which was specified in the <code>iMeta</code> argument to
+<code>new_coin()</code>. By default, this is done using the arithmetic
+mean, and using weights which were also specified in
+<code>iMeta</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">f_ag =</span> <span class="st">&quot;a_amean&quot;</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span></code></pre></div>
+<p>Details on aggregation can be found in the <a href="aggregate.html">Aggregation</a> vignette.</p>
+<p>We now have a fully-constructed coin with index scores for each
+country. How do we look at the results? One way is the
+<code>get_results()</code> function which extracts a
+conveniently-arranged table of results:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get results table</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df_results <span class="ot">&lt;-</span> <span class="fu">get_results</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="at">tab_type =</span> <span class="st">&quot;Aggs&quot;</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_results)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode Rank Index  Conn  Sust Physical ConEcFin Political Instit   P2P Environ</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   CHE    1 68.33 62.18 74.48    64.37    33.30     73.03  83.32 56.87   78.13</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   DNK    2 64.47 56.05 72.90    50.17    30.52     76.98  71.59 51.01   70.53</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   NLD    3 64.46 61.32 67.60    68.15    45.11     83.49  67.96 41.86   57.14</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   NOR    4 64.23 56.53 71.93    57.45    25.39     78.95  87.10 33.75   71.55</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   BEL    5 63.11 63.02 63.19    71.80    48.65     79.57  71.84 43.27   52.00</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6   SWE    6 62.82 52.88 72.77    51.90    23.93     80.10  70.04 38.43   68.34</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Social SusEcFin</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  87.63    57.67</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  86.17    61.99</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  86.00    59.65</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  87.04    57.20</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  85.36    52.22</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  86.92    63.04</span></span></code></pre></div>
+<p>This shows at a glance the top-ranking countries and their scores.
+See the <a href="results.html">Presenting Results</a> vignette for more
+ways to generate results tables.</p>
+<p>We can also generate a bar chart:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="at">iCode =</span> <span class="st">&quot;Index&quot;</span>, <span class="at">stack_children =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAEgCAMAAABcujGyAAADAFBMVEUAAAAAADoAAGYAOpAAZrYAv8Q6AAA6ADo6AGY6OpA6kJA6kNtNTU1NTVNNTVlNTV5NTWRNTWlNTW5NTW9NTXlNTYNNTY5NU39NWU1NWY5NXl5NXp1NY1lNY25NY51NZE1NZGRNZG5NZG9NZHlNZKtNaX9NaatNbm5Nbo5Nbp1NbqtNbrVNb2RNb7VNeWRNeXlNechNg45Ng8hNjoNNjo5NjqJNjqtNjrVNjshTTU1TTWlTTYNTXmlZTU1ZZFlZjqtZjs1ZjuReTU1eTY5eU01ebmleg45encheneRjTU1jTV5jbk1jf2ljjo5jq+RkTU1kTW5keW5mAABmADpmAGZmZrZmtv9pTU1pTYNpjo5pnc1pq8hpq+RuTU1uTV5uTWRuTW5uTW9uTYNuTY5ubm5ubo5ubqtujm5ujoNujo5ujshunc1uq51uq6tuq7Vuq8huq81uq+Rutf9vTU1vTVlvZE1vg8hvtf95TU15TVl5eU15yP9/U01/WU1/aU1/oqt/zf+DTU2DteSOTU2OTW6OTY6OWU2OXk2Obk2Obm6ObquOeXmOjm6OjsiOonmOoo6Oq6uOq+SOtauOyKKOyMiOyOSOyP+O5P+QOgCQOjqQOmaQZgCQkGaQtpCQ2/+dXk2daU2dbk2dblOdjm6d5P+iZE2ib02ig02ijk2iq26iq6uiyI6i//+rY02rbk2rbm6rjk2rjmSrjm6rjqurq26rq8irtY6rtauryI6ryKuryP+rzaur5OSr5P+1bk21jk21nV61q261//+2ZgC2Zma22/+2///IeU3Ijk3IjlnInV7Iq27Iq6vItavIyI7IyJ3IyKvIyP/I5KvI5P/I/+TI///Nq27N///bkDrb2//b/7bb///kjlnkq2nkq27kyI7k5Kvk5LXk5Mjk5OTk5P/k/8jk/+Tk///r6+v4dm3/omT/tW7/tmb/yHn/yIP/yI7/yKv/zX//25D/27b/5I7/5J3/5Kv/5Mj/5OT//7X//7b//8j//83//9v//+T///85Rq4qAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAbW0lEQVR4nO2dC7wcV13HL6ENYKdpmtpYjfiWloslbY12o0al+CgWjRYNoqxWq2mqprpWbXyhdRNBLaJI16pYRPFtL4hPHteq0XQVKApejVrXam1vanK7EGWUrNnxvM9/dmd39uzunHtm9vf7QO7cuTP/35lzvnPm/M+Z3S4lEBSwlja7ABA0TgAUCloAFApaABQKWgAUCloAFApa0wF6qqDNwgLDbp6BfQqAws45sE8BUNg5B/YpAAo758A+BUBh5xzYpxwBPQUttoqhcIzQg8LOObBPAVDYOQf2KQAKO+fAPgVAYecc2KecAX3SSP5ejjqF3TwD+xQAhZ1zYJ8CoLBzDuxTABR2zoF9CoDCzjmwTwFQ2DkH9ikACjvnwD4FQGHnHNinACjsnAP7FACFnXNgnwKgsHMO7FMAFHbOgX1qFkCzN4VCq1PYzTOwT80f0FlYrUoTVtvOqwAo7JwD+xQAhZ1zYJ8CoLBzDuxThQLqjG1VmrDadl4FQGHnHNinACjsnAP7FACFnXNgnwKgsHMO7FObAOgYVqvShNW286oxgPZXoh2rSdJrRsvrdi8AXXg7rxoDaLuVdJfX+yutpFOze+cK6CCrVWnCatt51WhAe8fW9I/41jWzuzBAB2EtcxNW286rRgMaH3wLf8THB9eT3tFVtfPUKcvRfDdH7YaCkh8qicYAWm9xOtlTngDqpwcdcQRXOfqYatt51bgeVJCZ7kEBKOz8aswY9McFmZsxBvXFalWIWUxAeRbPus/+SsNPFj/teVyhNWG17bxqDKC9ZrRzrdh50DkAOgurVSFmQQHNFgANjxgASgRAwyMGgBIFDKgzq1UhBoASAdDwiAGgRAA0PGIAKFE5AJ2M1aoQA0CJAGh4xABQotIBSj24KkgMACUqDJ6iAlMPrgoSA0CJCoOnqMAj7IQqQgwAJSqMmKIC59sJlZkYAErkgxgPmzNNT4VGDAAl8kxMEHZCARMDQImCIGbz7IRCIwaAEoVGTBB2QgC0CAHQgmcKAOhsAqAA1DmwTwFQAOoc2KcAKAB1DuxTABSAOgf2KQAKQJ0D+xQABaDOgX0KgAJQ58A+BUD92AkBUHcBUADqHNinHAH1/vWLFbQrtYqhcIzQg3q3E0IPOqEAKAB1DuxTADQQOyEAOiQAGoidEAAdEgANxE4IgA4JgIZnJwRApQBoeHZCAFQKgAZtJwRAXRRaE1bbTgiAuii0Jqy2nRAAdVFoTVhtOyEA6qLQmrDadkIA1EWhNeHC2AkB0FwF3ITVthMCoLkKuAmrbScEQHMVcBNW204IgOYq4Castp0QAM1VwE1YbTuhcAE9ubS09LT7cw7K1X/95eAeAFpCO6GgAD1/39P/mUN6YOxRuTr7jCHEAWgJ7YSCAvQ455MRKn9MLQBaDTuhkAA9d7PtOs/ft7R0AWftF7cuLV10lv1zgP3y+qUlDm/qjwfk71tO6N/5wRcNhAagJbSbkCN/gJKe7/x9F4j/n93KgDzJqTy55cTZrVtO6D/YP8p9vNvVv6MHrYbdhBx5BPSZJ/TmGdYh8n/ObmUdpPznGffrn+k/qt9Z92uOA6CVsJuQo03pQc/wJ7lmTf8jfjIQB//IU/8lPhCgx6UFQEtoNyFH/seg515yvxugKqkCoNWym5Ajj1m8Io0NI8/wydAzajhpwBOP8GcO/fGMmjkFoNWym5CjTZkHNXlQGtCBJEntF6cxSvXvdDZAaSyg/ZVWkvSa0fK63VeOJqy23YQceV1JOq5XksxMUuoR/3qxc+iP/Hd2lvn9uDiKaiygnaglIO3U7L5yNOHC2I3jyCugY5Xx6J5U4wCNv/lVraR3bC2Jb10zO0vXhAtjJ1RpQM//Y+pP/Te/k/We8cH1pHd0Ve3D1y+Wwy6wr1+cE6DnbhbrTOd/Xs66dhr88d5dpoCiBy2HnVA4PegMSj3iz/CVqTN8cZSJdZ39oR4UgJbOTqgigLI+dGlJ51GdiKuBMWjJ7YSqAmhydit9nYT3oP2VBrL4MtsJVQTQ8/ctXSAe80qYB62WnVCJAT1389PEkumWEyMPB6BlthMqM6BfJX/+BQCtpp1QIYA+maWxZ0wqrMUvkJ1QqQE9ubR0IOdzJRcaVbEJF9FOqByAHn/6P918QLyGP1oAtMJ2QuECeu7mA/x9pzNjkyQCqAuruceWpAkXxk4IgM61Tl02YZcXgiswQJOT/BGvVuRHKRdQl73zrVOXTdjlheAKDdDkjPgI09gTAOjC2QmFAegEAqALZyc0E6C845vyS0cAKOxyo3HNAuhJntUcn45QA6h4kUlqtiQJgFbNblZAz71EflbpAIeMf9HNs35BfB+O/DEpoFwn1Rc9jDthdkCzD3CieQ6VXlTgCtrNCugZ03cev4j/cnYr/eEAqEJzmmkmF2wBaMnsZgZUr/yc+8oTvDvlX5TD/q9+lAbQ3CPmW+lFBa6g3ayAnn2W6iY5jud/bnpA9SN+inlQAFphu1kBNWPQWXtQNQ86ftwaGqC5diMqfcrGmnKzKnZTAWqzeDUGnR7QCQRAp9msit10gJp5UJXFA1AvgLqUcsEBnUEpQPlXME83D+oD0Nn3UrvZGwuA+gY0501QKRdAXQgGoHPcrCigOVP0UgEDmhthvk0IQK2ezNLsdCaDPSgAddgEoD6U/uqbsaNPqWoD6gIdAPWh9CN+6pdFAgY03y7XI3vT5diqA3phluYO6AQ6dcr6z2HTXvqowOSI3L0um04e2Zsux1bl2x5HrSddmKWZ4eQqdB40d9NeupcelNadi0f2pksE9KDTqpyAzr45LaAupXQiJtfZiaPZQ4wInEsF0Uxgas3pheUpN+mluzT97JtOHlMWwomY7POm5Wj2ECMCbx6gk2pKIPKbMPeIuTpPW8wpTwOg0wqABg1o9t58jlwOdgqcSwXRTGBqhQ5oUZsAdKrNfCqIZgJTC4AW5zGCmOwjXPbmczRXKmngXCqIzF95fjOU2OS/aRcAoPRiigochl02dNmbVQNUvOMx9KWJADQoO8+ATnleMYAKFO1HPfjry1tOyHeXAWgodnMFNHtvsIDK/9Jsot+k559MOnkBetCw7BYZUPGRD/6fjFWAis/QAdCw7BYb0ET+N4/VI/7sVo0rAA3GbnZAc4+dA6D5gacBVH5xw/ED5FNy6rOdADQYOxfoXDbLAKjI4tmDnT/bT245wb/uBoAuil0+oLkHFw6omAfl/wmuk0tLH8EypONiVvT8fcjiF8DOCdDc8/IDTwXoLAKglbEDoANFKV8TVtsOgA4UpXxNWG07ADpQlPI1YbXtNhPQ4gRAK2MHQIWKqt4KEuPZbr6AjgjsXQC0MnZOgE4b2LsAaGXsAKhQUdVbQWI82wFQoaKqt4LEeLYDoEJFVW8FifFst3CAxvUoaiVJrxktr9u9RVVvBYnxbLdogPaOribxLav9lVbSqdndRVVvBYnxbLdogHY5le1W79haEt+6ZnYXVb0VJMaz3aIBysV60fjguuhMpeb89Ytks7DAC2NnOSrwSzKLJ3JAYwHtrzSS7jIFFD1ouHaF9aBk07/GAdprNliqdBCAlsNu4QCN6yyHTzAGhR0J7F2jAZV8isc8snjYqcDeNRrQTsTVwjwo7Ehg78JKEuxcAnsXAIWdS2DvAqCwcwnsXQAUdi6BvQuAws4lsHcBUNi5BPYuAAo7l8DeBUBh5xLYuwAo7FwCexcAhZ1LYO8CoLBzCexdABR2LoG9C4DCziWwdwFQ2LkE9i4ACjuXwN4FQGHnEti7ACjsXAJ7FwCFnUtg7wKgsHMJ7F0AFHYugb0LgMLOJbB3AVDYuQT2LgAKO5fA3gVAYecS2LsAKOxcAnuXI6D4+sXFtgvs6xezZEtbkpsedvMM7F0AFHYugb0LgMLOJbB3AVDYuQT2LgAKO5fA3gVAYecS2LsAKOxcAnsXAIWdS2DvAqCwcwnsXQAUdi6BvQuAws4lsHcBUNi5BPYuAAo7l8DeBUBh5xLYuwAo7FwCexcAhZ1LYO8CoLBzCexdABR2LoG9C4DCziWwdwFQ2LkE9i4ACjuXwN4FQGHnEti7ACjsXAJ7FwCFnUtg7wKgsHMJ7F0AFHYugb0LgMLOJbB35QPaa0bL6/bX0tUp7OYZ2LtyAe2vtJJOzf5eujqF3TwDe1cuoL1ja0l865r5vXR1Crt5BvauXEDjg+tJ7+iq+u0UtNgqGMdh5QLaXaaAKp0qaLOwwLCbZ2CfcuxBlUpXp7CbZ2Cfch6DCpWuTmE3z8A+NUEW30hl8UKlq1PYzTOwTznPgwqVrk5hN8/APuW8kiRUujqF3TwD+xQAhZ1zYJ8CoLBzDuxTABR2zoF9ajpAIciTACgUtAAoFLQAKBS0ACgUtAAoFLQAKBS0ACgUtDYP0A+s5h9TfIi52nkuz1z1v4MvBAWiqQDttsh2Y8rzIvMOnw3R3bmWsTkynAmRfTCN1sr4u/y4wFg7enWkxJke2QfMQSOubsd0t8OIaJFthEbOsV41DaDdHd9uf2mbpo/rka6zbhRlVB89j1Zv29TIY21TI3aTxc1seBLCHkydyV5aYiL+kdUhZyp7dcSOFoicl0cMOY2WMruukk4URa1Bj7hu7qj+StZp5IC0c1ZdkZrv7rjHXBK55kxnv5oC0HRDmMvpsvpsy/uQ33idoQui53XpO6Zdwh+tPbnJTus1M7rpVAhzcNrZhsjyYho+Nn2EbSxrN1Agc97wa7OpYOQ0WsrsuhrYpTza0b0rJmDv2O/LyyIeqQOss22ZVIn5PVDTZetkAZrt7FXugIrW7v+erj99ORKCuN5QDwb59KSPC3Jed8c7V2wL8I89GQ0SKk5Tj+LUAzcVQh9snQdDSOde85si2lXST1tJ5/QR9vYzdrRA5DxygC0lCUZOo6XMrquhD9nYq7PqNDo8JvUgY5qBipctkyqxvAd6fyuPsFeUAjTT2aecAZWtvXLV+xNZC+pydCfFLkVejXh6dHfUGxnnxbessk3ZKuwe5h97sh0Bq5GuurP5pogr67L/VlvJNgQ9mDiTaMSZtwPrOGxb8Y6DRKBHkKujdrZAxIMcQEtJgpHTbCnp9v/cQ8+ToXvNQ7ZscjzSNqVn1dZR1EsPcgApBGmZ1JXKe7PXjFr9N6/qW4K26Ghnn3IG9OFmjdWEKLqohbZ8TryrLquUXYvY5Luj6JKvNTduO9LnqdtRNGf8LR1xIPujjdB4V/32utjZ3vmbfC9vfSHaDegQgwdL5ysiHe1b/9iWWDYiG75Fy/8qq5vfHCTCWnf5CXXEc98YmatL2ZkCkRKTA0gpP7Bq7B6M0qfJUi7/md2OXk6uTvdnnU8jZWMcd1ln2Wu+Rg5PO42EE0ouyRywc80EIy0zcKXrnM9GVw51BaAf/q79pEUznLNzzSLlCGiXl/IzRWv3mpfzWmi3eOVEO9+n6oFdS1yvtUVXcfEXvV21Vq95xR593t03aUKfrTdavFIu2y8jdHYvPypOYmP76IqX1WtxndeLSCZ0NIMbh9wczM6Tzskj0Seq8jwSNWyJG7zL5LD2mrwJOaLtQ7oxRQSGpz7i8ldF+uou+3Nl96kv5R6yQPwM7aGSEFaevxewyVKydtbBtrGWJqfJUnZuf7utq8+9JrFXp1HokKpgmxLM9hfWD7OOj99c3W3sZOKhDviatr6oDW5rWiZVV5xIxri6vXiH2msefg9t0WFn/12oI6A8rZN49JqyFnSqqVpLdBIy5VNDP17DDI1e83VNTYkaZ/Z/6Qo1BG+INFtG6DXvXWmp+593r1dKC5VMxDKaLk//gY/6B9KuOtnk1jLaRvQVNQX0hsBIYKMyZ9YQtfirf4N0NxyJx5uq01SJNEkQ2tHHvbE2dM0b0ffrpKb/BlaeRKDfa166qijlR976Pnqa6iDF3azqqlOT/Mhiioc3i6OpJQn1xrafZfv4s7nTEHuthzyCs6YIFb2Bapmvu8Hc4V1xlihO99pb1L3V2ogEwqKYjxnEifPQ9yN4kPMjXhEqIGmnmpbXQ+9u0X/wTTP0i9n9zkdhrOXVeYbQd/+6HK7vlh0QP413BgpE1epietEkE3H9tn12Wip57yufI/vQLn9irktkZELNN5+KruMNz0u8EX2ZCMh+J5kz67pbqctgjaAT2t7Rt/HAdG727979foVlx1zoU6J8Mlz8jb8lBtn16LD6MKwKxsZ5A6fpLFrXVVeW+TZdzKjR3X7nZzQbZsRgbuuPV/A1eXLE91oP8WNFoM4POix7A9EyTZnLi2iCua5Msb5Aplj9lZ/Z/zl8k9gNOm9GIu8MKL/yXnOP7MTERRxqmD/tuXuXJIP9zw5W5QQge5T0ms+PUpesNv7zkjfJNJvVIj+U36m8k9DD+KhGkokP3bDXjP+jln7KH+KdI0+2mLNOqPmZ1yVqrPV81vCS8Fv+MCPXt4R2ambIyzbr30EyD715e73WUbeAKrF++JmxYxRdKgvBgj0mPFr8cH0aR0Zn0XH9epulnNbFFM/WhronTaXJ8aEub+8P/kOSaD3UAJKPvfRFiY09oj/n+81OVkj+LPlolWK1o0My21J2EvEBZ/9yALQrYWuIPtSmeASYuP7Za/JnSzyE9NDvpuW3sCpgLdA7sleP2A+RNPuSF66ZNFtIPu4OmWF89GKSeL1JV5vMTwWhp6MbdZPG9c8yCbVteN5/Kowe+sisXJ/ZmbSpvdtsxvWbbIJgcoWfsheaynnWNaDxN3y5LgQPxp7a9zQG6ucOk0ULKGU5N7b/jimbzftPZ9zWrLy2PYiHyGJFDbW320aK65eaXN4SyszZvaxSrEd/WmdbkXzU88BDzt7lAKi98p1rNsXbTnsf04FcdXdN5zJi0MloZaOshs0rWHpqUuCHm8/Tj4+uza1Vk/Fh/AO71nUy0X+DGUhtsO5RRlh+4q3ikVdLdB6iE2od5d++d79Nl/eazY95aSoPV2lTI371ut7stmKVIDz0giQ2uYK5UDmqMDmPHth9kpwXE737q8XfIjp9yk+zWfSPiOYXWcqRvdekyjY4XUBmneIXRYbES77HerCYV8oG+bXoZSYPtyFeQ6aauqmsUW8eMYHlvIitoE2QyyPeXHlbjRFlnq0JZYDoBjgtB4RmsMohietXygRKUtsyqPJjZF/73/t2GTLkQeKI+EtewQ1lbLGAIpOJG9WwiHHw4O1yoGvzTJVQt0TDb0Sf9x6dLm/70j9KbepCqLOi2gf3KrpYBvX1Zo104+IvNvVwdFVf6Af3isZUj2Q+xhSMvPcHdq2nCsEttt1oABX1QbJoDgvrv1hdGdof2fZDw9MFdNbp4WiPao/+j+qVzM6Od7BSmEkOkrOvm1z+xXT6qKXSOFl4nW2Rhn50oIK8a2JA+Yhe5uFyadd2m2qwwx+iugPZ9px10QnywaoYg3Nuursj+VCq6XG8hDLia4BiHBd9vuRNQ6Kf4Q3eFZlG4gsobPx/ZJ+Z3vwXkeyLxrjF5JkyoVbp6Y0mdZbpKdlU94u50F+Nou82SXt0l9r7lOquE3lT2At9XKQxNbOS2RYJ/PUrNKuX+pOopX02IjuTJIosZsNf17xJZ/W8cDveJhLqrq40XsxPsbNObNyuSTSrnskj0V1ixqSmx7FyOUDnjKzruPiHCbYPiulUW/hOjTa0mtgbrCC/mhRQNaJv1szS7gChh8X0plzauPQVDTUg5H0iH4uzTscsyZkBrEyBr+HBdJqtpCGRw3jZSWpC5QIKGeOaZJ/dJDbB1wk1O/UnOZ+2GzJYms3+A1eb01KvJ6k1Uv7MvU6mceLxq6eBxIXKNGa3eYLLcYCes1eFEGYt3cE+Jcer4pQoep4qSTsyWb08nhFa0yuZ8ra+3kzAyYkKTaha9TTrqWz/36xYQvV2Lfnwnem+hWPHskZdeHaz2IY2E3tkncO/JgTUTLGxx/gOkw7SEVFdPqgYbP3f3Xe1GhB+n5hC7K+IWT67yqgXimWaLYL1mp9+5wsSlS5bSPgwXk+Br59OLaCY5rHJ/rfdudcCalYLIz0WUE0v01OzyQ/4hLodGdhVPbtGSlZL9RRVW0wD1Uwaw+8B+oaHWhjVhdBLiLyD5YNn/oDht99fRZ+sH7h/uktn9SlCVbXJ21pPwNmJCnLTkryKGfYJoXp7T/MOPUIiq5oPbTfpWPta09C79VyH6VA2RRMCair6cJOkgy/aa4czfJ9YlGZ7XqsGhA9dbl7WuurH7LLfE2ahmKwT95omXb43a+m3v/LcXzELKLRDJ9kG7dZtQvKx+3UXcHogPZWbsoCmU7FJu50os1v25Q5+odek0hgyvkgUFLoQj1ytaeCn3aVmHPjt9w76zJZZvV0e5qs5ptrEFcsJOLvyv0Fv2nQpsght6BFSg6xT//U+c1r8E7qhb7PTHpuqSQHVrV2jS7tkFE5ft9D7P3TDdyamNyLLfjbvHwimc+TMpV92rllA0fvk6hFds8taLXxcjwXIPMRvkykJW2J2XkxW9exE2R1qayPVbHEqjTEzCLbAuhD9X45erqco+wMzDmbSLL02LiTyJZJm6wm4hoy/vM6C0Zs2XQo7k0G2zQgpsevUl+03p5GXAMjs2UguiteEgNrWtumgZFPUFX2xQPxRrnTclAZNJ4mJ5eFaGkxZHV2NRy392gUUU66BbCOxa6EdlWK17No9SU8fJ1MSSeo8XYqETpSprSN7U82WWvWMsvIIXYjX2jVutcJjLk9PjKfXxhOzT1ZbagJOSr+JQG7adCnShD57YIREDrZb9CUAO3uWcWG+NHGSZFo7IYvutnbJhEYidxzmcyZp0MhcheYhFSxJUutpGUu/ZgGFyiT71lnaRQYsS6iNbjcHziOlMBNleitON5sZL6Y2UxUX6f7SohOnZxz03UrvM35ZNVUKVW1kAs6UUq0z2Zs2XQqa3PzfD0YDIyQysLGn2YbetJfoU3KYZtKtncilXfOYI4QSkR0GNDpI0zykgg283ZbR4kM+smw18oEgWu16HDsZoRmlMKu6emug2fIJ1YWgJR/ortUbHKn7LEn+fUWVgowqo1rqVea+fDWA3rQjSqFs0iOkbEJNQ48J5U+TT9Tb1hbp4EDtZpMjREBrkyvWJ6SCGY1c+s30Mcn+SE1C6IgTG+mtgWZLvS0zNqVIE3p4+KLT9xkRqbZ2NDySSPuOKcXQCClF6PBtHQKh033sOKsSsismDZpc9pvoxMJEB5pZn3XK1dTNNtiHDmnUfZZZbSMC5x84OEKaR+DiNMfPxQdwNX5U4gstX9HxzSKLpdIRCkChoAVAoaAFQKGgBUChoAVAoaAFQKGgBUChoAVAoaAFQKGgBUChoAVAoaAFQKGgBUChoAVAoaAFQKGg9f8v0iPrUsKQ0QAAAABJRU5ErkJggg==" /><!-- --></p>
+<p>This also shows the underlying sub-index scores.</p>
+<p>We will not explore all functions here. As a final useful step, we
+can export the entire contents of the coin to Excel if needed:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># export coin to Excel</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">export_to_excel</span>(coin, <span class="at">fname =</span> <span class="st">&quot;example_coin_results.xlsx&quot;</span>)</span></code></pre></div>
+</div>
+<div id="finally" class="section level1">
+<h1>Finally</h1>
+<p>The preceding example covered a number of features of COINr. Features
+that were not mentioned can be found in the following vignettes:</p>
+<ul>
+<li><a href="weights.html">Weights</a></li>
+<li><a href="analysis.html">Analysis</a></li>
+<li><a href="sensitivity.html">Sensitivity analysis</a></li>
+<li><a href="adjustments.html">Adjustments and Comparisons</a></li>
+<li><a href="data_selection.html">Data selection</a></li>
+<li><a href="other_functions.html">Other functions</a></li>
+<li><a href="panel_data.html">Panel data</a> (placeholder - to
+complete)</li>
+</ul>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

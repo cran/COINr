@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Weights</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Weights</h1>
+
+
+
+<p>Weights are used by most aggregation methods to optionally alter the
+contribution of each indicator in an aggregation group, as well as by
+aggregates themselves if they are further aggregated. Weighting is
+therefore part of aggregation, but this vignette deals with it
+separately because there are a few special tools for weighting in
+COINr.</p>
+<p>First, let’s see what weights look like in practice. When a coin is
+built using <code>new_coin()</code>, the <code>iMeta</code> data frame
+(an input to <code>new_coin()</code>) has a “Weight” column, which is
+also required. Therefore, every coin should have a set of weights in it
+by default, which you had to specify as part of its construction. Sets
+of weights are stored in the <code>.$Meta$Weights</code> sub-list. Each
+set of weights is stored as a data frame with a name. The set of weights
+created when calling <code>new_coin()</code> is called “Original”. We
+can see this by building the example coin and accessing the “Original”
+set directly:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># build example coin</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">up_to =</span> <span class="st">&quot;Normalise&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># view weights</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(coin<span class="sc">$</span>Meta<span class="sc">$</span>Weights<span class="sc">$</span>Original)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       iCode Level Weight</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9     Goods     1      1</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Services     1      1</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11      FDI     1      1</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12   PRemit     1      1</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13  ForPort     1      1</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31    Renew     1      1</span></span></code></pre></div>
+<p>The weight set simply has the indicator code, Level, and the weight
+itself. Notice that the indicator codes also include aggregate codes, up
+to the index:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># view rows not in level 1</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>coin<span class="sc">$</span>Meta<span class="sc">$</span>Weights<span class="sc">$</span>Original[coin<span class="sc">$</span>Meta<span class="sc">$</span>Weights<span class="sc">$</span>Original<span class="sc">$</span>Level <span class="sc">!=</span> <span class="dv">1</span>, ]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        iCode Level Weight</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 50  Physical     2      1</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 51  ConEcFin     2      1</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 52 Political     2      1</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 53    Instit     2      1</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 54       P2P     2      1</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 55   Environ     2      1</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 56    Social     2      1</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 57  SusEcFin     2      1</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 58      Conn     3      1</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 59      Sust     3      1</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 60     Index     4      1</span></span></code></pre></div>
+<p>And that the index itself doesn’t have a weight because it is not
+used in an aggregation. Notice also that weights can be specified
+<em>relative</em> to one another. When an aggregation group is
+aggregated, the weights within that group are first scaled to sum to 1.
+This means that weights are relative within groups, but not between
+groups.</p>
+<div id="manual-re-weighting" class="section level1">
+<h1>Manual re-weighting</h1>
+<p>To change weights, one way is to simply go back to the original
+<code>iMeta</code> data frame that you used to build the coin, and edit
+it. If you don’t want to do that, you can also create a new weight set.
+This simply involves:</p>
+<ol style="list-style-type: decimal">
+<li>Making a copy of the existing set of weights</li>
+<li>Changing the weights of the copy</li>
+<li>Putting the new set of weights in the coin</li>
+</ol>
+<p>For example, if we want to change the weighting of the “Conn” and
+“Sust” sub-indices, we could do this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># copy original weights</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>w1 <span class="ot">&lt;-</span> coin<span class="sc">$</span>Meta<span class="sc">$</span>Weights<span class="sc">$</span>Original</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># modify weights of Conn and Sust to 0.3 and 0.7 respectively</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>w1<span class="sc">$</span>Weight[w1<span class="sc">$</span>iCode <span class="sc">==</span> <span class="st">&quot;Conn&quot;</span>] <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>w1<span class="sc">$</span>Weight[w1<span class="sc">$</span>iCode <span class="sc">==</span> <span class="st">&quot;Sust&quot;</span>] <span class="ot">&lt;-</span> <span class="fl">0.7</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># put weight set back with new name</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>coin<span class="sc">$</span>Meta<span class="sc">$</span>Weights<span class="sc">$</span>MyFavouriteWeights <span class="ot">&lt;-</span> w1</span></code></pre></div>
+<p>Now, to actually use these weights in aggregation, we have to direct
+the <code>Aggregate()</code> function to find them. When weights are
+stored in the “Weights” sub-list as we have done here, this is easy
+because we only have to pass the name of the weights to
+<code>Aggregate()</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">w =</span> <span class="st">&quot;MyFavouriteWeights&quot;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span></code></pre></div>
+<p>Alternatively, we can pass the data frame itself to
+<code>Aggregate()</code> if we don’t want to store it in the coin for
+some reason:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">w =</span> w1)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
+<p>When altering weights we may wish to compare the outcomes of
+alternative sets of weights. See the <a href="adjustments.html">Adjustments and comparisons</a> vignette for
+details on how to do this.</p>
+</div>
+<div id="effective-weights" class="section level1">
+<h1>Effective weights</h1>
+<p>COINr has some statistical tools for adjusting weights as explained
+in the next sections. Before that, it is also interesting to look at
+“effective weights”. At the index level, the weighting of an indicator
+is not due just to its own weight, but also to the weights of each
+aggregation that it is involved in, plus the number of
+indicators/aggregates in each group. This means that the final
+weighting, at the index level, of each indicator, is slightly complex to
+understand. COINr has a built in function to get these “effective
+weights”:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>w_eff <span class="ot">&lt;-</span> <span class="fu">get_eff_weights</span>(coin, <span class="at">out2 =</span> <span class="st">&quot;df&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(w_eff)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       iCode Level Weight  EffWeight</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9     Goods     1      1 0.02000000</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Services     1      1 0.02000000</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11      FDI     1      1 0.02000000</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12   PRemit     1      1 0.02000000</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13  ForPort     1      1 0.02000000</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31    Renew     1      1 0.03333333</span></span></code></pre></div>
+<p>The “EffWeight” column is the effective weight of each component at
+the highest level of aggregation (the index). These weights sum to 1 for
+each level:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get sum of effective weights for each level</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(w_eff<span class="sc">$</span>EffWeight, w_eff<span class="sc">$</span>Level, sum)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 2 3 4 </span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 1 1 1</span></span></code></pre></div>
+<p>The effective weights can also be viewed using the
+<code>plot_framework()</code> function, where the angle of each
+indicator/aggregate is proportional to its effective weight:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_framework</span>(coin)</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAHgCAMAAABKCk6nAAACjlBMVEUAv8QAv88Av9gAys8AyuIA1ewzzNAzzNgzzOAz1dgz1egz3fA6v8Q6ysQ64PVazNBa1dBa1eha3fBa5vdmv8Rm2dxm2eJm2ehm4OJm4O5m5uhm5vNm6v9/zNB/zNh/7vd/7v+B2dyB2eKB4NyB4O6B5vOB7fOB7fmQysSQ9P+d2dyd2eKd2eid4O6d5vOd7fOd7fmd8vOd8vmd8v+g1dCg9/Cg9/+21cS24Ny24Oi25u627eK27ei27fm28u629OK2+PO2+Pm2+P+2///B3dDB7vDB9+jB9/DB///P5tzP5ujP7eLP7e7P8u7P8vPP8vnP+O7P+PPP+PnP//PP//nP///b4M/b9OLb9PXh5tjh7uDh9+jh9/fh///n7eLn7ejn8ujn8vPn+O7n+PPn+Pnn//Pn//nn///4dm34dof4dqD4j7n4pqD4ptH5dm35kYr5kZ75kbL5pZ75pcf5uLL5uNr5vej6kYr6pYr6pcf6yu37dm37kYr7raf7rbb7rcX7u7b7u9T7ycX7yeL71Oj72+372//8j238pYr8pm38raf8rbb8rcX8u6f8yeL81+L81/H82+385OL85PH85P/86f/87e387f/8/9H8/+j9uIr9u6f9u7b9u8X9yaf9ydT917b91/H929r95NT95OL95PH97cf98tT98uL98vH98v/9/9r9/+L9/+39//H9///+vYf+yp7+1KD+17b+18X+19T+27L+28f+29r+5MX+5OL+7cf+8tT+8vH+/9r+/+L+//H+////1KD/27L/5MX/6bn/6tj/7cf/7uD/8tT/8uj/9OL/9+j/+O7//9H//9r//+L//+z//+3///D///H///P///X///f///n///9uKiS1AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAgAElEQVR4nO3dj58ex3kQcLcQOUjFAsSri/rGxHKKD67BbXQmudKS2kJQDlPXaeKAkva1kjq12xLOjlBdFL93urzEVd8E9219JSDRI22c2lZMHPGGgFwLED5a67CJiCWq+W+YeWZmd3Z3Znd2dmZndzTPR37vfd/bfW/f/fqZ/TG/bkMxgo7bfG9ADLcRgQOPCBx4RODAIwIHHhE48IjAgUcEDjwicOARgQOPCBx4RODA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" /><!-- --></p>
+</div>
+<div id="pca-weights" class="section level1">
+<h1>PCA weights</h1>
+<p>The <code>get_PCA()</code> function can be used to return a set of
+weights which maximises the explained variance within aggregation
+groups. This function is already discussed in the <a href="analysis.html">Analysis</a> vignette, so we will only focus on the
+weighting aspect here.</p>
+<p>First of all, PCA weights come with a number of caveats which need to
+be mentioned (this is also detailed in the <code>get_PCA()</code>
+function help). First, what constitutes “PCA weights” in composite
+indicators is not very well-defined. In COINr, a simple option is
+adopted. That is, the loadings of the first principal component are
+taken as the weights. The logic here is that these loadings should
+maximise the explained variance - the implication being that if we use
+these as weights in an aggregation, we should maximise the explained
+variance and hence the information passed from the indicators to the
+aggregate value. This is a nice property in a composite indicator, where
+one of the aims is to represent many indicators by single composite. See
+for a discussion on this.</p>
+<p>But. The weights that result from PCA have a number of downsides.
+First, they can often include negative weights which can be hard to
+justify. Also PCA may arbitrarily flip the axes (since from a variance
+point of view the direction is not important). In the quest for maximum
+variance, PCA will also weight the strongest-correlating indicators the
+highest, which means that other indicators may be neglected. In short,
+it often results in a very unbalanced set of weights. Moreover, PCA can
+only be performed on one level at a time.</p>
+<p>The result is that PCA weights should be used carefully. All that
+said, let’s see how to get PCA weights. We simply run the
+<code>get_PCA()</code> function with <code>out2 = &quot;coin&quot;</code> and
+specifying the name of the weights to use. Here, we will calculate PCA
+weights at level 2, i.e. at the first level of aggregation. To do this,
+we need to use the “Aggregated” data set because the PCA needs to have
+the level 2 scores to work with:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">get_PCA</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="at">Level =</span>  <span class="dv">2</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">weights_to =</span> <span class="st">&quot;PCAwtsLev2&quot;</span>, <span class="at">out2 =</span> <span class="st">&quot;coin&quot;</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Weights written to .$Meta$Weights$PCAwtsLev2</span></span></code></pre></div>
+<p>This stores the new set of weights in the Weights sub-list, with the
+name we gave it. Let’s have a look at the resulting weights. The only
+weights that have changed are at level 2, so we look at those:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>coin<span class="sc">$</span>Meta<span class="sc">$</span>Weights<span class="sc">$</span>PCAwtsLev2[coin<span class="sc">$</span>Meta<span class="sc">$</span>Weights<span class="sc">$</span>PCAwtsLev2<span class="sc">$</span>Level <span class="sc">==</span> <span class="dv">2</span>, ]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        iCode Level     Weight</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 50  Physical     2  0.5117970</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 51  ConEcFin     2  0.3049926</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 52 Political     2  0.3547671</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 53    Instit     2  0.5081540</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 54       P2P     2  0.5108455</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 55   Environ     2  0.6513188</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 56    Social     2 -0.7443677</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 57  SusEcFin     2  0.1473108</span></span></code></pre></div>
+<p>This shows the nature of PCA weights: actually in this case it is not
+too severe but the Social dimension is negatively weighted because it is
+negatively correlated with the other components in its group. In any
+case, the weights can sometimes be “strange” to look at and that may or
+may not be a problem. As explained above, to actually use these weights
+we can call them when calling <code>Aggregate()</code>.</p>
+</div>
+<div id="optimised-weights" class="section level1">
+<h1>Optimised weights</h1>
+<p>While PCA is based on linear algebra, another way to statistically
+weight indicators is via numerical optimisation. Optimisation is a
+numerical search method which finds a set of values which maximise or
+minimise some criterion, called the “objective function”.</p>
+<p>In composite indicators, different objectives are conceivable. The
+<code>get_opt_weights()</code> function gives two options in this
+respect - either to look for the set of weights that “balances” the
+indicators, or the set that maximises the information transferred (see
+). This is done by looking at the correlations between indicators and
+the index. This needs a little explanation.</p>
+<p>If weights are chosen to match the opinions of experts, or indeed
+your own opinion, there is a catch that is not very obvious. Put simply,
+weights do not directly translate into importance.</p>
+<p>To understand why, we must first define what “importance” means.
+Actually there is more than one way to look at this, but one possible
+measure is to use the (possibly nonlinear) correlation between each
+indicator and the overall index. If the correlation is high, the
+indicator is well-reflected in the index scores, and vice versa.</p>
+<p>If we accept this definition of importance, then it’s important to
+realise that this correlation is affected not only by the weights
+attached to each indicator, but also by the correlations <em>between
+indicators</em>. This means that these correlations must be accounted
+for in choosing weights that agree with the budgets assigned by the
+group of experts.</p>
+<p>In fact, it is possible to reverse-engineer the weights either <a href="https://doi.org/10.1111/j.1467-985X.2012.01059.x">analytically
+using a linear solution</a> or <a href="https://doi.org/10.1016/j.ecolind.2017.03.056">numerically using a
+nonlinear solution</a>. While the former method is far quicker than a
+nonlinear optimisation, it is only applicable in the case of a single
+level of aggregation, with an arithmetic mean, and using linear
+correlation as a measure. Therefore in COINr, the second method is
+used.</p>
+<p>Let’s now see how to use <code>get_opt_weights()</code> in practice.
+Like with PCA weights, we can only optimise one level at a time. We also
+need to say what kind of optimisation to perform. Here, we will search
+for the set of weights that results in equal influence of the
+sub-indexes (level 3) on the index. We need a coin with an aggregated
+data set already present, because the function needs to know which kind
+of aggregation method you are using. Just before doing that, we will
+first check what the correlations look like between level 3 and the
+index, using equal weighting:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build example coin</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># check correlations between level 3 and index</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">get_corr</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="at">Levels =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Var1 Var2 Correlation</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Index Conn   0.9397805</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Index Sust   0.8382873</span></span></code></pre></div>
+<p>This shows that the correlations are similar but not the same. Now
+let’s run the optimisation:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># optimise weights at level 3</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">get_opt_weights</span>(coin, <span class="at">itarg =</span> <span class="st">&quot;equal&quot;</span>, <span class="at">dset =</span> <span class="st">&quot;Aggregated&quot;</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">Level =</span> <span class="dv">3</span>, <span class="at">weights_to =</span> <span class="st">&quot;OptLev3&quot;</span>, <span class="at">out2 =</span> <span class="st">&quot;coin&quot;</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iterating... objective function = -7.11287670895252</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iterating... objective function = -6.75731482891423</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iterating... objective function = -7.5563175412706</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iterating... objective function = -8.21181051402935</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iterating... objective function = -10.0802172796095</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iterating... objective function = -13.3043247136273</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iterating... objective function = -8.7011048855954</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iterating... objective function = -7.93721550859392</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iterating... objective function = -9.92111795779074</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iterating... objective function = -8.57337082557942</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iterating... objective function = -13.0490317878554</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iterating... objective function = -10.1205749624737</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iterating... objective function = -11.4698196057753</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iterating... objective function = -11.5046209642509</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iterating... objective function = -12.938292451273</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Optimisation successful!</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Optimised weights written to .$Meta$Weights$OptLev3</span></span></code></pre></div>
+<p>We can view the optimised weights (weights will only change at level
+3)</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>coin<span class="sc">$</span>Meta<span class="sc">$</span>Weights<span class="sc">$</span>OptLev3[coin<span class="sc">$</span>Meta<span class="sc">$</span>Weights<span class="sc">$</span>OptLev3<span class="sc">$</span>Level <span class="sc">==</span> <span class="dv">3</span>, ]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    iCode Level    Weight</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 58  Conn     3 0.3902439</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 59  Sust     3 0.6097561</span></span></code></pre></div>
+<p>To see if this was successful in balancing correlations, let’s
+re-aggregate using these weights and check correlations.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># re-aggregate</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">w =</span> <span class="st">&quot;OptLev3&quot;</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># check correlations between level 3 and index</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">get_corr</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="at">Levels =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>))</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Var1 Var2 Correlation</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Index Conn   0.8971336</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Index Sust   0.8925119</span></span></code></pre></div>
+<p>This shows that indeed the correlations are now well-balanced - the
+optimisation has worked.</p>
+<p>We will not explore all the features of
+<code>get_opt_weights()</code> here, especially because optimisations
+can take a significant amount of CPU time. However, the main options
+include specifying a vector of “importances” rather than aiming for
+equal importance, and optimising to maximise total correlation, rather
+than balancing. There are also some numerical optimisation parameters
+that could help if the optimisation doesn’t converge.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

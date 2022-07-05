@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Denomination</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Denomination</h1>
+
+
+
+<p>Denomination is the process of scaling one indicator by another
+quantity to adjust for the effect of size. This is because many
+indicators are linked to the unit’s size (economic size, physical size,
+population, etc.) in one way or another, and if no adjustments were
+made, a composite indicator would end up with the largest units at the
+top and the smallest at the bottom. Often, the adjustment is made by
+dividing the indicator by a so-called “denominator” or a denominating
+variable. If units are countries, denominators are typically things like
+GDP, population or land area.</p>
+<p>COINr’s <code>Denominate()</code> function allows to quickly perform
+this operation in a flexible and reproducible way. As with other
+building functions, it is a <em>generic</em> which means that it has
+different methods for data frames, coins and purses. They are however
+all fairly similar.</p>
+<div id="data-frames" class="section level1">
+<h1>Data frames</h1>
+<p>We’ll begin by demonstrating denomination on a data frame. We’ll use
+the in-built data set to get a small sample of indicators:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a sample of indicator data (note must be indicators plus a &quot;UnitCode&quot; column)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>iData <span class="ot">&lt;-</span> ASEM_iData[<span class="fu">c</span>(<span class="st">&quot;uCode&quot;</span>, <span class="st">&quot;Goods&quot;</span>, <span class="st">&quot;Flights&quot;</span>, <span class="st">&quot;LPI&quot;</span>)]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iData)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode     Goods  Flights      LPI</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   AUT 278.42640 29.01725 4.097985</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   BEL 597.87230 31.88546 4.108538</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   BGR  42.82515  9.23588 2.807685</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   HRV  28.36795  9.24529 3.160829</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   CYP   8.76681  8.75467 2.999061</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6   CZE 274.13650 15.30953 3.674309</span></span></code></pre></div>
+<p>This is the raw indicator data for three indicators, plus the “uCode”
+column which identifies each unit. We will also get some data for
+denominating the indicators. COINr has an in-built set of denominator
+data called <code>WorldDenoms</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(WorldDenoms)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 x 7</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uName          uCode           GDP Population    Area  GDPpc Income_Group     </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt;         &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;            </span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Afghanistan    AFG    19291104008.   38041754  652860   507. Low income       </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Albania        ALB    15279183290.    2854191   27400  5353. Upper middle inc~</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Algeria        DZA   171091289782.   43053054 2381740  3974. Lower middle inc~</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 American Samoa ASM      636000000       55312     200 11467. Upper middle inc~</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 Andorra        AND     3154057987.      77142     470 40886. High income      </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 Angola         AGO    88815697793.   31825295 1246700  2791. Lower middle inc~</span></span></code></pre></div>
+<p>Now, the main things to specify in denomination are which indicators
+to denominate, and by what. In other words, we need to map the
+indicators to the denominators. In the example, the export of goods
+should be denominated by GDP, passenger flight capacity by population
+(GDP could also possibly be reasonable), and “LPI” (the logistics
+performance index) is an intensive variable that does not need to be
+denominated.</p>
+<p>This specification is passed to <code>Denominate()</code> using the
+<code>denomby</code> argument. This takes a data frame which includes
+“iCode” (the name of the column to be denonimated), “Denominator” (the
+column name of the denominator data frame to use), and “ScaleFactor” is
+a multiplying factor to apply if needed. We create this data frame
+here:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># specify how to denominate</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>denomby <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">iCode =</span> <span class="fu">c</span>(<span class="st">&quot;Goods&quot;</span>, <span class="st">&quot;Flights&quot;</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Denominator =</span> <span class="fu">c</span>(<span class="st">&quot;GDP&quot;</span>, <span class="st">&quot;Population&quot;</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ScaleFactor =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1000</span>))</span></code></pre></div>
+<p>A second important consideration is that the rows of the indicators
+and the denominators need to be matched, so that each unit is
+denominated by the value corresponding to that unit, and not another
+unit. Notice that the <code>WorldDenoms</code> data frame covers more or
+less all countries in the world, whereas the sample indicators only
+cover 51 countries. The matching is performed inside the
+<code>Denominate()</code> function, using an identifier column which
+must be present in both data frames. Here, our common column is “uCode”,
+which is already found in both data frames. This is also the default
+column name expected by <code>Denominate()</code>, so we don’t even need
+to specify it. If you have other column names, use the <code>x_iD</code>
+and <code>denoms_ID</code> arguments to pass these names to the
+function.</p>
+<p>Ok so now we are ready to denominate:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Denominate one by the other</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>iData_den <span class="ot">&lt;-</span> <span class="fu">Denominate</span>(iData, WorldDenoms, denomby)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iData_den)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode        Goods     Flights      LPI</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   AUT 6.255713e-10 0.003268788 4.097985</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   BEL 1.121507e-09 0.002776498 4.108538</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   BGR 6.246483e-10 0.001323996 2.807685</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   HRV 4.669422e-10 0.002272966 3.160829</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   CYP 3.513901e-10 0.007304232 2.999061</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6   CZE 1.093569e-09 0.001434859 3.674309</span></span></code></pre></div>
+<p>The function has matched each unit in <code>iData</code> with its
+corresponding denominator value in <code>WorldDenoms</code> and divided
+the former by the latter. As expected, “Goods” and “Flights” have
+changed, but “LPI” has not because it was not included in the
+<code>denomby</code> data frame.</p>
+<p>Otherwise, the only other feature to mention is the
+<code>f_denom</code> argument, which allows other functions to be used
+other than the division operator. See the function documentation.</p>
+</div>
+<div id="coins" class="section level1">
+<h1>Coins</h1>
+<p>Now let’s look at denomination inside a coin. The main difference
+here is that the information needed to denominate the indicators may
+already be present inside the coin. When creating the coin using
+<code>new_coin()</code>, there is the option to specify denominating
+variables as part of <code>iData</code> (these are variables where
+<code>iMeta$Type = &quot;Denominator&quot;</code>), and to specify in
+<code>iMeta</code> the mapping between indicators and denominators,
+using the <code>iMeta$Type</code> column. To see what this looks
+like:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first few rows of the example iMeta, selected cols</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ASEM_iMeta[<span class="fu">c</span>(<span class="st">&quot;iCode&quot;</span>, <span class="st">&quot;Denominator&quot;</span>)])</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     iCode Denominator</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     LPI        &lt;NA&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Flights  Population</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    Ship        &lt;NA&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    Bord        Area</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    Elec      Energy</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6     Gas      Energy</span></span></code></pre></div>
+<p>The entries in “Denominator” correspond to column names that are
+present in <code>iData</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># see names of example iData</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ASEM_iData)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;uName&quot;         &quot;uCode&quot;         &quot;GDP_group&quot;     &quot;GDPpc_group&quot;  </span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;Pop_group&quot;     &quot;EurAsia_group&quot; &quot;Time&quot;          &quot;Area&quot;         </span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;Energy&quot;        &quot;GDP&quot;           &quot;Population&quot;    &quot;LPI&quot;          </span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] &quot;Flights&quot;       &quot;Ship&quot;          &quot;Bord&quot;          &quot;Elec&quot;         </span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [17] &quot;Gas&quot;           &quot;ConSpeed&quot;      &quot;Cov4G&quot;         &quot;Goods&quot;        </span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [21] &quot;Services&quot;      &quot;FDI&quot;           &quot;PRemit&quot;        &quot;ForPort&quot;      </span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [25] &quot;Embs&quot;          &quot;IGOs&quot;          &quot;UNVote&quot;        &quot;CostImpEx&quot;    </span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [29] &quot;Tariff&quot;        &quot;TBTs&quot;          &quot;TIRcon&quot;        &quot;RTAs&quot;         </span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [33] &quot;Visa&quot;          &quot;StMob&quot;         &quot;Research&quot;      &quot;Pat&quot;          </span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [37] &quot;CultServ&quot;      &quot;CultGood&quot;      &quot;Tourist&quot;       &quot;MigStock&quot;     </span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [41] &quot;Lang&quot;          &quot;Renew&quot;         &quot;PrimEner&quot;      &quot;CO2&quot;          </span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [45] &quot;MatCon&quot;        &quot;Forest&quot;        &quot;Poverty&quot;       &quot;Palma&quot;        </span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [49] &quot;TertGrad&quot;      &quot;FreePress&quot;     &quot;TolMin&quot;        &quot;NGOs&quot;         </span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [53] &quot;CPI&quot;           &quot;FemLab&quot;        &quot;WomParl&quot;       &quot;PubDebt&quot;      </span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [57] &quot;PrivDebt&quot;      &quot;GDPGrow&quot;       &quot;RDExp&quot;         &quot;NEET&quot;</span></span></code></pre></div>
+<p>So in our example, all the information needed to denominate is
+already present in the coin - the denominator data, and the mapping. In
+this case, to denominate, we simply call:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build example coin</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">up_to =</span> <span class="st">&quot;new_coin&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># denominate (here, we only need to say which dset to use)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Denominate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span></code></pre></div>
+<p>If the denomination data and/or mapping isn’t present in the coin, or
+we wish to try an alternative specification, we can also pass this to
+<code>Denominate()</code> using the <code>denoms</code> and
+<code>denomby</code> arguments as in the previous section.</p>
+<p>This concludes the main features of <code>Denominate()</code> for a
+coin. Before moving on, consider that denomination needs extra care
+because it radically changes the indicator. It is a nonlinear
+transformation because each data point is divided by a different value.
+To demonstrate, consider the “Flights” indicator that we just
+denominated - let’s plot the raw indicator against the denominated
+version:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_scatter</span>(coin, <span class="at">dsets =</span> <span class="fu">c</span>(<span class="st">&quot;Raw&quot;</span>, <span class="st">&quot;Denominated&quot;</span>), <span class="at">iCodes =</span> <span class="st">&quot;Flights&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>This shows that the raw and denominated indicators show very little
+resemblance to one another.</p>
+</div>
+<div id="purses" class="section level1">
+<h1>Purses</h1>
+<p>The final method for <code>Denominate()</code> is for purses. The
+purse method is exactly the same as the coin method, except applied to a
+purse.</p>
+<p>An important consideration here is that denominator variables can and
+do vary with time, just like indicators. This means that e.g. “Total
+value of exports” from 2019 should be divided by GDP from 2019, and not
+from another year. In other words, denominators are panel data just like
+the indicators.</p>
+<p>This is why denominators are ideally input as part of
+<code>iData</code> when calling <code>new_coin()</code>. In doing so,
+denominators are another column of the data frame like the indicators,
+and must have an entry for each unit/time pair. This also ensures that
+the unit-matching of denominator and indicator is correct (or more
+accurately, I leave that up to you!).</p>
+<p>In our example purse, the denominator data is already included, as is
+the mapping. This means that denomination is exactly the same operation
+as denominating a coin:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build example purse</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">build_example_purse</span>(<span class="at">up_to =</span> <span class="st">&quot;new_coin&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># denominate using data/specs already included in coin</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">Denominate</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span></code></pre></div>
+<p>In fact if you try to pass denominator data to
+<code>Denominate()</code> for a purse via <code>denoms</code>, there is
+a catch: at the moment, <code>denoms</code> does not support panel data,
+so it is required to use the same value for each time point. This is not
+ideal and may be sorted out in future releases. For now, it is better to
+denominate purses by passing all the specifications via
+<code>iData</code> and <code>iMeta</code> when building the purse with
+<code>new_coin()</code>.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
