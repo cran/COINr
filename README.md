@@ -7,7 +7,14 @@
 
 [![CRAN-update](https://www.r-pkg.org/badges/version-ago/COINr)](https://cran.r-project.org/package=COINr)
 [![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/COINr)](https://CRAN.R-project.org/package=COINr)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.04567/status.svg)](https://doi.org/10.21105/joss.04567)
+[![R-CMD-check](https://github.com/bluefoxr/COINr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bluefoxr/COINr/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/bluefoxr/COINr/branch/master/graph/badge.svg)](https://app.codecov.io/gh/bluefoxr/COINr?branch=master)
 <!-- badges: end -->
+
+**Full documentation is available at [COINr’s
+website](https://bluefoxr.github.io/COINr/)**
 
 COINr is a high-level R package which is the first fully-flexible
 development and analysis environment for composite indicators and
@@ -20,15 +27,13 @@ presentation*.
 -   Flexible and fast development of composite indicators with no limits
     on aggregation levels, numbers of indicators, highly flexible set of
     methodological choices.
--   Denomination by other indicators (including built in world
-    denominators data set)
+-   Denomination by other indicators
 -   Screening units by data requirements
 -   Imputation of missing data, by a variety of methods
 -   Data treatment using Winsorisation and nonlinear transformations
--   Normalisation by more than ten methods, either for all indicators or
-    for each individually
--   Weighting using either manual weighting, PCA weights or correlation
-    optimised weights.
+-   Normalisation (scaling) using a variety of methods
+-   Weighting using either manual weighting, PCA weights or
+    correlation-optimised weights.
 -   Aggregation of indicators using a variety of methods which can be
     different for each aggregation level.
 
@@ -57,10 +62,6 @@ presentation*.
 COINr also allows fast import from the [COIN
 Tool](https://knowledge4policy.ec.europa.eu/composite-indicators/coin-tool_en)
 and fast export to Excel.
-
-In short, COINr aims to allow composite indicators to be developed and
-prototyped very quickly and in a structured fashion. As of v1.0 it has
-support for panel data.
 
 ## Installation
 
@@ -117,3 +118,39 @@ a separate package called “COINr6”. This is available on GitHub:
 ``` r
 remotes::install_github("bluefoxr/COINr6")
 ```
+
+# Help and issues
+
+For general help with COINr, the best place to look is the package’s
+documentation which is available either via the command line
+(`vignette(package = "COINr")`) or by checking individual function
+documentation (`?function_name`). All documentation is also conveniently
+available online at [COINr’s
+website](https://bluefoxr.github.io/COINr/).
+
+If you find any problems with the package, including bugs or
+suggestions, either open a GitHub issue here, or else contact me by
+email.
+
+Finally, contributions to the package are most welcome. This should be
+done by cloning the repo, making your modifications, and then opening a
+pull request. You could also contact me in advance to discuss changes
+and extensions. Any changes (especially new functions) should be
+accompanied by unit tests, and all existing tests should run without
+errors or warnings. To do this, run:
+
+``` r
+devtools::test()
+```
+
+# Citing COINr
+
+If you have found COINr helpful, we are grateful if you cite the
+package. COINr is citable by a paper in the Journal of Open Source
+Software which you can find
+[here](https://joss.theoj.org/papers/10.21105/joss.04567) (with citation
+information).
+
+In R you can also generate the citation info using
+`citation(package = "COINr")`, or see the same info on the [COINr web
+page](https://bluefoxr.github.io/COINr/authors.html#citation).

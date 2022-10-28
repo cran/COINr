@@ -13,8 +13,7 @@
 #' Run [check_iData()] and [check_iMeta()] to validate your data frames, and these should generate helpful
 #' error messages when things go wrong.
 #'
-#' It is worth reading a little about coins and purses to use COINr. See `vignette("coins")` for more details,
-#' and also `vignette("panel_data")` for details on using panel data with COINr.
+#' It is worth reading a little about coins and purses to use COINr. See `vignette("coins")` for more details.
 #'
 #' ## `iData`
 #'
@@ -94,7 +93,9 @@
 #' to split to a subset of the entries to `Time`.
 #'
 #' Splitting panel data results in a so-called "purse" class, which is a data frame of COINs, indexed by `Time`.
-#' See `vignette("panel_data")` and `vignette("coins")` for more details.
+#' See `vignette("coins")` for more details.
+#'
+#' This function replaces the now-defunct `assemble()` from COINr < v1.0.
 #'
 #' @param iData The indicator data and metadata of each unit
 #' @param iMeta Indicator metadata
@@ -269,8 +270,10 @@ new_coin <- function(iData, iMeta, exclude = NULL, split_to = NULL,
     coin_i <- write_dset(coin_i, iDatai[c("uCode", iCodes)], dset = "Raw",
                          ignore_class = TRUE, quietly = quietly)
 
-    # alter Log to only include iData of the COIN (not whole panel)
-    coin_i$Log$new_coin$iData <- iDatai
+    if(is_panel){
+      # alter Log to only include iData of the COIN (not whole panel)
+      coin_i$Log$new_coin$iData <- iDatai
+    }
 
     # Extract denominators, groups and other non-indicator cols
     coin_i$Meta$Unit <- iDatai[c("uCode", not_icodes)]

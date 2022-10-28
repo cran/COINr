@@ -69,6 +69,15 @@ get_dset(coin, "Normalised")[1:4] |>
   head(10)
 
 ## -----------------------------------------------------------------------------
+head(ASEM_iMeta[c("iCode", "Target")])
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  coin <- Normalise(coin, dset = "Raw", global_specs = list(f_n = "n_dist2targ"))
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  coin <- Normalise(coin, dset = "Raw", global_specs = list(f_n = "n_dist2targ", f_n_para = list(cap_max = TRUE)))
+
+## -----------------------------------------------------------------------------
 mtcars_n <- Normalise(mtcars, global_specs = list(f_n = "n_dist2max"))
 
 head(mtcars_n)

@@ -120,13 +120,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -382,8 +389,9 @@ But the focus got lost at some point when I got carried away with html
 plotly plots and shiny apps. These things, although nice, were in
 retrospect not really that useful in the package and are also difficult
 to maintain and bloat out the package. I decided to cut out all
-interactive plots and apps, but to archive them in a separate package
-called “COINrX” (see below).</p>
+interactive plots and apps, but these can still be accessed through the
+COINr6 package and the conversion functions between COINr and COINr6
+(see below).</p>
 </div>
 <div id="dependencies" class="section level2">
 <h2>Dependencies</h2>
@@ -504,19 +512,6 @@ can still do most of the plotting as in the previous versions, but with
 more predictable (and more usable) outputs.</p>
 </div>
 </div>
-<div id="coinrx-apps-and-widgets" class="section level1">
-<h1>COINrX: Apps and widgets</h1>
-<p>It may be that actually, you rather liked the Shiny apps and
-interactive plots. A shame, you say, to chuck those things away. Well,
-along those lines I have/will archive the removed apps and plots in a
-separate extension package called “COINrX”. At the time of writing, I
-haven’t yet got round to doing this, but it shouldn’t take too long.</p>
-<p>The idea of COINrX is that if you don’t want all the interactive
-stuff, just install COINr. If you <em>do</em> also want that, install
-COINr and then also install COINrX. When you want to generate
-interactive plots, load up COINrX and it will add the missing
-functions.</p>
-</div>
 <div id="coinr6-i-want-out" class="section level1">
 <h1>COINr6: I want out!</h1>
 <p>If this level of upheaval is all a bit too much, and you’d like to go
@@ -543,6 +538,14 @@ version number of any package to install. This might be a bit more
 fiddly, and personally I would recommend to rather install COINr6. But
 if you want, check out <a href="https://support.rstudio.com/hc/en-us/articles/219949047-Installing-older-versions-of-packages">this
 article</a> for some info on installing older package versions.</p>
+<p>COINr and COINr6 have conversion functions: in COINr there is the
+<code>COIN_to_coin()</code> function which allows conversion from the
+older “COIN” class to the newer “coin” class. In COINr6 there is also
+now the reverse function, <code>coin_to_COIN()</code>, which allows
+access to all the old interactive plotting of COINr6 if you liked that,
+as well as the apps. Note that conversion comes with some limitations in
+both directions, which are discussed in those functions’
+documentation.</p>
 </div>
 <div id="summary" class="section level1">
 <h1>Summary</h1>

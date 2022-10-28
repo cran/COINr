@@ -6,6 +6,8 @@
 #' This function uses ggplot2 to generate plots, so the plot can be further manipulated using ggplot2 commands.
 #' See `vignette("visualisation`) for more details on plotting.
 #'
+#' This function replaces the now-defunct `plotIndDist()` from COINr < v1.0.
+#'
 #' @param coin The coin object, or a data frame of indicator data
 #' @param dset The name of the data set to apply the function to, which should be accessible in `.$Data`.
 #' @param iCodes Indicator code(s) to plot. See details.
@@ -113,7 +115,8 @@ plot_dist <- function(coin, dset, iCodes, ..., type = "Box", normalise = FALSE,
     plt <- plt + ggplot2::labs(title = names(iData_))
   }
 
-  plt
+  plt  +
+    ggplot2::theme(text=ggplot2::element_text(family="sans"))
 
 }
 
@@ -126,6 +129,8 @@ plot_dist <- function(coin, dset, iCodes, ..., type = "Box", normalise = FALSE,
 #'
 #' This function uses ggplot2 to generate plots, so the plot can be further manipulated using ggplot2 commands.
 #' See `vignette("visualisation`) for more details on plotting.
+#'
+#' This function replaces the now-defunct `plotIndDot()` from COINr < v1.0.
 #'
 #' @param coin The coin
 #' @param dset The name of the data set to apply the function to, which should be accessible in `.$Data`.
@@ -190,7 +195,7 @@ plot_dot <- function(coin, dset, iCode, Level = NULL, ..., usel = NULL, marker_t
   plt <- ggplot2::ggplot(ind_data, ggplot2::aes(x=.data$x, y=.data$y)) +
     ggplot2::theme_minimal() +
     ggplot2::geom_point(
-      color="transparent",
+      color="blue",
       fill="blue",
       shape=mno,
       alpha=0.5,
@@ -305,6 +310,7 @@ plot_dot <- function(coin, dset, iCode, Level = NULL, ..., usel = NULL, marker_t
 
   # OUTPUT ------------------------------------------------------------------
 
-  plt + ggplot2::ylim(c(0.98, 1.02))
+  plt + ggplot2::ylim(c(0.98, 1.02))  +
+    ggplot2::theme(text=ggplot2::element_text(family="sans"))
 
 }

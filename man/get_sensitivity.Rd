@@ -40,6 +40,7 @@ Sensitivity analysis results as a list, containing:
 \item \code{.$Scores} a data frame with a row for each unit, and columns are the scores for each replication.
 \item \code{.$Ranks} as \code{.$Scores} but for unit ranks
 \item \code{.$RankStats} summary statistics for ranks of each unit
+\item \code{.$Para} a list containing parameter values for each run
 \item \code{.$Nominal} the nominal scores and ranks of each unit (i.e. from the original COIN)
 \item \code{.$Sensitivity} (only if \code{SA_type = "SA"}) sensitivity indices for each parameter. Also confidence intervals if \code{Nboot}
 was specified.
@@ -74,6 +75,8 @@ found in one of the data sets of the coin, and is specified using the \code{dset
 Finally, if \code{SA_type = "SA"}, it is advisable to set \code{Nboot} to e.g. 100 or more, which is the number of bootstrap samples
 to take when estimating confidence intervals on sensitivity indices. This does \emph{not} perform extra regenerations of the
 coin, so setting this to a higher number shouldn't have much impact on computational time.
+
+This function replaces the now-defunct \code{sensitivity()} from COINr < v1.0.
 }
 \examples{
 # for examples, see `vignette("sensitivity")`

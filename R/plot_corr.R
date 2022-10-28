@@ -11,7 +11,9 @@
 #' Note that this function can only call correlations within the same data set (i.e. only one data set in `.$Data`).
 #'
 #' This function uses ggplot2 to generate plots, so the plot can be further manipulated using ggplot2 commands.
-#' See `vignette("visualisation`) for more details on plotting.
+#' See `vignette("visualisation")` for more details on plotting.
+#'
+#' This function replaces the now-defunct `plotCorr()` from COINr < v1.0.
 #'
 #' @param coin The coin object
 #' @param dset The target data set.
@@ -29,9 +31,9 @@
 #' @param showvals If `TRUE`, shows correlation values. If `FALSE`, no values shown.
 #' @param flagcolours If `TRUE`, uses discrete colour map with thresholds defined by `flagthresh`. If `FALSE` uses continuous colour map.
 #' @param flagthresh A 3-length vector of thresholds for highlighting correlations, if `flagcolours = TRUE`.
-#' `flagthresh[1]` is the negative threshold. Below this value, values will be flagged red.
-#' `flagthresh[2]` is the "weak" threshold. Values between `flagthresh[1]` and `flagthresh[2]` are coloured grey.
-#' `flagthresh[3]` is the "high" threshold. Anything between `flagthresh[2]` and `flagthresh[3]` is flagged "OK",
+#' `flagthresh[1]` is the negative threshold (default -0.4). Below this value, values will be flagged red.
+#' `flagthresh[2]` is the "weak" threshold (default 0.3). Values between `flagthresh[1]` and `flagthresh[2]` are coloured grey.
+#' `flagthresh[3]` is the "high" threshold (default 0.9). Anything between `flagthresh[2]` and `flagthresh[3]` is flagged "OK",
 #' and anything above `flagthresh[3]` is flagged "high".
 #' @param pval The significance level for plotting correlations. Correlations with \eqn{p < pval} will be shown,
 #' otherwise they will be plotted as the colour specified by `insig_colour`. Set to 0 to disable this.
@@ -57,7 +59,7 @@
 #' @export
 plot_corr <- function(coin, dset, iCodes = NULL, Levels = 1, ..., cortype = "pearson",
                      withparent = FALSE, grouplev = NULL, box_level = NULL, showvals = TRUE, flagcolours = FALSE,
-                     flagthresh = c(-0.4, 0.3, 0.9), pval = 0.05, insig_colour = "#F0F0F0",
+                     flagthresh = NULL, pval = 0.05, insig_colour = "#F0F0F0",
                      text_colour = NULL, discrete_colours = NULL, box_colour = NULL){
 
 
@@ -117,9 +119,17 @@ plot_corr <- function(coin, dset, iCodes = NULL, Levels = 1, ..., cortype = "pea
   }
 
   # for discrete colour map
-  hithresh <- 0.9
-  weakthresh <- 0.3
-  negthresh <- -0.4
+  if(is.null(flagthresh)){
+    hithresh <- 0.9
+    weakthresh <- 0.3
+    negthresh <- -0.4
+  } else {
+    stopifnot(is.numeric(flagthresh),
+              length(flagthresh) == 3)
+    hithresh <- flagthresh[3]
+    weakthresh <- flagthresh[2]
+    negthresh <- flagthresh[1]
+  }
 
   if (flagcolours){
 
@@ -142,7 +152,7 @@ plot_corr <- function(coin, dset, iCodes = NULL, Levels = 1, ..., cortype = "pea
       ggplot2::scale_y_discrete(expand=c(0,0))
 
     if(is.null(discrete_colours)){
-      discrete_colours <- c("#80d67b", "#b8e8b5", "#e2e6e1", "#b25491")
+      discrete_colours <- c("#80d67b", "#b8e8b5", "#e2e6e1", "#d098bd")
     } else {
       stopifnot(is.character(discrete_colours),
                 length(discrete_colours)==4)
@@ -173,10 +183,12 @@ plot_corr <- function(coin, dset, iCodes = NULL, Levels = 1, ..., cortype = "pea
   }
 
   if (showvals){
-    if(flagcolours){
-      text_colour <- "#6a6a6a"
-    } else {
-      text_colour <- "white"
+    if(is.null(text_colour)){
+      if(flagcolours){
+        text_colour <- "#6a6a6a"
+      } else {
+        text_colour <- "white"
+      }
     }
     plt <- plt + ggplot2::geom_text(colour = text_colour, size = 3, na.rm = TRUE)
   }
@@ -262,6 +274,7 @@ plot_corr <- function(coin, dset, iCodes = NULL, Levels = 1, ..., cortype = "pea
 
   }
 
-  plt
+  plt  +
+    ggplot2::theme(text=ggplot2::element_text(family="sans"))
 
 }

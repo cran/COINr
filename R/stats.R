@@ -204,11 +204,13 @@ get_stats.data.frame <- function(x, t_skew = 2, t_kurt = 3.5, t_avail = 0.65, t_
 #'
 #' See also `vignette("analysis")`.
 #'
+#' This function replaces the now-defunct `getStats()` from COINr < v1.0.
+#'
 #' @param x Object (data frame or coin)
 #' @param ... Further arguments to be passed to methods.
 #'
 #' @examples
-#' #
+#' # see individual method documentation
 #'
 #' @return A data frame of statistics for each column
 #'

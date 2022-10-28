@@ -27,6 +27,8 @@
 #' to take when estimating confidence intervals on sensitivity indices. This does *not* perform extra regenerations of the
 #' coin, so setting this to a higher number shouldn't have much impact on computational time.
 #'
+#' This function replaces the now-defunct `sensitivity()` from COINr < v1.0.
+#'
 #' @param coin A coin
 #' @param SA_specs Specifications of the input uncertainties
 #' @param N The number of regenerations
@@ -44,6 +46,7 @@
 #' * `.$Scores` a data frame with a row for each unit, and columns are the scores for each replication.
 #' * `.$Ranks` as `.$Scores` but for unit ranks
 #' * `.$RankStats` summary statistics for ranks of each unit
+#' * `.$Para` a list containing parameter values for each run
 #' * `.$Nominal` the nominal scores and ranks of each unit (i.e. from the original COIN)
 #' * `.$Sensitivity` (only if `SA_type = "SA"`) sensitivity indices for each parameter. Also confidence intervals if `Nboot`
 #' was specified.
@@ -83,11 +86,6 @@ get_sensitivity <- function(coin, SA_specs, N, SA_type = "UA", dset, iCode, Nboo
 
   # number of uncertain input paras
   d <- length(SA_specs)
-
-  if(d==1){
-    stop("Only one uncertain input defined. It is not meaningful to run a sensitivity analysis
-      with only one input variable. Consider changing SA_type to \"UA\".")
-  }
 
   # get sample
   if(SA_type == "UA"){
@@ -193,7 +191,8 @@ get_sensitivity <- function(coin, SA_specs, N, SA_type = "UA", dset, iCode, Nboo
   SA_out <- list(
     Scores = SA_scores,
     Ranks = SA_ranks,
-    RankStats = RankStats
+    RankStats = RankStats,
+    Para = XX_p
   )
 
   # get sensitivity indices if SA
@@ -453,6 +452,12 @@ check_address <- function(address, coin){
 #' @export
 SA_estimate <- function(yy, N, d, Nboot = NULL){
 
+  # checks
+  stopifnot(is.numeric(yy))
+  if(length(yy) != N*(d+2)){
+    stop("The length of 'yy' does not correspond to the values of 'N' and 'd'. The vector 'yy' should be of length N(d+2).")
+  }
+
   # put into matrix format: just the ABis
   yyABi <- matrix(yy[(2*N +1):length(yy)], nrow = N)
   # get yA and yB
@@ -583,6 +588,8 @@ SA_sample <- function(N, d){
 #'
 #' See `vignette("sensitivity")`.
 #'
+#' This function replaces the now-defunct `plotSARanks()` from COINr < v1.0.
+#'
 #' @param SAresults A list of sensitivity/uncertainty analysis results from [get_sensitivity()].
 #' @param plot_units A character vector of units to plot. Defaults to all units. You can also set
 #' to `"top10"` to only plot top 10 units, and `"bottom10"` for bottom ten.
@@ -675,7 +682,8 @@ plot_uncertainty <- function(SAresults, plot_units = NULL, order_by = "nominal",
     ggplot2::scale_y_discrete(limits = plot_order) +
     ggplot2::scale_x_reverse() +
     ggplot2::coord_flip() +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
+    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))  +
+    ggplot2::theme(text=ggplot2::element_text(family="sans"))
 
 }
 
@@ -688,6 +696,8 @@ plot_uncertainty <- function(SAresults, plot_units = NULL, order_by = "nominal",
 #' `SAresults` argument here.
 #'
 #' See `vignette("sensitivity")`.
+#'
+#' This function replaces the now-defunct `plotSA()` from COINr < v1.0.
 #'
 #' @param SAresults A list of sensitivity/uncertainty analysis results from [plot_sensitivity()].
 #' @param ptype Type of plot to generate - either `"bar"`, `"pie"` or `"box"`.
@@ -736,7 +746,7 @@ plot_sensitivity <- function(SAresults, ptype = "bar"){
     #                              cols = c("MainEffect", "Interactions"))
 
     # make stacked bar plot
-    ggplot2::ggplot(bardf, ggplot2::aes(fill=.data$name, y=.data$Value, x=.data$Variable)) +
+    plt <- ggplot2::ggplot(bardf, ggplot2::aes(fill=.data$name, y=.data$Value, x=.data$Variable)) +
       ggplot2::geom_bar(position="stack", stat="identity") +
       ggplot2::labs(
         x = NULL,
@@ -753,7 +763,7 @@ plot_sensitivity <- function(SAresults, ptype = "bar"){
     Sis <- rbind(Sis, data.frame(Variable = "Interactions", Si = intsum))
 
     # Basic piechart
-    ggplot2::ggplot(Sis, ggplot2::aes(x = "", y = .data$Si, fill = .data$Variable)) +
+    plt <- ggplot2::ggplot(Sis, ggplot2::aes(x = "", y = .data$Si, fill = .data$Variable)) +
       ggplot2::geom_bar(stat="identity", width=1, color="white") +
       ggplot2::coord_polar("y", start=0) +
       ggplot2::theme_void() # remove background, grid, numeric labels
@@ -771,7 +781,7 @@ plot_sensitivity <- function(SAresults, ptype = "bar"){
     Sdf$q95[Sdf$q95 > 1] <- 1
     Sdf$Value[Sdf$Value > 1] <- 1
 
-    ggplot2::ggplot(Sdf, ggplot2::aes(x = .data$Variable, y = .data$Value, ymax = .data$q95, ymin = .data$q5)) +
+    plt <- ggplot2::ggplot(Sdf, ggplot2::aes(x = .data$Variable, y = .data$Value, ymax = .data$q95, ymin = .data$q5)) +
       ggplot2::geom_point(size = 1.5) +
       ggplot2::geom_errorbar(width = 0.2) +
       ggplot2::theme_bw() +
@@ -781,6 +791,9 @@ plot_sensitivity <- function(SAresults, ptype = "bar"){
         y = NULL)
 
   }
+
+  plt +
+    ggplot2::theme(text=element_text(family="sans"))
 
 }
 
@@ -798,6 +811,8 @@ plot_sensitivity <- function(SAresults, ptype = "bar"){
 #' while the `NoiseFactor` refers to the size of the perturbation. If e.g. a row is `Level = 1` and
 #' `NoiseFactor = 0.2`, this will allow the weights in aggregation level 1 to deviate by +/- 20% of their
 #' nominal values (the values in `w`).
+#'
+#' This function replaces the now-defunct `noisyWeights()` from COINr < v1.0.
 #'
 #' @param w A data frame of weights, in the format found in `.$Meta$Weights`.
 #' @param noise_specs a data frame with columns:

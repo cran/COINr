@@ -22,11 +22,16 @@
 
 \item{dset}{The name of the data set to apply the function to, which should be accessible in \code{.$Data}.}
 
-\item{f_ag}{The name of an aggregation function, a string}
+\item{f_ag}{The name of an aggregation function, a string. This can either be a single string naming
+a function to use for all aggregation levels, or else a character vector of function names of length \code{n-1}, where \code{n} is
+the number of levels in the index structure. In this latter case, a different aggregation function may be used for each level
+in the index: the first in the vector will be used to aggregate from Level 1 to Level 2, the second from Level 2 to Level 3, and
+so on.}
 
 \item{w}{An optional data frame of weights. If \code{f_ag} does not require accept weights, set to \code{"none"}.}
 
-\item{f_ag_para}{Optional parameters to pass to \code{f_ag}, other than \code{x} and \code{w}}
+\item{f_ag_para}{Optional parameters to pass to \code{f_ag}, other than \code{x} and \code{w}. As with \code{f_ag}, this can specified to have different
+parameters for each aggregation level by specifying as a nested list of length \code{n-1}.}
 
 \item{dat_thresh}{An optional data availability threshold, specified as a number between 0 and 1. If a row
 within an aggregation group has data availability lower than this threshold, the aggregated value for that row will be
@@ -48,7 +53,8 @@ else if \code{out2 = "df"} outputs the aggregated data set as a data frame.
 }
 \description{
 Aggregates a named data set specified by \code{dset} using aggregation function \code{f_ag}, weights \code{w}, and optional
-function parameters \code{f_ag_para}.
+function parameters \code{f_ag_para}. Note that COINr has a number of aggregation functions built in,
+all of which are of the form \verb{a_*()}, e.g. \code{\link[=a_amean]{a_amean()}}, \code{\link[=a_gmean]{a_gmean()}} and friends.
 }
 \details{
 Aggregation is performed row-wise using the function \code{f_ag}, such that for each row \code{x_row}, the output is
@@ -61,6 +67,10 @@ case \code{f_ag} should return a single numeric value (i.e. the result of aggreg
 a numeric vector (the result of aggregating the whole data frame in one go).
 
 \code{f_ag} can optionally have other parameters, e.g. weights, specified as a list in \code{f_ag_para}.
+
+Note that COINr has a number of aggregation functions built in,
+all of which are of the form \verb{a_*()}, e.g. \code{\link[=a_amean]{a_amean()}}, \code{\link[=a_gmean]{a_gmean()}} and friends. To see a list browse COINr functions alphabetically or
+type \code{a_} in the R Studio console and press the tab key (after loading COINr).
 
 Optionally, a data availability threshold can be assigned below which the aggregated value will return
 \code{NA} (see \code{dat_thresh} argument). If \code{by_df = TRUE}, this will however be ignored because aggregation is not

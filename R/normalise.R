@@ -102,7 +102,8 @@ Normalise.purse <- function(x, dset, global_specs = NULL, indiv_specs = NULL,
 #' Creates a normalised data set using specifications specified in `global_specs`. Columns of `dset` can also optionally be
 #' normalised with individual specifications using the `indiv_specs` argument. If indicators should have their
 #' directions reversed, this can be specified using the `directions` argument. Non-numeric columns are ignored
-#' automatically by this function.
+#' automatically by this function. By default, this function normalises each indicator using the "min-max" method, scaling indicators to lie between
+#' 0 and 100. This calls the [n_minmax()] function. Note, all COINr normalisation functions are of the form `n_*()`.
 #'
 #' ## Global specification
 #'
@@ -125,6 +126,11 @@ Normalise.purse <- function(x, dset, global_specs = NULL, indiv_specs = NULL,
 #'
 #' The default list for `global_specs` is: `list(f_n = "n_minmax", f_n_para = list(l_u = c(0,100)))`, i.e.
 #' min-max normalisation between 0 and 100.
+#'
+#' Note, all COINr normalisation functions (passed to `f_n`) are of the form `n_*()`. Type `n_` in the R Studio console and press the Tab key to see a list.
+#'
+#' This function includes a special case for "distance to target" normalisation. Setting `global_specs = list(f_n = "n_dist2targ")` will apply distance to
+#' target normalisation, automatically passing targets found in the "Target" column of `iMeta`.
 #'
 #' ## Individual column specification
 #'
@@ -193,8 +199,41 @@ Normalise.coin <- function(x, dset, global_specs = NULL, indiv_specs = NULL,
 
   # NORMALISE DATA ----------------------------------------------------------
 
-  iData_n <- Normalise(iData_, global_specs = global_specs, indiv_specs = indiv_specs,
-                        directions = dirs_c)
+  if(!is.null(global_specs[["f_n"]])){
+    if(global_specs[["f_n"]] == "n_dist2targ"){
+
+      # special treatment for dist2targ
+      # first, get iMeta
+      iMeta <- coin$Meta$Ind
+      if(is.null(iMeta[["Target"]])){
+        stop("You specified f_para = 'n_dist2targ' but no targets can be found - please attach these as a column 'Target' in iMeta.")
+      }
+      # see if cap_max is specified
+      if(!is.null(global_specs$f_n_para$cap_max)){
+        cap_max <- global_specs$f_n_para$cap_max
+      } else {
+        cap_max <- FALSE
+      }
+
+      # now we need to apply the n_dist2targ() function to each column, but also respecting the directions.
+      l_n <- lapply(names(iData_), function(icode){
+        n_dist2targ(iData_[[icode]],
+                    targ = iMeta$Target[iMeta$iCode == icode],
+                    direction = dirs_c$Direction[dirs_c$iCode == icode],
+                    cap_max = cap_max)
+      })
+      names(l_n) <- names(iData_)
+      iData_n <- as.data.frame(l_n)
+
+    } else {
+      iData_n <- Normalise(iData_, global_specs = global_specs, indiv_specs = indiv_specs,
+                           directions = dirs_c)
+    }
+  } else {
+    iData_n <- Normalise(iData_, global_specs = global_specs, indiv_specs = indiv_specs,
+                         directions = dirs_c)
+  }
+
   # reunite with uCode col
   iData_n <- cbind(uCode = iData$uCode, iData_n)
 
@@ -215,7 +254,8 @@ Normalise.coin <- function(x, dset, global_specs = NULL, indiv_specs = NULL,
 #' Normalises a data frame using specifications specified in `global_specs`. Columns can also optionally be
 #' normalised with individual specifications using the `indiv_specs` argument. If variables should have their
 #' directions reversed, this can be specified using the `directions` argument. Non-numeric columns are ignored
-#' automatically by this function.
+#' automatically by this function. By default, this function normalises each indicator using the "min-max" method, scaling indicators to lie between
+#' 0 and 100. This calls the [n_minmax()] function. Note, all COINr normalisation functions are of the form `n_*()`.
 #'
 #' ## Global specification
 #'
@@ -237,6 +277,8 @@ Normalise.coin <- function(x, dset, global_specs = NULL, indiv_specs = NULL,
 #' values assigned to the arguments `arg1` and `arg2` respectively.
 #'
 #' The default list for `global_specs` is: `list(f_n = "n_minmax", f_n_para = list(l_u = c(0,100)))`.
+#'
+#' Note, all COINr normalisation functions (passed to `f_n`) are of the form `n_*()`. Type `n_` in the R Studio console and press the Tab key to see a list.
 #'
 #' ## Individual column specification
 #'
@@ -331,7 +373,7 @@ Normalise.data.frame <- function(x, global_specs = NULL, indiv_specs = NULL,
 
     # add direction
     specs$direction <- directions$Direction[directions$iCode == col_name]
-    if(is.null(specs$direction)){
+    if(length(specs$direction) != 1){
       stop("No 'direction' entry found for numerical column ", col_name)
     }
 
@@ -453,6 +495,8 @@ Normalise.numeric <- function(x, f_n = NULL, f_n_para = NULL,
 #' * [Normalise.purse()]
 #'
 #' See also `vignette("normalise")` for more details.
+#'
+#' This function replaces the now-defunct `normalise()` from COINr < v1.0.
 #'
 #' @param x Object to be normalised
 #' @param ... Further arguments to be passed to methods.
@@ -632,14 +676,23 @@ n_dist2ref <- function(x, iref, cap_max = FALSE){
 
 #' Normalise as distance to target
 #'
-#' A measure of the distance of each value of `x` to a specified target. The formula is:
+#' A measure of the distance of each value of `x` to a specified target which can be a high or low target depending on `direction`. See details below.
 #'
-#' \deqn{ 1 - (x_{targ} - x)/(x_{targ} - x_{min}) }
 #'
-#' Values exceeding `x_targ` can be optionally capped at 1 if `cap_max = TRUE`.
+#' If `direction = 1`, the formula is:
+#'
+#' \deqn{ \frac{x - x_{min}}{x_{targ} - x_{min}} }
+#'
+#' else if `direction = -1`:
+#'
+#' \deqn{ \frac{x_{max} - x}{x_{max} - x_{targ}} }
+#'
+#' Values surpassing `x_targ` in either case can be optionally capped at 1 if `cap_max = TRUE`.
 #'
 #' @param x A numeric vector
 #' @param targ An target value
+#' @param direction Either 1 (default) or -1. In the former case, the indicator is assumed to be "positive" so that the target is at the higher
+#' end of the range. In the latter, the indicator is "negative" so that the target is typically at the low end of the range.
 #' @param cap_max If `TRUE`, any value of `x` that exceeds `targ` will be assigned a score of 1, otherwise
 #' will have a score greater than 1.
 #'
@@ -650,23 +703,40 @@ n_dist2ref <- function(x, iref, cap_max = FALSE){
 #' @return Numeric vector
 #'
 #' @export
-n_dist2targ <- function(x, targ, cap_max = FALSE){
+n_dist2targ <- function(x, targ, direction = 1, cap_max = FALSE){
 
   stopifnot(is.numeric(x),
             is.numeric(targ),
             length(targ)==1,
-            is.logical(cap_max))
+            is.logical(cap_max),
+            is.numeric(direction),
+            length(direction) == 1)
 
   if(is.na(targ)){
     stop("targ is NA")
   }
 
-  minx <- min(x, na.rm = TRUE)
-  if(targ < minx){
-    warning("targ is less than min(x) - this will produce negative scores.")
+  if(direction == 1){
+
+    minx <- min(x, na.rm = TRUE)
+    if(targ < minx){
+      warning("targ is less than min(x) - this will produce negative scores.")
+    }
+    y <- (x - minx)/(targ - minx)
+
+  } else if (direction == -1){
+
+    maxx <- max(x, na.rm = TRUE)
+    if(targ > maxx){
+      warning("targ is greater than max(x) - this will produce negative scores.")
+    }
+    y <- (maxx - x)/(maxx- targ)
+
+  } else {
+    stop("'direction' must be either -1 or 1")
   }
 
-  y <- 1 - (targ - x)/(targ - minx)
+  # cap
   if(cap_max){
     y[y>1] <- 1
   }

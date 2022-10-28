@@ -2,6 +2,8 @@
 #'
 #' Compares two coin class objects using a specified `iCode` (column of data) from specified data sets.
 #'
+#' This function replaces the now-defunct `compTable()` from COINr < v1.0.
+#'
 #' @param coin1 A coin class object
 #' @param coin2 A coin class object
 #' @param dset A data set that is found in `.$Data`.
@@ -131,10 +133,12 @@ compare_coins <- function(coin1, coin2, dset, iCode, also_get = NULL, compare_by
 #' Optionally, specifying `also_get` (passed to [get_data()]) will additionally merge using the metadata columns.
 #' This means that coins must share the same metadata columns that are returned as a result of `also_get`.
 #'
+#' This function replaces the now-defunct `compTableMulti()` from COINr < v1.0.
+#'
 #' @param coins A list of coins. If names are provided, these will be used in the tables returned by this function.
 #' @param tabtype The type of table to generate. One of:
-#' * `"Ranks"`: returns a data frame of index ranks for each coin provided, plus ISO3 column
-#' * `"Diffs"`: returns a data frame of index rank differences between the base coin and each other coin (see `ibase`)
+#' * `"Values"`: returns a data frame of rank values for each coin provided, plus ISO3 column
+#' * `"Diffs"`: returns a data frame of rank differences between the base coin and each other coin (see `ibase`)
 #' * `"AbsDiffs"`: as `"Diffs"` but absolute rank differences are returned
 #' * `"All"`: returns all of the three previous rank tables, as a list of data frames
 #' @param ibase The index of the coin to use as a base comparison (default first coin in list)
@@ -159,14 +163,14 @@ compare_coins <- function(coin1, coin2, dset, iCode, also_get = NULL, compare_by
 compare_coins_multi <- function(coins, dset, iCode, also_get = NULL, tabtype = "Values",
                                 ibase = 1, sort_table = TRUE, compare_by = "ranks"){
 
-  tabtypes <- c("Values", "Diffs", "AbsDiffs")
+  tabtypes <- c("Values", "Diffs", "AbsDiffs", "All")
 
   # if all tabtypes are requested, recursively call the function
   if(tabtype == "All"){
-    tablist <- lapply(tabtypes, function(x){
+    tablist <- lapply(setdiff(tabtypes, "All"), function(x){
       compare_coins_multi(coins, dset = dset, iCode = iCode, also_get = also_get, tabtype = x,
                           ibase = ibase, sort_table = sort_table, compare_by = compare_by)})
-    names(tablist) <- tabtypes
+    names(tablist) <- setdiff(tabtypes, "All")
     return(tablist)
   }
 
@@ -177,7 +181,7 @@ compare_coins_multi <- function(coins, dset, iCode, also_get = NULL, tabtype = "
     stop("One or more coins are not coin class objects.")
   }
   if(tabtype %nin% tabtypes){
-    stop("tabtype must be one of c('Values', 'Diffs', 'AbsDiffs') ")
+    stop("tabtype must be one of c('Values', 'Diffs', 'AbsDiffs', 'All') ")
   }
   stopifnot(ibase %in% 1:length(coins),
             is.logical(sort_table),

@@ -29,8 +29,8 @@ are returned as a result of \code{also_get}.}
 
 \item{tabtype}{The type of table to generate. One of:
 \itemize{
-\item \code{"Ranks"}: returns a data frame of index ranks for each coin provided, plus ISO3 column
-\item \code{"Diffs"}: returns a data frame of index rank differences between the base coin and each other coin (see \code{ibase})
+\item \code{"Values"}: returns a data frame of rank values for each coin provided, plus ISO3 column
+\item \code{"Diffs"}: returns a data frame of rank differences between the base coin and each other coin (see \code{ibase})
 \item \code{"AbsDiffs"}: as \code{"Diffs"} but absolute rank differences are returned
 \item \code{"All"}: returns all of the three previous rank tables, as a list of data frames
 }}
@@ -55,6 +55,8 @@ in all the coins in \code{coins}.
 By default, the ranks of the target indicator/aggregate of each coin will be merged using the \code{uCode}s within each coin.
 Optionally, specifying \code{also_get} (passed to \code{\link[=get_data]{get_data()}}) will additionally merge using the metadata columns.
 This means that coins must share the same metadata columns that are returned as a result of \code{also_get}.
+
+This function replaces the now-defunct \code{compTableMulti()} from COINr < v1.0.
 }
 \examples{
 # see vignette("adjustments")

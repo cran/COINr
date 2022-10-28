@@ -83,3 +83,78 @@ test_that("norm_coin", {
   expect_equal(dsetn, dsetn2)
 
 })
+
+test_that("n_funcs", {
+
+  # test data
+  x <- runif(10)
+
+  xn <- n_scaled(x, npara = c(1, 10))
+  expect_length(xn, length(x))
+  expect_equal(xn, (x-1)/(10-1)*100)  # (x-l)/(u-l) * 100
+
+  xn <- n_dist2max(x)
+  expect_equal(xn, 1 - (max(x) - x)/(max(x)-min(x))) # 1 - (x_{max} - x)/(x_{max} - x_{min})
+
+  xn <- n_dist2ref(x, iref = 1)
+  xn2 <- 1- (x[1] - x)/(x[1] - min(x)) # 1 - (x_{ref} - x)/(x_{ref} - x_{min})
+  expect_equal(xn, xn2)
+  xn <- n_dist2ref(x, iref = 1, cap_max = TRUE)
+  xn2[xn2 > 1] <- 1
+  expect_equal(xn, xn2)
+
+  xn <- n_fracmax(x)
+  expect_equal(xn, x/max(x))
+
+  xn <- n_goalposts(x, gposts = c(0.2, 0.8, 10))
+  xn2 <- (x - 0.2)/0.6
+  xn2[xn2 < 0] <- 0
+  xn2[xn2 > 1] <- 1
+  xn2 <- xn2 * 10
+  expect_equal(xn, xn2)
+
+})
+
+test_that("dist2targ", {
+
+  x <- c(0, 5, 11)
+  y <- n_dist2targ(x, targ = 10, direction = 1, cap_max = FALSE)
+  expect_equal(y, c(0, 0.5, 1.1))
+  # with cap
+  y <- n_dist2targ(x, targ = 10, direction = 1, cap_max = TRUE)
+  expect_equal(y, c(0, 0.5, 1))
+  # reverse direction
+  x <- c(-1, 1, 10)
+  y <- n_dist2targ(x, targ = 0, direction = -1, cap_max = FALSE)
+  expect_equal(y, c(1.1, 0.9, 0))
+  # with cap
+  y <- n_dist2targ(x, targ = 0, direction = -1, cap_max = TRUE)
+  expect_equal(y, c(1, 0.9, 0))
+
+})
+
+test_that("dist2targ_coin", {
+
+  # test for normalising a coin with dist2targ
+  coin <- build_example_coin(up_to = "new_coin", quietly = TRUE)
+
+  # normalise using dist2targ
+  coin <- Normalise(coin, dset = "Raw", global_specs = list(f_n = "n_dist2targ"))
+
+  Xr <- get_dset(coin, dset = "Raw")
+  Xn <- get_dset(coin, dset = "Normalised")
+
+  # cross-check a couple of indicators
+
+  # LPI (direction = 1)
+  targ <- coin$Meta$Ind$Target[coin$Meta$Ind$iCode == "LPI"]
+  # manual normalisation
+  xn <- (Xr$LPI - min(Xr$LPI, na.rm = TRUE))/(targ - min(Xr$LPI, na.rm = TRUE))
+  expect_equal(Xn$LPI, xn)
+
+  # CO2 (direction = -1)
+  targ <- coin$Meta$Ind$Target[coin$Meta$Ind$iCode == "CO2"]
+  # manual normalisation
+  xn <- (max(Xr$CO2, na.rm = TRUE) - Xr$CO2)/(max(Xr$CO2, na.rm = TRUE) - targ)
+  expect_equal(Xn$CO2, xn)
+})

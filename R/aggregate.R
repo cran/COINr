@@ -1,13 +1,18 @@
 #' Aggregate indicators
 #'
 #' Aggregates indicators following the structure specified in `iMeta`, for each coin inside the purse.
-#' See [Aggregate.coin()] for more information.
+#' See [Aggregate.coin()], which is applied to each coin, for more information
 #'
 #' @param x A purse-class object
 #' @param dset The name of the data set to apply the function to, which should be accessible in `.$Data`.
-#' @param f_ag The name of an aggregation function, specified as a string
+#' @param f_ag The name of an aggregation function, a string. This can either be a single string naming
+#' a function to use for all aggregation levels, or else a character vector of function names of length `n-1`, where `n` is
+#' the number of levels in the index structure. In this latter case, a different aggregation function may be used for each level
+#' in the index: the first in the vector will be used to aggregate from Level 1 to Level 2, the second from Level 2 to Level 3, and
+#' so on.
 #' @param w An optional data frame of weights. If `f_ag` does not require or accept weights, set to `"none"`.
-#' @param f_ag_para Optional parameters to pass to `f_ag`, other than `x` and `w`
+#' @param f_ag_para Optional parameters to pass to `f_ag`, other than `x` and `w`. As with `f_ag`, this can specified to have different
+#' parameters for each aggregation level by specifying as a nested list of length `n-1`.
 #' @param dat_thresh An optional data availability threshold, specified as a number between 0 and 1. If a row
 #' within an aggregation group has data availability lower than this threshold, the aggregated value for that row will be
 #' `NA`. Data availability, for a row `x_row` is defined as `sum(!is.na(x_row))/length(x_row)`, i.e. the
@@ -45,7 +50,8 @@ Aggregate.purse <- function(x, dset, f_ag = NULL, w = NULL, f_ag_para = NULL, da
 #' Aggregate indicators
 #'
 #' Aggregates a named data set specified by `dset` using aggregation function `f_ag`, weights `w`, and optional
-#' function parameters `f_ag_para`.
+#' function parameters `f_ag_para`. Note that COINr has a number of aggregation functions built in,
+#' all of which are of the form `a_*()`, e.g. [a_amean()], [a_gmean()] and friends.
 #'
 #' Aggregation is performed row-wise using the function `f_ag`, such that for each row `x_row`, the output is
 #' `f_ag(x_row, f_ag_para)`, and for the whole data frame, it outputs a numeric vector. The data frame `x` must
@@ -58,15 +64,24 @@ Aggregate.purse <- function(x, dset, f_ag = NULL, w = NULL, f_ag_para = NULL, da
 #'
 #' `f_ag` can optionally have other parameters, e.g. weights, specified as a list in `f_ag_para`.
 #'
+#' Note that COINr has a number of aggregation functions built in,
+#' all of which are of the form `a_*()`, e.g. [a_amean()], [a_gmean()] and friends. To see a list browse COINr functions alphabetically or
+#' type `a_` in the R Studio console and press the tab key (after loading COINr).
+#'
 #' Optionally, a data availability threshold can be assigned below which the aggregated value will return
 #' `NA` (see `dat_thresh` argument). If `by_df = TRUE`, this will however be ignored because aggregation is not
 #' done on individual rows. Note that more complex constraints could be built into `f_ag` if needed.
 #'
 #' @param x A coin class object.
 #' @param dset The name of the data set to apply the function to, which should be accessible in `.$Data`.
-#' @param f_ag The name of an aggregation function, a string
+#' @param f_ag The name of an aggregation function, a string. This can either be a single string naming
+#' a function to use for all aggregation levels, or else a character vector of function names of length `n-1`, where `n` is
+#' the number of levels in the index structure. In this latter case, a different aggregation function may be used for each level
+#' in the index: the first in the vector will be used to aggregate from Level 1 to Level 2, the second from Level 2 to Level 3, and
+#' so on.
 #' @param w An optional data frame of weights. If `f_ag` does not require accept weights, set to `"none"`.
-#' @param f_ag_para Optional parameters to pass to `f_ag`, other than `x` and `w`
+#' @param f_ag_para Optional parameters to pass to `f_ag`, other than `x` and `w`. As with `f_ag`, this can specified to have different
+#' parameters for each aggregation level by specifying as a nested list of length `n-1`.
 #' @param dat_thresh An optional data availability threshold, specified as a number between 0 and 1. If a row
 #' within an aggregation group has data availability lower than this threshold, the aggregated value for that row will be
 #' `NA`. Data availability, for a row `x_row` is defined as `sum(!is.na(x_row))/length(x_row)`, i.e. the
@@ -275,7 +290,8 @@ Aggregate.coin <- function(x, dset, f_ag = NULL, w = NULL, f_ag_para = NULL, dat
 
 #' Aggregate data frame
 #'
-#' Aggregates a data frame into a single column using a specified function.
+#' Aggregates a data frame into a single column using a specified function. Note that COINr has a number of aggregation functions built in,
+#' all of which are of the form `a_*()`, e.g. [a_amean()], [a_gmean()] and friends.
 #'
 #' Aggregation is performed row-wise using the function `f_ag`, such that for each row `x_row`, the output is
 #' `f_ag(x_row, f_ag_para)`, and for the whole data frame, it outputs a numeric vector. The data frame `x` must
@@ -288,11 +304,15 @@ Aggregate.coin <- function(x, dset, f_ag = NULL, w = NULL, f_ag_para = NULL, dat
 #'
 #' `f_ag` can optionally have other parameters, e.g. weights, specified as a list in `f_ag_para`.
 #'
+#' Note that COINr has a number of aggregation functions built in,
+#' all of which are of the form `a_*()`, e.g. [a_amean()], [a_gmean()] and friends. To see a list browse COINr functions alphabetically or
+#' type `a_` in the R Studio console and press the tab key (after loading COINr).
+#'
 #' Optionally, a data availability threshold can be assigned below which the aggregated value will return
 #' `NA` (see `dat_thresh` argument). If `by_df = TRUE`, this will however be ignored because aggregation is not
 #' done on individual rows. Note that more complex constraints could be built into `f_ag` if needed.
 #'
-#' @param x Object to be aggregated
+#' @param x Data frame to be aggregated
 #' @param f_ag The name of an aggregation function, as a string.
 #' @param f_ag_para Any additional parameters to pass to `f_ag`, as a named list.
 #' @param dat_thresh An optional data availability threshold, specified as a number between 0 and 1. If a row
@@ -386,7 +406,12 @@ Aggregate.data.frame <- function(x, f_ag = NULL, f_ag_para = NULL, dat_thresh = 
 
 
   if(!is.numeric(y)){
-    stop("The output of f_ag has not successfully created a numeric vector.")
+    if(all(is.na(y))){
+      # if we get all NAs, this comes back as a logical vector, so convert
+      y <- as.numeric(y)
+    } else {
+      stop("The output of f_ag has not successfully created a numeric vector.")
+    }
   }
   if(length(y) != nrow(x)){
     stop("The ouput of f_ag is not the same length as nrow(x).")
@@ -469,6 +494,8 @@ a_amean <- function(x, w){
 #'
 #' Weighted geometric mean of a vector. `NA` are skipped by default.
 #'
+#' This function replaces the now-defunct `geoMean()` from COINr < v1.0.
+#'
 #' @param x A numeric vector of positive values.
 #' @param w A vector of weights, which should have length equal to `length(x)`. Weights are relative
 #' and will be re-scaled to sum to 1. If `w` is not specified, defaults to equal weights.
@@ -516,6 +543,8 @@ a_gmean <- function(x, w = NULL){
 #' Weighted harmonic mean
 #'
 #' Weighted harmonic mean of a vector. `NA` are skipped by default.
+#'
+#' This function replaces the now-defunct `harMean()` from COINr < v1.0.
 #'
 #' @param x A numeric vector of positive values.
 #' @param w A vector of weights, which should have length equal to `length(x)`. Weights are relative
@@ -597,7 +626,7 @@ outrankMatrix <- function(X, w = NULL){
 
   if(is.null(w)){
     # default equal weights
-    w <- rep(1,nUnit)
+    w <- rep(1,nInd)
     message("No weights specified for outranking matrix, using equal weights.")
   }
 
@@ -652,6 +681,17 @@ outrankMatrix <- function(X, w = NULL){
 #' Aggregates a data frame of indicator values into a single column using the Copeland method.
 #' This function calls `outrankMatrix()`.
 #'
+#' The outranking matrix is transformed as follows:
+#'
+#' * values > 0.5 are replaced by 1
+#' * values < 0.5 are replaced by -1
+#' * values == 0.5 are replaced by 0
+#' * the diagonal of the matrix is all zeros
+#'
+#' The Copeland scores are calculated as the row sums of this transformed matrix.
+#'
+#' This function replaces the now-defunct `copeland()` from COINr < v1.0.
+#'
 #' @param X A numeric data frame or matrix of indicator data, with observations as rows and indicators
 #' as columns. No other columns should be present (e.g. label columns).
 #' @param w A numeric vector of weights, which should have length equal to `ncol(X)`. Weights are relative
@@ -671,6 +711,11 @@ a_copeland <- function(X, w = NULL){
 
   # get outranking matrix
   orm <- outrankMatrix(X, w)$OutRankMatrix
+
+  orm[orm > 0.5] <- 1
+  orm[orm == 0.5] <- 0
+  orm[orm < 0.5] <- -1
+  diag(orm) <- 0
 
   # get scores by summing across rows
   rowSums(orm, na.rm = TRUE)

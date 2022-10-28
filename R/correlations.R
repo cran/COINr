@@ -90,6 +90,8 @@ get_denom_corr <- function(coin, dset, cor_thresh = 0.6, cortype = "pearson", nr
 #' This function is motivated by the idea that having very highly-correlated indicators within the same group may
 #' amount to double counting, or possibly redundancy in the framework.
 #'
+#' This function replaces the now-defunct `hicorrSP()` from COINr < v1.0.
+#'
 #' @param coin A coin class object
 #' @param dset The name of the data set to apply the function to, which should be accessible in `.$Data`.
 #' @param cor_thresh A threshold to flag high correlation. Default 0.9.
@@ -186,7 +188,8 @@ get_corr_flags <- function(coin, dset, cor_thresh = 0.9, thresh_type = "high", c
 #'
 #' Helper function for getting correlations between indicators and aggregates. This retrieves subsets of correlation
 #' matrices between different aggregation levels, in different formats. By default, it will return a
-#' long-form data frame, unless `make_long = FALSE`.
+#' long-form data frame, unless `make_long = FALSE`. By default, any correlations with a p-value less than 0.05 are
+#' replaced with `NA`. See `pval` argument to adjust this.
 #'
 #' This function allows you to obtain correlations between any subset of indicators or aggregates, from
 #' any data set present in a coin. Indicator selection is performed using [get_data()]. Two different
@@ -209,6 +212,8 @@ get_corr_flags <- function(coin, dset, cor_thresh = 0.9, thresh_type = "high", c
 #'
 #' Note that this function can only call correlations within the same data set (i.e. only one data set in `.$Data`).
 #'
+#' This function replaces the now-defunct `getCorr()` from COINr < v1.0.
+#'
 #' @param coin A coin class coin object
 #' @param dset  The name of the data set to apply the function to, which should be accessible in `.$Data`.
 #' @param iCodes An optional list of character vectors where the first entry specifies the indicator/aggregate
@@ -217,7 +222,9 @@ get_corr_flags <- function(coin, dset, cor_thresh = 0.9, thresh_type = "high", c
 #' Defaults to indicator level.
 #' @param ... Further arguments to be passed to [get_data()] (`uCodes` and `use_group`).
 #' @param cortype The type of correlation to calculate, either `"pearson"`, `"spearman"`, or `"kendall"`.
-#' @param withparent If `TRUE`, and `aglev[1] != aglev[2]`, will only return correlations of each row with its parent.
+#' @param withparent If `TRUE`, and `aglev[1] != aglev[2]`, will only return correlations of each row with its parent. Alternatively, if
+#' `withparent = "family"`, will return correlations with parents, grandparents etc, up to the highest level. In both cases the data set
+#' must be aggregated for this to work.
 #' @param grouplev The aggregation level to group correlations by if `aglev[1] == aglev[2]`. Requires that
 #' `make_long = TRUE`.
 #' @param pval The significance level for including correlations. Correlations with \eqn{p > pval} will be returned as `NA`.
@@ -486,6 +493,8 @@ get_pvals = function(X, ...) {
 #'
 #' This function simply returns Cronbach's alpha. If you want a lot more details on reliability, the 'psych' package has
 #' a much more detailed analysis.
+#'
+#' This function replaces the now-defunct `getCronbach()` from COINr < v1.0.
 #'
 #' @param coin A coin or a data frame containing only numerical columns of data.
 #' @param ... Further arguments passed to [get_data()], other than those explicitly specified here.

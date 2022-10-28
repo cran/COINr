@@ -57,7 +57,7 @@ ci_installed
 #  # wrapper to get output of interest from ci_bod
 #  # also suppress messages about missing values
 #  ci_bod2 <- function(x){
-#    suppressMessages(ci_bod(x)$ci_bod_est)
+#    suppressMessages(Compind::ci_bod(x)$ci_bod_est)
 #  }
 #  
 #  # aggregate
@@ -85,6 +85,9 @@ df1
 Aggregate(df1, f_ag = "a_amean",
            f_ag_para = list(w = c(1,1,1)),
            dat_thresh = 2/3)
+
+## -----------------------------------------------------------------------------
+coin <- Aggregate(coin, dset = "Normalised", f_ag = c("a_amean", "a_gmean", "a_amean"))
 
 ## -----------------------------------------------------------------------------
 # get some indicator data - take a few columns from built in data set
