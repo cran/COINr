@@ -68,6 +68,19 @@ ASEM <- Impute(ASEM, dset = "Raw", f_i = "i_mean_grp", use_group = "GDP_group", 
 ASEM <- Impute(ASEM, dset = "Raw", f_i = "i_mean", impute_by = "row",
                group_level = 2, normalise_first = TRUE)
 
+## ---- eval=FALSE--------------------------------------------------------------
+#  # this function takes a data frame input and returns an imputed data frame using amelia
+#  i_EM <- function(x){
+#    # impute
+#    amOut <- Amelia::amelia(x, m = 1, p2s = 0, boot.type = "none")
+#    # return imputed data
+#    amOut$imputations[[1]]
+#  }
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  # impute raw data set
+#  coin <- Impute(coin, dset = "Raw", f_i = i_EM, impute_by = "df", group_level = 2)
+
 ## -----------------------------------------------------------------------------
 # copy
 dfp <- ASEM_iData_p

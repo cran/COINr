@@ -13,6 +13,8 @@
 #' @param cortype The type of correlation: to be passed to the `method` argument of `stats::cor`.
 #' @param nround Optional number of decimal places to round correlation values to. Default 2, set `NULL` to
 #' disable.
+#' @param use_directions Logical: if `TRUE` the extracted data is adjusted using directions found inside the coin (i.e. the "Direction"
+#' column input in `iMeta`. See comments on this argument in [get_corr()].
 #'
 #' @return A data frame of pairwise correlations that exceed the threshold.
 #' @export
@@ -24,11 +26,16 @@
 #' # get correlations >0.7 of any indicator with denominators
 #' get_denom_corr(coin, dset = "Raw", cor_thresh = 0.7)
 #'
-get_denom_corr <- function(coin, dset, cor_thresh = 0.6, cortype = "pearson", nround = 2){
+get_denom_corr <- function(coin, dset, cor_thresh = 0.6, cortype = "pearson",
+                           nround = 2, use_directions = FALSE){
 
   # indicator data
   # get everything at this point to ensure matching rows
   iData <- get_dset(coin, dset = dset, also_get = "all")
+
+  if(use_directions){
+    iData <- directionalise(iData, coin)
+  }
 
   # iMeta
   iMeta <- coin$Meta$Ind
@@ -101,6 +108,8 @@ get_denom_corr <- function(coin, dset, cor_thresh = 0.6, cortype = "pearson", nr
 #' @param roundto Number of decimal places to round correlations to. Default 3. Set `NULL` to disable rounding.
 #' @param thresh_type Either `"high"`, which will only flag correlations *above* `cor_thresh`, or `"low"`,
 #' which will only flag correlations *below* `cor_thresh`.
+#' @param use_directions Logical: if `TRUE` the extracted data is adjusted using directions found inside the coin (i.e. the "Direction"
+#' column input in `iMeta`. See comments on this argument in [get_corr()].
 #'
 #' @examples
 #' # build example coin
@@ -115,7 +124,7 @@ get_denom_corr <- function(coin, dset, cor_thresh = 0.6, cortype = "pearson", nr
 #'
 #' @export
 get_corr_flags <- function(coin, dset, cor_thresh = 0.9, thresh_type = "high", cortype = "pearson",
-                     grouplev = NULL, roundto = 3){
+                     grouplev = NULL, roundto = 3, use_directions = FALSE){
 
 
   # CHECKS AND DEFAULTS -----------------------------------------------------
@@ -132,6 +141,10 @@ get_corr_flags <- function(coin, dset, cor_thresh = 0.9, thresh_type = "high", c
             cor_thresh >= -1)
 
   iData <- get_dset(coin, dset, also_get = "none")
+
+  if(use_directions){
+    iData <- directionalise(iData, coin)
+  }
 
 
   # GET CORRS ---------------------------------------------------------------
@@ -179,7 +192,8 @@ get_corr_flags <- function(coin, dset, cor_thresh = 0.9, thresh_type = "high", c
     crtable$Corr <- round(crtable$Corr, roundto)
   }
 
-  crtable[c("Group", "Ind1", "Ind2", "Corr")]
+  df_out <- crtable[c("Group", "Ind1", "Ind2", "Corr")]
+  remove_duplicate_corrs(df_out, c("Ind1", "Ind2"))
 
 }
 
@@ -217,7 +231,8 @@ get_corr_flags <- function(coin, dset, cor_thresh = 0.9, thresh_type = "high", c
 #' @param coin A coin class coin object
 #' @param dset  The name of the data set to apply the function to, which should be accessible in `.$Data`.
 #' @param iCodes An optional list of character vectors where the first entry specifies the indicator/aggregate
-#' codes to correlate against the second entry (also a specification of indicator/aggregate codes).
+#' codes to correlate against the second entry (also a specification of indicator/aggregate codes). If this is specified as a character vector
+#' it will coerced to the first entry of a list, i.e. `list(iCodes)`.
 #' @param Levels The aggregation levels to take the two groups of indicators from. See [get_data()] for details.
 #' Defaults to indicator level.
 #' @param ... Further arguments to be passed to [get_data()] (`uCodes` and `use_group`).
@@ -232,6 +247,12 @@ get_corr_flags <- function(coin, dset, cor_thresh = 0.9, thresh_type = "high", c
 #' @param make_long Logical: if `TRUE`, returns correlations in long format (default), else if `FALSE`
 #' returns in wide format. Note that if wide format is requested, features specified by `grouplev`
 #' and `withparent` are not supported.
+#' @param use_directions Logical: if `TRUE` the extracted data is adjusted using directions found inside the coin (i.e. the "Direction"
+#' column input in `iMeta`: any indicators with negative direction will have their values multiplied by -1 which will reverse the
+#' direction of correlation). This should only be set to `TRUE` if the data set has not yet been normalised. For example, this can be
+#' useful to set to `TRUE` to analyse correlations in the raw data, but would make no sense to analyse correlations in the normalised
+#' data because that already has the direction adjusted! So you would reverse direction twice. In other words, use this at your
+#' discretion.
 #'
 #' @importFrom stats cor
 #'
@@ -252,7 +273,7 @@ get_corr_flags <- function(coin, dset, cor_thresh = 0.9, thresh_type = "high", c
 #' @export
 get_corr <- function(coin, dset, iCodes = NULL, Levels = NULL, ...,
                      cortype = "pearson", pval = 0.05, withparent = FALSE,
-                     grouplev = NULL, make_long = TRUE){
+                     grouplev = NULL, make_long = TRUE, use_directions = FALSE){
 
   # CHECKS ------------------------------------------------------------------
 
@@ -263,7 +284,11 @@ get_corr <- function(coin, dset, iCodes = NULL, Levels = NULL, ...,
   # set Levels, repeat iCodes etc if only one input
   if(is.null(Levels)){Levels <- 1}
   if(is.null(iCodes)){iCodes <- list(NULL)}
-  stopifnot(is.list(iCodes))
+
+  if(!is.list(iCodes)){
+    stopifnot(is.character(iCodes))
+    iCodes <- list(iCodes)
+  }
 
   if (length(iCodes) == 1){
     iCodes = rep(iCodes, 2)
@@ -314,6 +339,14 @@ get_corr <- function(coin, dset, iCodes = NULL, Levels = NULL, ...,
                      Level = Levels[[1]], ..., also_get = "none")
   iData2 <- get_data(coin, dset = dset, iCodes = iCodes[[2]],
                      Level = Levels[[2]], ..., also_get = "none")
+
+
+  # Adjust directions -------------------------------------------------------
+
+  if(use_directions){
+    iData1 <- directionalise(iData1, coin)
+    iData2 <- directionalise(iData2, coin)
+  }
 
   # GET CORRELATIONS --------------------------------------------------------
 
@@ -470,8 +503,13 @@ get_pvals = function(X, ...) {
     for (j in (i + 1):n) {
 
       # get p val for pair
-      tmp = stats::cor.test(x = X[, i], y = X[, j], ...)
-      p.X[i, j] = p.X[j, i] = tmp$p.value
+      # catch possibility of all NAs in one or both vectors
+      if(all(is.na(X[,i])) | all(is.na(X[,j]))){
+        p.X[i, j] <- p.X[j, i] <- NA
+      } else {
+        tmp = stats::cor.test(x = X[, i], y = X[, j], ...)
+        p.X[i, j] = p.X[j, i] = tmp$p.value
+      }
 
     }
   }

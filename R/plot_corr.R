@@ -42,6 +42,16 @@
 #' @param discrete_colours An optional 4-length character vector of colour codes or names to define the discrete
 #' colour map if `flagcolours = TRUE` (from high to low correlation categories). Defaults to a green/blue/grey/purple.
 #' @param box_colour The line colour of grouping boxes, default black.
+#' @param order_as Optional list for ordering the plotting of variables. If specified, this must be a list of length 2, where each entry of the list is
+#' a character vector of the iCodes plotted on the x and y axes of the plot. The plot will then follow the order of these character vectors. Note this must
+#' be used with care because the `grouplev` and `boxlev` arguments will not follow the reordering. Hence this argument is probably best used for plots
+#' with no grouping, or for simply re-ordering within groups.
+#' @param use_directions Logical: if `TRUE` the extracted data is adjusted using directions found inside the coin (i.e. the "Direction"
+#' column input in `iMeta`: any indicators with negative direction will have their values multiplied by -1 which will reverse the
+#' direction of correlation). This should only be set to `TRUE` if the data set has *not* yet been normalised. For example, this can be
+#' useful to set to `TRUE` to analyse correlations in the raw data, but would make no sense to analyse correlations in the normalised
+#' data because that already has the direction adjusted! So you would reverse direction twice. In other words, use this at your
+#' discretion.
 #'
 #' @importFrom ggplot2 ggplot aes geom_tile
 #' @importFrom rlang .data
@@ -60,7 +70,7 @@
 plot_corr <- function(coin, dset, iCodes = NULL, Levels = 1, ..., cortype = "pearson",
                      withparent = FALSE, grouplev = NULL, box_level = NULL, showvals = TRUE, flagcolours = FALSE,
                      flagthresh = NULL, pval = 0.05, insig_colour = "#F0F0F0",
-                     text_colour = NULL, discrete_colours = NULL, box_colour = NULL){
+                     text_colour = NULL, discrete_colours = NULL, box_colour = NULL, order_as = NULL, use_directions = FALSE){
 
 
   # NOTE SET grouplev default to level + 1
@@ -81,7 +91,7 @@ plot_corr <- function(coin, dset, iCodes = NULL, Levels = 1, ..., cortype = "pea
 
   crtable <- get_corr(coin, dset = dset, iCodes = iCodes, Levels = Levels,
                       ... = ..., cortype = cortype, pval = pval, withparent = withparent,
-                      grouplev = grouplev, make_long = TRUE)
+                      grouplev = grouplev, make_long = TRUE, use_directions = use_directions)
 
   # round values for plotting
   crtable$Correlation <- round(crtable$Correlation,2)
@@ -129,6 +139,29 @@ plot_corr <- function(coin, dset, iCodes = NULL, Levels = 1, ..., cortype = "pea
     hithresh <- flagthresh[3]
     weakthresh <- flagthresh[2]
     negthresh <- flagthresh[1]
+  }
+
+  if(!is.null(order_as)){
+    # custom ordering
+    stopifnot(is.list(order_as),
+              length(order_as) == 2,
+              is.character(order_as[[1]]),
+              is.character(order_as[[2]]))
+    if(length(order_as[[1]]) != length(ord1)){
+      stop("Error in length of order_as[[1]]: expected length = ", length(ord1))
+    }
+    if(length(order_as[[2]]) != length(ord2)){
+      stop("Error in length of order_as[[2]]: expected length = ", length(ord2))
+    }
+    if(!setequal(order_as[[1]], ord1)){
+      stop("Expected iCodes not found in order_as[[1]] - expected codes are: ", paste(ord1, collapse = ", "))
+    }
+    if(!setequal(order_as[[2]], ord2)){
+      stop("Expected iCodes not found in order_as[[2]] - expected codes are: ", paste(ord2, collapse = ", "))
+    }
+
+    ord1 <- order_as[[1]]
+    ord2 <- order_as[[2]]
   }
 
   if (flagcolours){

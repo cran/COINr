@@ -15,6 +15,7 @@
   normalise_first = NULL,
   out2 = "coin",
   write_to = NULL,
+  disable = FALSE,
   ...
 )
 }
@@ -35,7 +36,7 @@ vector to \code{f_i}; if \code{"row"}, passes each \emph{row} separately; and if
 imputation.}
 
 \item{group_level}{A level of the framework to use for grouping indicators. This is only
-relevant if \code{impute_by = "row"}. In that case, indicators will be split into their groups at the
+relevant if \code{impute_by = "row"} or \code{"df"}. In that case, indicators will be split into their groups at the
 level specified by \code{group_level}, and imputation will be performed across rows of the group, rather
 than the whole data set. This can make more sense because indicators within a group are likely to be
 more similar.}
@@ -48,6 +49,9 @@ frame.}
 
 \item{write_to}{Optional character string for naming the data set in the coin. Data will be written to
 \code{.$Data[[write_to]]}. Default is \code{write_to == "Imputed"}.}
+
+\item{disable}{Logical: if \code{TRUE} will disable imputation completely and write the unaltered data set. This option is mainly useful
+in sensitivity and uncertainty analysis (to test the effect of turning imputation on/off).}
 
 \item{...}{arguments passed to or from other methods.}
 }
