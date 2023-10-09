@@ -358,32 +358,32 @@ all fairly similar.</p>
 <h1>Data frames</h1>
 <p>We’ll begin by demonstrating denomination on a data frame. We’ll use
 the in-built data set to get a small sample of indicators:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a sample of indicator data (note must be indicators plus a &quot;UnitCode&quot; column)</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>iData <span class="ot">&lt;-</span> ASEM_iData[<span class="fu">c</span>(<span class="st">&quot;uCode&quot;</span>, <span class="st">&quot;Goods&quot;</span>, <span class="st">&quot;Flights&quot;</span>, <span class="st">&quot;LPI&quot;</span>)]</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iData)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode     Goods  Flights      LPI</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   AUT 278.42640 29.01725 4.097985</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   BEL 597.87230 31.88546 4.108538</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   BGR  42.82515  9.23588 2.807685</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   HRV  28.36795  9.24529 3.160829</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   CYP   8.76681  8.75467 2.999061</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6   CZE 274.13650 15.30953 3.674309</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># Get a sample of indicator data (note must be indicators plus a &quot;UnitCode&quot; column)</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>iData <span class="ot">&lt;-</span> ASEM_iData[<span class="fu">c</span>(<span class="st">&quot;uCode&quot;</span>, <span class="st">&quot;Goods&quot;</span>, <span class="st">&quot;Flights&quot;</span>, <span class="st">&quot;LPI&quot;</span>)]</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">head</span>(iData)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt;   uCode     Goods  Flights      LPI</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; 1   AUT 278.42640 29.01725 4.097985</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt; 2   BEL 597.87230 31.88546 4.108538</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt; 3   BGR  42.82515  9.23588 2.807685</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt; 4   HRV  28.36795  9.24529 3.160829</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt; 5   CYP   8.76681  8.75467 2.999061</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt; 6   CZE 274.13650 15.30953 3.674309</span></span></code></pre></div>
 <p>This is the raw indicator data for three indicators, plus the “uCode”
 column which identifies each unit. We will also get some data for
 denominating the indicators. COINr has an in-built set of denominator
 data called <code>WorldDenoms</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(WorldDenoms)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 7</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uName          uCode           GDP Population    Area  GDPpc Income_Group     </span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt;         &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;            </span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Afghanistan    AFG    19291104008.   38041754  652860   507. Low income       </span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Albania        ALB    15279183290.    2854191   27400  5353. Upper middle inc…</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Algeria        DZA   171091289782.   43053054 2381740  3974. Lower middle inc…</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 American Samoa ASM      636000000       55312     200 11467. Upper middle inc…</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 Andorra        AND     3154057987.      77142     470 40886. High income      </span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 Angola         AGO    88815697793.   31825295 1246700  2791. Lower middle inc…</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">head</span>(WorldDenoms)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 7</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt;   uName          uCode           GDP Population    Area  GDPpc Income_Group     </span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt;         &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;            </span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; 1 Afghanistan    AFG    19291104008.   38041754  652860   507. Low income       </span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; 2 Albania        ALB    15279183290.    2854191   27400  5353. Upper middle inc…</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; 3 Algeria        DZA   171091289782.   43053054 2381740  3974. Lower middle inc…</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; 4 American Samoa ASM      636000000       55312     200 11467. Upper middle inc…</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 5 Andorra        AND     3154057987.      77142     470 40886. High income      </span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; 6 Angola         AGO    88815697793.   31825295 1246700  2791. Lower middle inc…</span></span></code></pre></div>
 <p>Now, the main things to specify in denomination are which indicators
 to denominate, and by what. In other words, we need to map the
 indicators to the denominators. In the example, the export of goods
@@ -397,10 +397,10 @@ denominated.</p>
 column name of the denominator data frame to use), and “ScaleFactor” is
 a multiplying factor to apply if needed. We create this data frame
 here:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># specify how to denominate</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>denomby <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">iCode =</span> <span class="fu">c</span>(<span class="st">&quot;Goods&quot;</span>, <span class="st">&quot;Flights&quot;</span>),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Denominator =</span> <span class="fu">c</span>(<span class="st">&quot;GDP&quot;</span>, <span class="st">&quot;Population&quot;</span>),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ScaleFactor =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1000</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># specify how to denominate</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>denomby <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">iCode =</span> <span class="fu">c</span>(<span class="st">&quot;Goods&quot;</span>, <span class="st">&quot;Flights&quot;</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>                      <span class="at">Denominator =</span> <span class="fu">c</span>(<span class="st">&quot;GDP&quot;</span>, <span class="st">&quot;Population&quot;</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>                      <span class="at">ScaleFactor =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1000</span>))</span></code></pre></div>
 <p>A second important consideration is that the rows of the indicators
 and the denominators need to be matched, so that each unit is
 denominated by the value corresponding to that unit, and not another
@@ -415,17 +415,17 @@ to specify it. If you have other column names, use the <code>x_iD</code>
 and <code>denoms_ID</code> arguments to pass these names to the
 function.</p>
 <p>Ok so now we are ready to denominate:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Denominate one by the other</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>iData_den <span class="ot">&lt;-</span> <span class="fu">Denominate</span>(iData, WorldDenoms, denomby)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iData_den)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode        Goods     Flights      LPI</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   AUT 6.255713e-10 0.003268788 4.097985</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   BEL 1.121507e-09 0.002776498 4.108538</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   BGR 6.246483e-10 0.001323996 2.807685</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   HRV 4.669422e-10 0.002272966 3.160829</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   CYP 3.513901e-10 0.007304232 2.999061</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6   CZE 1.093569e-09 0.001434859 3.674309</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Denominate one by the other</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>iData_den <span class="ot">&lt;-</span> <span class="fu">Denominate</span>(iData, WorldDenoms, denomby)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">head</span>(iData_den)</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt;   uCode        Goods     Flights      LPI</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; 1   AUT 6.255713e-10 0.003268788 4.097985</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; 2   BEL 1.121507e-09 0.002776498 4.108538</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; 3   BGR 6.246483e-10 0.001323996 2.807685</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; 4   HRV 4.669422e-10 0.002272966 3.160829</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; 5   CYP 3.513901e-10 0.007304232 2.999061</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; 6   CZE 1.093569e-09 0.001434859 3.674309</span></span></code></pre></div>
 <p>The function has matched each unit in <code>iData</code> with its
 corresponding denominator value in <code>WorldDenoms</code> and divided
 the former by the latter. As expected, “Goods” and “Flights” have
@@ -446,43 +446,43 @@ variables as part of <code>iData</code> (these are variables where
 <code>iMeta</code> the mapping between indicators and denominators,
 using the <code>iMeta$Type</code> column. To see what this looks
 like:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first few rows of the example iMeta, selected cols</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ASEM_iMeta[<span class="fu">c</span>(<span class="st">&quot;iCode&quot;</span>, <span class="st">&quot;Denominator&quot;</span>)])</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     iCode Denominator</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     LPI        &lt;NA&gt;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Flights  Population</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    Ship        &lt;NA&gt;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    Bord        Area</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    Elec      Energy</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6     Gas      Energy</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># first few rows of the example iMeta, selected cols</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">head</span>(ASEM_iMeta[<span class="fu">c</span>(<span class="st">&quot;iCode&quot;</span>, <span class="st">&quot;Denominator&quot;</span>)])</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt;     iCode Denominator</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; 1     LPI        &lt;NA&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; 2 Flights  Population</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; 3    Ship        &lt;NA&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; 4    Bord        Area</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; 5    Elec      Energy</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; 6     Gas      Energy</span></span></code></pre></div>
 <p>The entries in “Denominator” correspond to column names that are
 present in <code>iData</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># see names of example iData</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ASEM_iData)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;uName&quot;         &quot;uCode&quot;         &quot;GDP_group&quot;     &quot;GDPpc_group&quot;  </span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;Pop_group&quot;     &quot;EurAsia_group&quot; &quot;Time&quot;          &quot;Area&quot;         </span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;Energy&quot;        &quot;GDP&quot;           &quot;Population&quot;    &quot;LPI&quot;          </span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] &quot;Flights&quot;       &quot;Ship&quot;          &quot;Bord&quot;          &quot;Elec&quot;         </span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [17] &quot;Gas&quot;           &quot;ConSpeed&quot;      &quot;Cov4G&quot;         &quot;Goods&quot;        </span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [21] &quot;Services&quot;      &quot;FDI&quot;           &quot;PRemit&quot;        &quot;ForPort&quot;      </span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [25] &quot;Embs&quot;          &quot;IGOs&quot;          &quot;UNVote&quot;        &quot;CostImpEx&quot;    </span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [29] &quot;Tariff&quot;        &quot;TBTs&quot;          &quot;TIRcon&quot;        &quot;RTAs&quot;         </span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [33] &quot;Visa&quot;          &quot;StMob&quot;         &quot;Research&quot;      &quot;Pat&quot;          </span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [37] &quot;CultServ&quot;      &quot;CultGood&quot;      &quot;Tourist&quot;       &quot;MigStock&quot;     </span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [41] &quot;Lang&quot;          &quot;Renew&quot;         &quot;PrimEner&quot;      &quot;CO2&quot;          </span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [45] &quot;MatCon&quot;        &quot;Forest&quot;        &quot;Poverty&quot;       &quot;Palma&quot;        </span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [49] &quot;TertGrad&quot;      &quot;FreePress&quot;     &quot;TolMin&quot;        &quot;NGOs&quot;         </span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [53] &quot;CPI&quot;           &quot;FemLab&quot;        &quot;WomParl&quot;       &quot;PubDebt&quot;      </span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [57] &quot;PrivDebt&quot;      &quot;GDPGrow&quot;       &quot;RDExp&quot;         &quot;NEET&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># see names of example iData</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">names</span>(ASEM_iData)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;uName&quot;         &quot;uCode&quot;         &quot;GDP_group&quot;     &quot;GDPpc_group&quot;  </span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;Pop_group&quot;     &quot;EurAsia_group&quot; &quot;Time&quot;          &quot;Area&quot;         </span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;Energy&quot;        &quot;GDP&quot;           &quot;Population&quot;    &quot;LPI&quot;          </span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; [13] &quot;Flights&quot;       &quot;Ship&quot;          &quot;Bord&quot;          &quot;Elec&quot;         </span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; [17] &quot;Gas&quot;           &quot;ConSpeed&quot;      &quot;Cov4G&quot;         &quot;Goods&quot;        </span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; [21] &quot;Services&quot;      &quot;FDI&quot;           &quot;PRemit&quot;        &quot;ForPort&quot;      </span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; [25] &quot;Embs&quot;          &quot;IGOs&quot;          &quot;UNVote&quot;        &quot;CostImpEx&quot;    </span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; [29] &quot;Tariff&quot;        &quot;TBTs&quot;          &quot;TIRcon&quot;        &quot;RTAs&quot;         </span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; [33] &quot;Visa&quot;          &quot;StMob&quot;         &quot;Research&quot;      &quot;Pat&quot;          </span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt; [37] &quot;CultServ&quot;      &quot;CultGood&quot;      &quot;Tourist&quot;       &quot;MigStock&quot;     </span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; [41] &quot;Lang&quot;          &quot;Renew&quot;         &quot;PrimEner&quot;      &quot;CO2&quot;          </span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt; [45] &quot;MatCon&quot;        &quot;Forest&quot;        &quot;Poverty&quot;       &quot;Palma&quot;        </span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; [49] &quot;TertGrad&quot;      &quot;FreePress&quot;     &quot;TolMin&quot;        &quot;NGOs&quot;         </span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt; [53] &quot;CPI&quot;           &quot;FemLab&quot;        &quot;WomParl&quot;       &quot;PubDebt&quot;      </span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt; [57] &quot;PrivDebt&quot;      &quot;GDPGrow&quot;       &quot;RDExp&quot;         &quot;NEET&quot;</span></span></code></pre></div>
 <p>So in our example, all the information needed to denominate is
 already present in the coin - the denominator data, and the mapping. In
 this case, to denominate, we simply call:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build example coin</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">up_to =</span> <span class="st">&quot;new_coin&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># denominate (here, we only need to say which dset to use)</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Denominate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># build example coin</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">up_to =</span> <span class="st">&quot;new_coin&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co"># denominate (here, we only need to say which dset to use)</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Denominate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span></code></pre></div>
 <p>If the denomination data and/or mapping isn’t present in the coin, or
 we wish to try an alternative specification, we can also pass this to
 <code>Denominate()</code> using the <code>denoms</code> and
@@ -494,7 +494,7 @@ transformation because each data point is divided by a different value.
 To demonstrate, consider the “Flights” indicator that we just
 denominated - let’s plot the raw indicator against the denominated
 version:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_scatter</span>(coin, <span class="at">dsets =</span> <span class="fu">c</span>(<span class="st">&quot;Raw&quot;</span>, <span class="st">&quot;Denominated&quot;</span>), <span class="at">iCodes =</span> <span class="st">&quot;Flights&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">plot_scatter</span>(coin, <span class="at">dsets =</span> <span class="fu">c</span>(<span class="st">&quot;Raw&quot;</span>, <span class="st">&quot;Denominated&quot;</span>), <span class="at">iCodes =</span> <span class="st">&quot;Flights&quot;</span>)</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>This shows that the raw and denominated indicators show very little
 resemblance to one another.</p>
@@ -518,16 +518,16 @@ accurately, I leave that up to you!).</p>
 <p>In our example purse, the denominator data is already included, as is
 the mapping. This means that denomination is exactly the same operation
 as denominating a coin:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build example purse</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">build_example_purse</span>(<span class="at">up_to =</span> <span class="st">&quot;new_coin&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># denominate using data/specs already included in coin</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">Denominate</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># build example purse</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">build_example_purse</span>(<span class="at">up_to =</span> <span class="st">&quot;new_coin&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co"># denominate using data/specs already included in coin</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">Denominate</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span></code></pre></div>
 <p>In fact if you try to pass denominator data to
 <code>Denominate()</code> for a purse via <code>denoms</code>, there is
 a catch: at the moment, <code>denoms</code> does not support panel data,

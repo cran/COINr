@@ -149,10 +149,12 @@ new_coin <- function(iData, iMeta, exclude = NULL, split_to = NULL,
     iMeta <- as.data.frame(iMeta)
   }
 
+  # change any integer to numeric
+  iData_codes <- colnames(iData)[colnames(iData) %nin% c("uCode", "uName", "Time")]
+  iData[iData_codes] <- df_int_2_numeric(iData[iData_codes])
+
   # CROSS CHECKS
   # Make sure iData codes are all in iMeta, excluding special codes
-
-  iData_codes <- colnames(iData)[colnames(iData) %nin% c("uCode", "uName", "Time")]
 
   if(any(iData_codes %nin% iMeta$iCode)){
     stop("Column names from iData not found in iMeta (excluding special columns).")
@@ -553,9 +555,16 @@ check_iMeta <- function(iMeta, quietly = FALSE){
     stop("Level column has missing entries between 1 and max(Level).")
   }
 
+  # where Type is Aggregate, level must be above 1
+  level1_aggs <- iMeta$Level[iMeta$Type == "Aggregate"] == 1
+  if(any(level1_aggs)){
+    stop("One or more entries in iMeta$Level is 1 where iMeta$Type is 'Aggregate'. Aggregates must have level 2 or higher.")
+  }
+
   # iCode should have no duplicates
-  if(anyDuplicated(iMeta$iCode) != 0){
-    stop("Duplicate entries in iCode.")
+  duplicate_codes <- iMeta$iCode[duplicated(iMeta$iCode)]
+  if(length(duplicate_codes) != 0){
+    stop("Duplicate entries in iCode: ", paste0(duplicate_codes, collapse = ", "))
   }
   # iCode should not start with a number
   num_start <- substring(iMeta$iCode, 1,1) %in% 0:9
@@ -735,11 +744,19 @@ get_lineage <- function(iMeta, level_names = NULL){
   # find max level
   maxlev <- max(iMeta$Level, na.rm = TRUE)
 
-  # successively add columns by looking up parent codes of last col
-  for(ii in 2:(maxlev-1)){
-    wideS <- cbind(wideS,
-                   longS$Parent[match(wideS[[ii]], longS$iCode)])
+  # catch possibility of only one level (may not make sense to make a coin in that
+  # situation, to be seen)
+  if(maxlev == 1){
+    wideS <- wideS["iCode"]
+    warning("Only one level is defined in iMeta. This is not normally expected in a composite indicator, and some functions may not work as expected.", call. = FALSE)
+  } else {
+    # successively add columns by looking up parent codes of last col
+    for(ii in 2:(maxlev-1)){
+      wideS <- cbind(wideS,
+                     longS$Parent[match(wideS[[ii]], longS$iCode)])
+    }
   }
+
 
   # rename columns
   if(is.null(level_names)){
@@ -751,8 +768,10 @@ get_lineage <- function(iMeta, level_names = NULL){
   }
   colnames(wideS) <- level_names
 
-  # reorder finally starting with highest level and working down
-  wideS[do.call(order, rev(wideS)), ]
-
-
+  if(maxlev == 1){
+    return(wideS)
+  } else {
+    # reorder finally starting with highest level and working down
+    wideS[do.call(order, rev(wideS)), ]
+  }
 }

@@ -351,47 +351,47 @@ such as Cronbach’s alpha and principal component analysis.</p>
 <h1>Indicator statistics</h1>
 <p>Indicator statistics can be obtained using the
 <code>get_stats()</code> function.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load COINr</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># build example coin</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span>  <span class="fu">build_example_coin</span>(<span class="at">up_to =</span> <span class="st">&quot;new_coin&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># get table of indicator statistics for raw data set</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>stat_table <span class="ot">&lt;-</span> <span class="fu">get_stats</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">out2 =</span> <span class="st">&quot;df&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># load COINr</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># build example coin</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>coin <span class="ot">&lt;-</span>  <span class="fu">build_example_coin</span>(<span class="at">up_to =</span> <span class="st">&quot;new_coin&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co"># get table of indicator statistics for raw data set</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>stat_table <span class="ot">&lt;-</span> <span class="fu">get_stats</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">out2 =</span> <span class="st">&quot;df&quot;</span>)</span></code></pre></div>
 <p>The resulting data frame has 18 columns, which is hard to display
 concisely here. Therefore we will look at the columns in groups of
 five.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(stat_table[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">5</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     iCode  Min    Max  Mean Median</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     LPI 2.07   4.23  3.41   3.42</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Flights 0.99 211.00 38.60  25.60</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    Ship 0.00  21.20 12.00  12.70</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    Bord 0.00 122.00 23.60  18.00</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    Elec 0.00 110.00 16.20   6.91</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">head</span>(stat_table[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">5</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt;     iCode  Min    Max  Mean Median</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; 1     LPI 2.07   4.23  3.41   3.42</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; 2 Flights 0.99 211.00 38.60  25.60</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; 3    Ship 0.00  21.20 12.00  12.70</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; 4    Bord 0.00 122.00 23.60  18.00</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; 5    Elec 0.00 110.00 16.20   6.91</span></span></code></pre></div>
 <p>Each row is one of the indicators from the targeted data set. Then
 columns are statistics, here obvious things like the minimum, maximum,
 mean and median.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(stat_table[<span class="dv">6</span><span class="sc">:</span><span class="dv">10</span>], <span class="dv">5</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      Std   Skew   Kurt N.Avail N.NonZero</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  0.538 -0.304 -0.657      51        51</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 46.700  2.100  4.510      51        51</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  6.840 -0.576 -0.681      51        42</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 24.800  2.150  5.790      51        45</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 22.700  2.230  5.790      51        47</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">head</span>(stat_table[<span class="dv">6</span><span class="sc">:</span><span class="dv">10</span>], <span class="dv">5</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt;      Std   Skew   Kurt N.Avail N.NonZero</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; 1  0.538 -0.304 -0.657      51        51</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; 2 46.700  2.100  4.510      51        51</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; 3  6.840 -0.576 -0.681      51        42</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; 4 24.800  2.150  5.790      51        45</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; 5 22.700  2.230  5.790      51        47</span></span></code></pre></div>
 <p>In the first three columns here we find the standard deviation,
 skewness and kurtosis. The remaining two columns are “N.Avail”, which is
 the number of non-<code>NA</code> data points, and “N.NonZero”, the
 number of non-zero points. This latter can be of interest because some
 indicators may have a high proportion of zeroes, which can be
 problematic.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(stat_table[<span class="dv">11</span><span class="sc">:</span><span class="dv">15</span>], <span class="dv">5</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   N.Unique N.Same Frc.Avail Frc.NonZero Frc.Unique</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       51      1         1       1.000      1.000</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2       51      1         1       1.000      1.000</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3       43      9         1       0.824      0.843</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4       30      6         1       0.882      0.588</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5       46      4         1       0.922      0.902</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">head</span>(stat_table[<span class="dv">11</span><span class="sc">:</span><span class="dv">15</span>], <span class="dv">5</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt;   N.Unique N.Same Frc.Avail Frc.NonZero Frc.Unique</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; 1       51      1         1       1.000      1.000</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; 2       51      1         1       1.000      1.000</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; 3       43      9         1       0.824      0.843</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; 4       30      6         1       0.882      0.588</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; 5       46      4         1       0.922      0.902</span></span></code></pre></div>
 <p>Here we have “N.Unique”, which is the number of unique data points
 (i.e. excluding duplicate values). The following three columns are
 similar to previous columns, e.g. “Frc.Avail” is the fraction of data
@@ -400,13 +400,13 @@ The final column, “Flag.Avail”, is a logical flag: if the data
 availability (“Frc.Avail”) is below the limit specified by the
 <code>t_avail</code> argument of <code>get_stats()</code>, it will be
 flagged as “LOW”.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(stat_table[<span class="dv">16</span><span class="sc">:</span><span class="fu">ncol</span>(stat_table)], <span class="dv">5</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Frc.Same Flag.Avail Flag.NonZero Flag.Unique Flag.SkewKurt</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   0.0196         ok           ok          ok            ok</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   0.0196         ok           ok          ok           OUT</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   0.1760         ok           ok          ok            ok</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   0.1180         ok           ok          ok           OUT</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   0.0784         ok           ok          ok           OUT</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">head</span>(stat_table[<span class="dv">16</span><span class="sc">:</span><span class="fu">ncol</span>(stat_table)], <span class="dv">5</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt;   Frc.Same Flag.Avail Flag.NonZero Flag.Unique Flag.SkewKurt</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; 1   0.0196         ok           ok          ok            ok</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; 2   0.0196         ok           ok          ok           OUT</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; 3   0.1760         ok           ok          ok            ok</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; 4   0.1180         ok           ok          ok           OUT</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; 5   0.0784         ok           ok          ok           OUT</span></span></code></pre></div>
 <p>The first two final columns are analogous to “Flag.Avail” and have
 thresholds which are controlled by arguments to
 <code>get_stats()</code>. The final column is a basic test of outliers
@@ -422,32 +422,32 @@ flagged here could be considered for outlier treatment.</p>
 <p>The same kind of analysis can be performed for units, rather than
 indicators. Here, the main thing of interest is data availability, which
 can be obtained throug the <code>get_data_avail()</code> function.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>l_dat <span class="ot">&lt;-</span> <span class="fu">get_data_avail</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">out2 =</span> <span class="st">&quot;list&quot;</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(l_dat, <span class="at">max.level =</span> <span class="dv">1</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; List of 2</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Summary:&#39;data.frame&#39;: 51 obs. of  6 variables:</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ ByGroup:&#39;data.frame&#39;: 51 obs. of  12 variables:</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>l_dat <span class="ot">&lt;-</span> <span class="fu">get_data_avail</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">out2 =</span> <span class="st">&quot;list&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">str</span>(l_dat, <span class="at">max.level =</span> <span class="dv">1</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; List of 2</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt;  $ Summary:&#39;data.frame&#39;: 51 obs. of  6 variables:</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt;  $ ByGroup:&#39;data.frame&#39;: 51 obs. of  12 variables:</span></span></code></pre></div>
 <p>Here we see the output is a list with two data frames. The first is a
 summary for each unit:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(l_dat<span class="sc">$</span>Summary, <span class="dv">5</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    uCode N_missing N_zero N_miss_or_zero Dat_Avail  Non_Zero</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31   AUS         0      3              3  1.000000 0.9387755</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    AUT         0      2              2  1.000000 0.9591837</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    BEL         0      2              2  1.000000 0.9591837</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 32   BGD         6      1              7  0.877551 0.9767442</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    BGR         0      0              0  1.000000 1.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">head</span>(l_dat<span class="sc">$</span>Summary, <span class="dv">5</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt;    uCode N_missing N_zero N_miss_or_zero Dat_Avail  Non_Zero</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; 31   AUS         0      3              3  1.000000 0.9387755</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; 1    AUT         0      2              2  1.000000 0.9591837</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; 2    BEL         0      2              2  1.000000 0.9591837</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; 32   BGD         6      1              7  0.877551 0.9767442</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; 3    BGR         0      0              0  1.000000 1.0000000</span></span></code></pre></div>
 <p>Each unit has its number of missing points, zero points,
 missing-or-zero points, as well as the percentage data availability and
 percentage non-zero. The “ByGroup” data frame gives data availability
 within aggregation groups:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(l_dat<span class="sc">$</span>ByGroup[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">5</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    uCode ConEcFin    Instit  P2P Physical</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31   AUS        1 1.0000000 1.00    1.000</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    AUT        1 1.0000000 1.00    1.000</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    BEL        1 1.0000000 1.00    1.000</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 32   BGD        1 0.8333333 0.75    0.875</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    BGR        1 1.0000000 1.00    1.000</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">head</span>(l_dat<span class="sc">$</span>ByGroup[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">5</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt;    uCode ConEcFin    Instit  P2P Physical</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt; 31   AUS        1 1.0000000 1.00    1.000</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt; 1    AUT        1 1.0000000 1.00    1.000</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; 2    BEL        1 1.0000000 1.00    1.000</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; 32   BGD        1 0.8333333 0.75    0.875</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; 3    BGR        1 1.0000000 1.00    1.000</span></span></code></pre></div>
 <p>Here we just view the first few columns to save space. The values are
 the fraction of indicator availability within each aggregation
 group.</p>
@@ -465,33 +465,33 @@ indicators/aggregates to be correlated against almost any other set. We
 won’t go over the full functionality here because this is covered in <a href="visualisation.html">Visualisation</a> vignette. However to
 demonstrate a couple of examples we begin by building the full example
 coin up to the aggregated data set.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Now we can take some examples. First, to get the correlations between
 indicators within the Environmental group:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get correlations</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>cmat <span class="ot">&lt;-</span> <span class="fu">get_corr</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="fu">list</span>(<span class="st">&quot;Environ&quot;</span>), <span class="at">Levels =</span> <span class="dv">1</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># examine first few rows</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cmat)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       Var1   Var2 Correlation</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1      CO2    CO2   1.0000000</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   Forest    CO2          NA</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   MatCon    CO2   0.7222051</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 PrimEner    CO2   0.3268484</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    Renew    CO2  -0.5986338</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6      CO2 Forest          NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># get correlations</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>cmat <span class="ot">&lt;-</span> <span class="fu">get_corr</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="fu">list</span>(<span class="st">&quot;Environ&quot;</span>), <span class="at">Levels =</span> <span class="dv">1</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co"># examine first few rows</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="fu">head</span>(cmat)</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt;       Var1   Var2 Correlation</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; 1      CO2    CO2   1.0000000</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; 2   Forest    CO2          NA</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; 3   MatCon    CO2   0.7222051</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt; 4 PrimEner    CO2   0.3268484</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; 5    Renew    CO2  -0.5986338</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; 6      CO2 Forest          NA</span></span></code></pre></div>
 <p>Here we see that the default output of <code>get_corr()</code> is a
 long-format correlation table. If you want the wide format, set
 <code>make_long = FALSE</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get correlations</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>cmat <span class="ot">&lt;-</span> <span class="fu">get_corr</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="fu">list</span>(<span class="st">&quot;Environ&quot;</span>), <span class="at">Levels =</span> <span class="dv">1</span>, <span class="at">make_long =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># examine first few rows</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round_df</span>(<span class="fu">head</span>(cmat), <span class="dv">2</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     CO2 Forest MatCon PrimEner Renew</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  1.00     NA   0.72     0.33 -0.60</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    NA   1.00     NA       NA  0.35</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  0.72     NA   1.00     0.38 -0.42</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  0.33     NA   0.38     1.00    NA</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 -0.60   0.35  -0.42       NA  1.00</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># get correlations</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>cmat <span class="ot">&lt;-</span> <span class="fu">get_corr</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="fu">list</span>(<span class="st">&quot;Environ&quot;</span>), <span class="at">Levels =</span> <span class="dv">1</span>, <span class="at">make_long =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co"># examine first few rows</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="fu">round_df</span>(<span class="fu">head</span>(cmat), <span class="dv">2</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">#&gt;     CO2 Forest MatCon PrimEner Renew</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt; 1  1.00     NA   0.72     0.33 -0.60</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; 2    NA   1.00     NA       NA  0.35</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt; 3  0.72     NA   1.00     0.38 -0.42</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; 4  0.33     NA   0.38     1.00    NA</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt; 5 -0.60   0.35  -0.42       NA  1.00</span></span></code></pre></div>
 <p>This gives the more classical-looking correlation matrix, although
 the long format can sometimes be easier to work with for futher
 processing. One further option that is worth mentioning is
@@ -509,11 +509,11 @@ and is more of a helper function but may still be useful.</p>
 first is <code>get_corr_flags()</code>. This is a useful function for
 finding correlations between indicators that exceed or fall below a
 given threshold, within aggregation groups:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_corr_flags</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">cor_thresh =</span> <span class="fl">0.75</span>,</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">thresh_type =</span> <span class="st">&quot;high&quot;</span>, <span class="at">grouplev =</span> <span class="dv">2</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      Group Ind1      Ind2  Corr</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 113 Social  CPI FreePress 0.761</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 116 Social  CPI      NGOs 0.768</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">get_corr_flags</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">cor_thresh =</span> <span class="fl">0.75</span>,</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>               <span class="at">thresh_type =</span> <span class="st">&quot;high&quot;</span>, <span class="at">grouplev =</span> <span class="dv">2</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt;      Group Ind1      Ind2  Corr</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt; 113 Social  CPI FreePress 0.761</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt; 116 Social  CPI      NGOs 0.768</span></span></code></pre></div>
 <p>Here we have identified any correlations above 0.75, from the
 “Normalised” data set, that are between indicators in the same group in
 level 2. Actually 0.75 is quite low for searching for “high
@@ -521,12 +521,12 @@ correlations”, but it is used as an example here because the example
 data set doesn’t have any very high correlations.</p>
 <p>By switching <code>thresh_type = &quot;low&quot;</code> we can similarly look
 for low/negative correlations:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_corr_flags</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">cor_thresh =</span> <span class="sc">-</span><span class="fl">0.5</span>,</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">thresh_type =</span> <span class="st">&quot;low&quot;</span>, <span class="at">grouplev =</span> <span class="dv">2</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       Group      Ind1   Ind2   Corr</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 215  Instit CostImpEx   TBTs -0.697</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1713 Instit      RTAs   TBTs -0.752</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1998 Instit      TBTs TIRcon -0.623</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">get_corr_flags</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">cor_thresh =</span> <span class="sc">-</span><span class="fl">0.5</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>               <span class="at">thresh_type =</span> <span class="st">&quot;low&quot;</span>, <span class="at">grouplev =</span> <span class="dv">2</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt;       Group      Ind1   Ind2   Corr</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; 215  Instit CostImpEx   TBTs -0.697</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co">#&gt; 1713 Instit      RTAs   TBTs -0.752</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co">#&gt; 1998 Instit      TBTs TIRcon -0.623</span></span></code></pre></div>
 <p>Our example has some fairly significant negative correlations! All
 within the “Institutional” group, and with the Technical Barriers to
 Trade indicator.</p>
@@ -538,18 +538,18 @@ help to identify in some cases <em>whether</em> to denominate an
 indicator and <em>with what</em> - i.e. if an indicator is strongly
 related with a denominator that means it is dependent on it, which may
 be a reason to denominate.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_denom_corr</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">cor_thresh =</span> <span class="fl">0.7</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          Ind  Denom Corr</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 70  CultGood Energy 0.71</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 119 CultGood    GDP 0.85</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 52       FDI Energy 0.74</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 101      FDI    GDP 0.85</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 99     Goods    GDP 0.80</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 102   PRemit    GDP 0.71</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 116 Research    GDP 0.78</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 100 Services    GDP 0.77</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 66     StMob Energy 0.73</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 115    StMob    GDP 0.84</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">get_denom_corr</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">cor_thresh =</span> <span class="fl">0.7</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">#&gt;          Ind  Denom Corr</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt; 70  CultGood Energy 0.71</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; 119 CultGood    GDP 0.85</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; 52       FDI Energy 0.74</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; 101      FDI    GDP 0.85</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt; 99     Goods    GDP 0.80</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; 102   PRemit    GDP 0.71</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; 116 Research    GDP 0.78</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt; 100 Services    GDP 0.77</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt; 66     StMob Energy 0.73</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#&gt; 115    StMob    GDP 0.84</span></span></code></pre></div>
 <p>Using a threshold of 0.7, and examining the raw data set, we see that
 several indicators are strongly related to the denominators, a classical
 example being export value of goods (Goods) being well correlated with
@@ -561,8 +561,8 @@ the ASEM example, but also for conceptual reasons.</p>
 <p>A first simple tool is to calculate Cronbach’s alpha. This can be
 done with any group of indicators, either the full set, or else
 targeting specific groups.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_cronbach</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="st">&quot;P2P&quot;</span>, <span class="at">Level =</span> <span class="dv">1</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.05126659</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">get_cronbach</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="st">&quot;P2P&quot;</span>, <span class="at">Level =</span> <span class="dv">1</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.05126659</span></span></code></pre></div>
 <p>This simply calculates Cronbach’s alpha (a measure of statistical
 consistency) for the “P2P” group (People to People connectivity, this
 case).</p>
@@ -570,42 +570,42 @@ case).</p>
 (PCA). Although, like correlation, this is built into base R, the
 <code>get_PCA()</code> function makes it easier to obtain PCA for groups
 of indicators, following the structure of the index.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>l_pca <span class="ot">&lt;-</span> <span class="fu">get_PCA</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="st">&quot;Sust&quot;</span>, <span class="at">out2 =</span> <span class="st">&quot;list&quot;</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in PCAwts(parents[ii]): 1 missing values found. Removing 1 rows with missing values in order to perform</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; PCA. You can also try imputing data first to avoid this.</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in PCAwts(parents[ii]): 22 missing values found. Removing 14 rows with missing values in order to perform</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; PCA. You can also try imputing data first to avoid this.</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in PCAwts(parents[ii]): 8 missing values found. Removing 7 rows with missing values in order to perform</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; PCA. You can also try imputing data first to avoid this.</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>l_pca <span class="ot">&lt;-</span> <span class="fu">get_PCA</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="st">&quot;Sust&quot;</span>, <span class="at">out2 =</span> <span class="st">&quot;list&quot;</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="co">#&gt; Warning in PCAwts(parents[ii]): 1 missing values found. Removing 1 rows with missing values in order to perform</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="co">#&gt; PCA. You can also try imputing data first to avoid this.</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co">#&gt; Warning in PCAwts(parents[ii]): 22 missing values found. Removing 14 rows with missing values in order to perform</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co">#&gt; PCA. You can also try imputing data first to avoid this.</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="co">#&gt; Warning in PCAwts(parents[ii]): 8 missing values found. Removing 7 rows with missing values in order to perform</span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co">#&gt; PCA. You can also try imputing data first to avoid this.</span></span></code></pre></div>
 <p>The function can return its results either as a list, or appended to
 the coin if <code>out2 = &quot;coin&quot;</code>. Here the output is a list and we
 will explore its output. First note the warnings above due to missing
 data, which can be suppressed using <code>nowarnings = TRUE</code>. The
 output list looks like this:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(l_pca, <span class="at">max.level =</span> <span class="dv">1</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; List of 2</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Weights   :&#39;data.frame&#39;:  60 obs. of  3 variables:</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ PCAresults:List of 3</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">str</span>(l_pca, <span class="at">max.level =</span> <span class="dv">1</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="co">#&gt; List of 2</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="co">#&gt;  $ Weights   :&#39;data.frame&#39;:  60 obs. of  3 variables:</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co">#&gt;  $ PCAresults:List of 3</span></span></code></pre></div>
 <p>I.e. we have a data frame of “PCA weights” and some PCA results. We
 ignore the weights for the moment and look closer at the PCA
 results:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(l_pca<span class="sc">$</span>PCAresults, <span class="at">max.level =</span> <span class="dv">2</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; List of 3</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Environ :List of 3</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..$ wts   : num [1:5] -0.581 0.214 -0.543 -0.313 0.473</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..$ PCAres:List of 5</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;class&quot;)= chr &quot;prcomp&quot;</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..$ iCodes: chr [1:5] &quot;CO2&quot; &quot;Forest&quot; &quot;MatCon&quot; &quot;PrimEner&quot; ...</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Social  :List of 3</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..$ wts   : num [1:9] -0.417 -0.324 0.401 -0.191 0.302 ...</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..$ PCAres:List of 5</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;class&quot;)= chr &quot;prcomp&quot;</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..$ iCodes: chr [1:9] &quot;CPI&quot; &quot;FemLab&quot; &quot;FreePress&quot; &quot;NGOs&quot; ...</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ SusEcFin:List of 3</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..$ wts   : num [1:5] 0.472 0.451 -0.492 -0.227 -0.53</span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..$ PCAres:List of 5</span></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;class&quot;)= chr &quot;prcomp&quot;</span></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ..$ iCodes: chr [1:5] &quot;GDPGrow&quot; &quot;NEET&quot; &quot;PrivDebt&quot; &quot;PubDebt&quot; ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">str</span>(l_pca<span class="sc">$</span>PCAresults, <span class="at">max.level =</span> <span class="dv">2</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="co">#&gt; List of 3</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="co">#&gt;  $ Environ :List of 3</span></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="co">#&gt;   ..$ wts   : num [1:5] -0.581 0.214 -0.543 -0.313 0.473</span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="co">#&gt;   ..$ PCAres:List of 5</span></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;class&quot;)= chr &quot;prcomp&quot;</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co">#&gt;   ..$ iCodes: chr [1:5] &quot;CO2&quot; &quot;Forest&quot; &quot;MatCon&quot; &quot;PrimEner&quot; ...</span></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="co">#&gt;  $ Social  :List of 3</span></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="co">#&gt;   ..$ wts   : num [1:9] -0.417 -0.324 0.401 -0.191 0.302 ...</span></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co">#&gt;   ..$ PCAres:List of 5</span></span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;class&quot;)= chr &quot;prcomp&quot;</span></span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a><span class="co">#&gt;   ..$ iCodes: chr [1:9] &quot;CPI&quot; &quot;FemLab&quot; &quot;FreePress&quot; &quot;NGOs&quot; ...</span></span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a><span class="co">#&gt;  $ SusEcFin:List of 3</span></span>
+<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a><span class="co">#&gt;   ..$ wts   : num [1:5] 0.472 0.451 -0.492 -0.227 -0.53</span></span>
+<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a><span class="co">#&gt;   ..$ PCAres:List of 5</span></span>
+<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a><span class="co">#&gt;   .. ..- attr(*, &quot;class&quot;)= chr &quot;prcomp&quot;</span></span>
+<span id="cb18-17"><a href="#cb18-17" tabindex="-1"></a><span class="co">#&gt;   ..$ iCodes: chr [1:5] &quot;GDPGrow&quot; &quot;NEET&quot; &quot;PrivDebt&quot; &quot;PubDebt&quot; ...</span></span></code></pre></div>
 <p>By default, <code>get_PCA()</code> will run a separate PCA for each
 aggregation group within the specified level. In this case, it has run
 three: one for each of the “Environ”, “Social” and “SusEcFin” groups.
@@ -615,17 +615,17 @@ group, <code>PCAres</code>, which is the direct output of
 corresponding vector of indicator codes for the group.</p>
 <p>We can do some basic PCA analysis using base R’s tools using the
 “PCAres” objects, e.g.:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summarise PCA results for &quot;Social&quot; group</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(l_pca<span class="sc">$</span>PCAresults<span class="sc">$</span>Social<span class="sc">$</span>PCAres)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Importance of components:</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                           PC1    PC2    PC3     PC4     PC5     PC6     PC7</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Standard deviation     2.2042 1.1256 0.9788 0.78834 0.77153 0.56836 0.42463</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance 0.5398 0.1408 0.1065 0.06905 0.06614 0.03589 0.02003</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion  0.5398 0.6806 0.7871 0.85611 0.92225 0.95814 0.97817</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                            PC8     PC9</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Standard deviation     0.36068 0.25760</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance 0.01445 0.00737</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion  0.99263 1.00000</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co"># summarise PCA results for &quot;Social&quot; group</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">summary</span>(l_pca<span class="sc">$</span>PCAresults<span class="sc">$</span>Social<span class="sc">$</span>PCAres)</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="co">#&gt; Importance of components:</span></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="co">#&gt;                           PC1    PC2    PC3     PC4     PC5     PC6     PC7</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="co">#&gt; Standard deviation     2.2042 1.1256 0.9788 0.78834 0.77153 0.56836 0.42463</span></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance 0.5398 0.1408 0.1065 0.06905 0.06614 0.03589 0.02003</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion  0.5398 0.6806 0.7871 0.85611 0.92225 0.95814 0.97817</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="co">#&gt;                            PC8     PC9</span></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co">#&gt; Standard deviation     0.36068 0.25760</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co">#&gt; Proportion of Variance 0.01445 0.00737</span></span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="co">#&gt; Cumulative Proportion  0.99263 1.00000</span></span></code></pre></div>
 <p>See <code>stats::prcomp()</code> and elsewhere for more resources on
 PCA in R.</p>
 <p>Now turning to the weighting, <code>get_PCA()</code> also outputs a

@@ -179,19 +179,41 @@ widen <- function(X){
 }
 
 
-# Convert iCodes to iNames
-#
-# @param coin A coin
-# @param iCodes A vector of iCodes
-#
-# @return Vector of iNames
-codes2names <- function(coin, iCodes){
+#' Convert iCodes to iNames
+#'
+#' @param coin A coin
+#' @param iCodes A vector of iCodes
+#'
+#' @return Vector of iNames
+#' @export
+icodes_to_inames <- function(coin, iCodes){
+
+  stopifnot(is.coin(coin))
 
   iMeta <- coin$Meta$Ind
 
   stopifnot(all(iCodes %in% iMeta$iCode))
 
   iMeta$iName[match(iCodes, iMeta$iCode)]
+
+}
+
+#' Convert uCodes to uNames
+#'
+#' @param coin A coin
+#' @param uCodes A vector of uCodes
+#'
+#' @return Vector of uNames
+#' @export
+ucodes_to_unames <- function(coin, uCodes){
+
+  stopifnot(is.coin(coin))
+
+  uMeta <- coin$Meta$Unit
+
+  stopifnot(all(uCodes %in% uMeta$uCode))
+
+  uMeta$uName[match(uCodes, uMeta$uCode)]
 
 }
 
@@ -260,5 +282,24 @@ remove_duplicate_corrs <- function(X, cols){
   X1 = X[,cols]
   duplicated_rows <- duplicated(t(apply(X1, 1, sort)))
   X[!duplicated_rows, ]
+
+}
+
+# convert integer columns to numeric (intended for iData)
+df_int_2_numeric <- function(X){
+
+  # convert integer cols to numeric (iData)
+  rnames <- row.names(X)
+  col_names <- names(X)
+  X <- lapply(col_names, function(col_name){
+    x <- X[[col_name]]
+    if(is.integer(x)){
+      message("iData column '", col_name, "' converted from integer to numeric.")
+      as.numeric(x)
+    } else x
+  }) |> as.data.frame()
+  row.names(X) <- rnames
+  names(X) <- col_names
+  X
 
 }

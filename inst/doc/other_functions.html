@@ -349,13 +349,13 @@ export, and some helper functions.</p>
 This can be used to export the contents of a coin to Excel at at any
 point in its construction, and is very simple to run. We first build the
 example coin:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># build example coin</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># build example coin</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Then export to Excel:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># export coin to Excel</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">export_to_excel</span>(coin, <span class="at">fname =</span> <span class="st">&quot;example_coin_results.xlsx&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># export coin to Excel</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">export_to_excel</span>(coin, <span class="at">fname =</span> <span class="st">&quot;example_coin_results.xlsx&quot;</span>)</span></code></pre></div>
 <p>This exports every data frame in the coin to a separate tab in the
 workbook, named according to its position in the coin. By default it
 excludes the Log of the coin, but this can be optionally included. The
@@ -369,9 +369,9 @@ from the COIN Tool to cross check or extend your analysis in COINr.</p>
 <p>To demonstrate, we can take the example version of the COIN Tool,
 which you can download <a href="https://composite-indicators.jrc.ec.europa.eu/sites/default/files/COIN_Tool_v1_LITE_exampledata.xlsm">here</a>.
 Then it’s as simple as running:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make sure file is in working directory!</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>coin_import <span class="ot">&lt;-</span> <span class="fu">import_coin_tool</span>(<span class="st">&quot;COIN_Tool_v1_LITE_exampledata.xlsm&quot;</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">makecodes =</span> <span class="cn">TRUE</span>, <span class="at">out2 =</span> <span class="st">&quot;coin&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># make sure file is in working directory!</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>coin_import <span class="ot">&lt;-</span> <span class="fu">import_coin_tool</span>(<span class="st">&quot;COIN_Tool_v1_LITE_exampledata.xlsm&quot;</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>                                <span class="at">makecodes =</span> <span class="cn">TRUE</span>, <span class="at">out2 =</span> <span class="st">&quot;coin&quot;</span>)</span></code></pre></div>
 <p>This will directly generate a coin from the COIN Tool.</p>
 </div>
 <div id="converting-from-older-coinr-versions" class="section level1">
@@ -382,7 +382,7 @@ called a “coin” and this is different from the “COIN” used up to v0.6.x.
 If you have worked in COINr before v1.0, you can use the
 <code>COIN_to_coin()</code> function to convert old COINs into new
 coins:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">COIN_to_coin</span>(COIN)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">COIN_to_coin</span>(COIN)</span></code></pre></div>
 <p>This comes with some limitations: any data sets present in the coin
 will not be passed on unless <code>recover_dsets = TRUE</code>. However,
 if this is specified, the coin cannot be regenerated because it is not
@@ -396,49 +396,49 @@ having to reformat <code>iData</code> and <code>iMeta</code>.</p>
 circumstances.</p>
 <p>The <code>rank_df()</code> function converts a data frame to ranks,
 ignoring non-numeric columns. Taking some sample data:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> ASEM_iData[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">10</span><span class="sc">:</span><span class="dv">12</span>)]</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>X</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode       GDP Population      LPI</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   AUT 390.79999   8735.453 4.097985</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   BEL 467.95527  11429.336 4.108538</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   BGR  53.23964   7084.571 2.807685</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   HRV  51.23100   4189.353 3.160829</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   CYP  20.04623   1179.551 2.999061</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>X <span class="ot">&lt;-</span> ASEM_iData[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">10</span><span class="sc">:</span><span class="dv">12</span>)]</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>X</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt;   uCode       GDP Population      LPI</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; 1   AUT 390.79999   8735.453 4.097985</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; 2   BEL 467.95527  11429.336 4.108538</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; 3   BGR  53.23964   7084.571 2.807685</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; 4   HRV  51.23100   4189.353 3.160829</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; 5   CYP  20.04623   1179.551 2.999061</span></span></code></pre></div>
 <p>This looks like</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rank_df</span>(X)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode GDP Population LPI</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   AUT   2          2   2</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   BEL   1          1   1</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   BGR   3          3   5</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   HRV   4          4   3</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   CYP   5          5   4</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">rank_df</span>(X)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt;   uCode GDP Population LPI</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; 1   AUT   2          2   2</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; 2   BEL   1          1   1</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; 3   BGR   3          3   5</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; 4   HRV   4          4   3</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; 5   CYP   5          5   4</span></span></code></pre></div>
 <p>The <code>replace_df()</code> function replaces values found anywhere
 in a data frame with corresponding new values:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">replace_df</span>(X, <span class="fu">data.frame</span>(<span class="at">old =</span> <span class="fu">c</span>(<span class="st">&quot;AUT&quot;</span>, <span class="st">&quot;BEL&quot;</span>), <span class="at">new =</span> <span class="fu">c</span>(<span class="st">&quot;test1&quot;</span>, <span class="st">&quot;test2&quot;</span>)))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode       GDP Population      LPI</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 test1 390.79999   8735.453 4.097985</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 test2 467.95527  11429.336 4.108538</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   BGR  53.23964   7084.571 2.807685</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   HRV  51.23100   4189.353 3.160829</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   CYP  20.04623   1179.551 2.999061</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">replace_df</span>(X, <span class="fu">data.frame</span>(<span class="at">old =</span> <span class="fu">c</span>(<span class="st">&quot;AUT&quot;</span>, <span class="st">&quot;BEL&quot;</span>), <span class="at">new =</span> <span class="fu">c</span>(<span class="st">&quot;test1&quot;</span>, <span class="st">&quot;test2&quot;</span>)))</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt;   uCode       GDP Population      LPI</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; 1 test1 390.79999   8735.453 4.097985</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; 2 test2 467.95527  11429.336 4.108538</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; 3   BGR  53.23964   7084.571 2.807685</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; 4   HRV  51.23100   4189.353 3.160829</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; 5   CYP  20.04623   1179.551 2.999061</span></span></code></pre></div>
 <p>The <code>round_df()</code> rounds to a specified number of decimal
 places, ignoring non-numeric columns:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round_df</span>(X, <span class="dv">1</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode   GDP Population LPI</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   AUT 390.8     8735.5 4.1</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   BEL 468.0    11429.3 4.1</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   BGR  53.2     7084.6 2.8</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   HRV  51.2     4189.4 3.2</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   CYP  20.0     1179.6 3.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">round_df</span>(X, <span class="dv">1</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt;   uCode   GDP Population LPI</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt; 1   AUT 390.8     8735.5 4.1</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt; 2   BEL 468.0    11429.3 4.1</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; 3   BGR  53.2     7084.6 2.8</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; 4   HRV  51.2     4189.4 3.2</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; 5   CYP  20.0     1179.6 3.0</span></span></code></pre></div>
 <p>The <code>signif_df()</code> is equivalent but for a number of
 significant figures:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">signif_df</span>(X, <span class="dv">3</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode   GDP Population  LPI</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   AUT 391.0       8740 4.10</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   BEL 468.0      11400 4.11</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   BGR  53.2       7080 2.81</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   HRV  51.2       4190 3.16</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   CYP  20.0       1180 3.00</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">signif_df</span>(X, <span class="dv">3</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt;   uCode   GDP Population  LPI</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co">#&gt; 1   AUT 391.0       8740 4.10</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; 2   BEL 468.0      11400 4.11</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt; 3   BGR  53.2       7080 2.81</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; 4   HRV  51.2       4190 3.16</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; 5   CYP  20.0       1180 3.00</span></span></code></pre></div>
 <p>Finally, the <code>compare_df()</code> function gives a detailed
 comparison between two similar data frames that are indexed by a
 specified column. This function is tailored to compare results in
@@ -451,38 +451,38 @@ comparison between the two data frames and points out any
 differences.</p>
 <p>We’ll demonstrate this by copying the example data frame, altering
 some values and seeing what happens:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># copy</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>X1 <span class="ot">&lt;-</span> X</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># change three values</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>X1<span class="sc">$</span>GDP[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="dv">101</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>X1<span class="sc">$</span>Population[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>X1<span class="sc">$</span>Population[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">70000</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># reorder</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>X1 <span class="ot">&lt;-</span> X1[<span class="fu">order</span>(X1<span class="sc">$</span>uCode), ]</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># now compare</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_df</span>(X, X1, <span class="at">matchcol =</span> <span class="st">&quot;uCode&quot;</span>)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Same</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Details</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       Column TheSame                          Comment NDifferent</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1      uCode    TRUE      Non-numerical and identical          0</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2        GDP   FALSE Numerical and different at 5 sf.          1</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Population   FALSE Numerical and different at 5 sf.          2</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4        LPI    TRUE Numerical and identical to 5 sf.          0</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Differences</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Differences$GDP</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode      df1 df2</span></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   BGR 53.23964 101</span></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Differences$Population</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode       df1   df2</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   AUT  8735.453 10000</span></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   BEL 11429.336 70000</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># copy</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>X1 <span class="ot">&lt;-</span> X</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co"># change three values</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>X1<span class="sc">$</span>GDP[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="dv">101</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>X1<span class="sc">$</span>Population[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>X1<span class="sc">$</span>Population[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">70000</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co"># reorder</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>X1 <span class="ot">&lt;-</span> X1[<span class="fu">order</span>(X1<span class="sc">$</span>uCode), ]</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co"># now compare</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="fu">compare_df</span>(X, X1, <span class="at">matchcol =</span> <span class="st">&quot;uCode&quot;</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt; $Same</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt; $Details</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co">#&gt;       Column TheSame                          Comment NDifferent</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a><span class="co">#&gt; 1      uCode    TRUE      Non-numerical and identical          0</span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="co">#&gt; 2        GDP   FALSE Numerical and different at 5 sf.          1</span></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="co">#&gt; 3 Population   FALSE Numerical and different at 5 sf.          2</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a><span class="co">#&gt; 4        LPI    TRUE Numerical and identical to 5 sf.          0</span></span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a><span class="co">#&gt; $Differences</span></span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a><span class="co">#&gt; $Differences$GDP</span></span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a><span class="co">#&gt;   uCode      df1 df2</span></span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a><span class="co">#&gt; 3   BGR 53.23964 101</span></span>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a><span class="co">#&gt; $Differences$Population</span></span>
+<span id="cb10-30"><a href="#cb10-30" tabindex="-1"></a><span class="co">#&gt;   uCode       df1   df2</span></span>
+<span id="cb10-31"><a href="#cb10-31" tabindex="-1"></a><span class="co">#&gt; 1   AUT  8735.453 10000</span></span>
+<span id="cb10-32"><a href="#cb10-32" tabindex="-1"></a><span class="co">#&gt; 2   BEL 11429.336 70000</span></span></code></pre></div>
 <p>The output is a list with several entries. First, it tells us that
 the two data frames are not the same. The “Details” data frame lists
 each column and says whether it is identical or not, and how many

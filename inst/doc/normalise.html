@@ -380,20 +380,20 @@ frame</li>
 </ul>
 <p>Let’s begin with a simple example. We build the example coin and
 normalise the raw data.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># build example coin</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">up_to =</span> <span class="st">&quot;new_coin&quot;</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iData checked and OK.</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iMeta checked and OK.</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Raw</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># normalise the raw data set</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># build example coin</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">up_to =</span> <span class="st">&quot;new_coin&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; iData checked and OK.</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt; iMeta checked and OK.</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Raw</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co"># normalise the raw data set</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span></code></pre></div>
 <p>We can compare one of the raw and un-normalised indicators side by
 side.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_scatter</span>(coin, <span class="at">dsets =</span> <span class="fu">c</span>(<span class="st">&quot;Raw&quot;</span>, <span class="st">&quot;Normalised&quot;</span>), <span class="at">iCodes =</span> <span class="st">&quot;Goods&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">plot_scatter</span>(coin, <span class="at">dsets =</span> <span class="fu">c</span>(<span class="st">&quot;Raw&quot;</span>, <span class="st">&quot;Normalised&quot;</span>), <span class="at">iCodes =</span> <span class="st">&quot;Goods&quot;</span>)</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>This plot also illustrates the linear nature of the min-max
 transformation.</p>
@@ -401,13 +401,13 @@ transformation.</p>
 indicators onto the <span class="math inline">\([0, 100]\)</span>
 interval. But we can change the normalisation type and its parameters
 using the <code>global_specs</code> argument.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>,</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_zscore&quot;</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">2</span>))))</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>                   <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_zscore&quot;</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>                                        <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">2</span>))))</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
 <p>Again, let’s plot an example of the result:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_scatter</span>(coin, <span class="at">dsets =</span> <span class="fu">c</span>(<span class="st">&quot;Raw&quot;</span>, <span class="st">&quot;Normalised&quot;</span>), <span class="at">iCodes =</span> <span class="st">&quot;Goods&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">plot_scatter</span>(coin, <span class="at">dsets =</span> <span class="fu">c</span>(<span class="st">&quot;Raw&quot;</span>, <span class="st">&quot;Normalised&quot;</span>), <span class="at">iCodes =</span> <span class="st">&quot;Goods&quot;</span>)</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>Again, the z-score transformation is linear. It simply puts the
 resulting indicator on a different scale.</p>
@@ -432,20 +432,20 @@ function for this purpose. We simply need to specify the number of bins.
 We could directly call <code>cut()</code>, but for clarity we will
 create a simple wrapper function around it, then pass that function to
 <code>Normalise()</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wrapper function</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>f_bin <span class="ot">&lt;-</span> <span class="cf">function</span>(x, nbins){</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cut</span>(x, <span class="at">breaks =</span> nbins, <span class="at">labels =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># pass wrapper to normalise, specify 5 bins</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;f_bin&quot;</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">nbins =</span> <span class="dv">5</span>)))</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># wrapper function</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>f_bin <span class="ot">&lt;-</span> <span class="cf">function</span>(x, nbins){</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">cut</span>(x, <span class="at">breaks =</span> nbins, <span class="at">labels =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>}</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co"># pass wrapper to normalise, specify 5 bins</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>                   <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;f_bin&quot;</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>                                        <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">nbins =</span> <span class="dv">5</span>)))</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
 <p>To illustrate the difference with the linear transformations above,
 we again plot the raw against normalised indicator:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_scatter</span>(coin, <span class="at">dsets =</span> <span class="fu">c</span>(<span class="st">&quot;Raw&quot;</span>, <span class="st">&quot;Normalised&quot;</span>), <span class="at">iCodes =</span> <span class="st">&quot;Goods&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">plot_scatter</span>(coin, <span class="at">dsets =</span> <span class="fu">c</span>(<span class="st">&quot;Raw&quot;</span>, <span class="st">&quot;Normalised&quot;</span>), <span class="at">iCodes =</span> <span class="st">&quot;Goods&quot;</span>)</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>Obviously this is <em>not</em> linear.</p>
 <p>Generally, the requirements of a function to be passed to
@@ -468,30 +468,30 @@ target data set) and <code>Direction</code> giving the direction as -1
 or 1.</p>
 <p>To show an example, we take the existing directions from the coin,
 modify them slightly, and then run the normalisation function again:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get directions from coin</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>directions <span class="ot">&lt;-</span> coin<span class="sc">$</span>Meta<span class="sc">$</span>Ind[<span class="fu">c</span>(<span class="st">&quot;iCode&quot;</span>, <span class="st">&quot;Direction&quot;</span>)]</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(directions, <span class="dv">10</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       iCode Direction</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9     Goods         1</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Services         1</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11      FDI         1</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12   PRemit         1</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13  ForPort         1</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31    Renew         1</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 32 PrimEner        -1</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 33      CO2        -1</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 34   MatCon        -1</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 35   Forest        -1</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># get directions from coin</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>directions <span class="ot">&lt;-</span> coin<span class="sc">$</span>Meta<span class="sc">$</span>Ind[<span class="fu">c</span>(<span class="st">&quot;iCode&quot;</span>, <span class="st">&quot;Direction&quot;</span>)]</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="fu">head</span>(directions, <span class="dv">10</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt;       iCode Direction</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; 9     Goods         1</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; 10 Services         1</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; 11      FDI         1</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; 12   PRemit         1</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; 13  ForPort         1</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; 31    Renew         1</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt; 32 PrimEner        -1</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt; 33      CO2        -1</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; 34   MatCon        -1</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; 35   Forest        -1</span></span></code></pre></div>
 <p>We’ll change the direction of the “Goods” indicator and
 re-normalise:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change Goods to -1</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>directions<span class="sc">$</span>Direction[directions<span class="sc">$</span>iCode <span class="sc">==</span> <span class="st">&quot;Goods&quot;</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># re-run (using min max default)</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">directions =</span> directions)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># change Goods to -1</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>directions<span class="sc">$</span>Direction[directions<span class="sc">$</span>iCode <span class="sc">==</span> <span class="st">&quot;Goods&quot;</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co"># re-run (using min max default)</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">directions =</span> directions)</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
 </div>
 <div id="individual-normalisation" class="section level2">
 <h2>Individual normalisation</h2>
@@ -506,34 +506,34 @@ apply min-max to all indicators except two. For those, we apply a rank
 transformation and distance to maximum approach. Note, that since the
 default of <code>global_specs</code> is min-max, we don’t need to
 specify that at all here.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># individual specifications:</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># LPI - borda scores</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Flights - z-scores with mean 10 and sd 2</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>indiv_specs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">LPI =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_borda&quot;</span>),</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Flights =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_zscore&quot;</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">m_sd =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">2</span>)))</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># normalise</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">indiv_specs =</span> indiv_specs)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># a quick look at the first three indicators</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="fu">get_dset</span>(coin, <span class="st">&quot;Normalised&quot;</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="sc">|&gt;</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    uCode LPI   Flights      Ship</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    AUS  36  9.889993  66.14497</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    AUT  44  9.588735   0.00000</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    BEL  45  9.711512  97.14314</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    BGD   4  8.529810  45.80661</span></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    BGR   7  8.741971  37.40495</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6    BRN   9  8.433044  35.38920</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7    CHE  42 10.563483   0.00000</span></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8    CHN  30 13.235114 100.00000</span></span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9    CYP  14  8.721372  55.21211</span></span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10   CZE  31  9.001961   0.00000</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># individual specifications:</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co"># LPI - borda scores</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co"># Flights - z-scores with mean 10 and sd 2</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>indiv_specs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  <span class="at">LPI =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_borda&quot;</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  <span class="at">Flights =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_zscore&quot;</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>                 <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">m_sd =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">2</span>)))</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>)</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co"># normalise</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">indiv_specs =</span> indiv_specs)</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co"># a quick look at the first three indicators</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="fu">get_dset</span>(coin, <span class="st">&quot;Normalised&quot;</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="sc">|&gt;</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="co">#&gt;    uCode LPI   Flights      Ship</span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="co">#&gt; 1    AUS  36  9.889993  66.14497</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="co">#&gt; 2    AUT  44  9.588735   0.00000</span></span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="co">#&gt; 3    BEL  45  9.711512  97.14314</span></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="co">#&gt; 4    BGD   4  8.529810  45.80661</span></span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a><span class="co">#&gt; 5    BGR   7  8.741971  37.40495</span></span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a><span class="co">#&gt; 6    BRN   9  8.433044  35.38920</span></span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a><span class="co">#&gt; 7    CHE  42 10.563483   0.00000</span></span>
+<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a><span class="co">#&gt; 8    CHN  30 13.235114 100.00000</span></span>
+<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a><span class="co">#&gt; 9    CYP  14  8.721372  55.21211</span></span>
+<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a><span class="co">#&gt; 10   CZE  31  9.001961   0.00000</span></span></code></pre></div>
 <p>This example is meant to be illustrative of the functionality of
 <code>Normalise()</code>, rather than being a sensible normalisation
 strategy, because the indicators are now on very different ranges.</p>
@@ -550,14 +550,14 @@ e.g. emissions targets or sales targets.</p>
 <p>Targets should be input into a coin using the <code>iMeta</code>
 argument when building the coin using <code>new_coin()</code>. In fact,
 the built-in example data has targets for all indicators:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ASEM_iMeta[<span class="fu">c</span>(<span class="st">&quot;iCode&quot;</span>, <span class="st">&quot;Target&quot;</span>)])</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     iCode     Target</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     LPI   4.118031</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Flights 200.332655</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    Ship  20.113377</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    Bord 115.900000</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    Elec 104.670585</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6     Gas  90.060420</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">head</span>(ASEM_iMeta[<span class="fu">c</span>(<span class="st">&quot;iCode&quot;</span>, <span class="st">&quot;Target&quot;</span>)])</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt;     iCode     Target</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt; 1     LPI   4.118031</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; 2 Flights 200.332655</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; 3    Ship  20.113377</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; 4    Bord 115.900000</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; 5    Elec 104.670585</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; 6     Gas  90.060420</span></span></code></pre></div>
 <p><em>(Note that these targets are fabricated just for the purposes of
 an example)</em></p>
 <p>To use distance-to-target normalisation, we call the
@@ -576,67 +576,67 @@ passed to <code>n_dist2targ()</code> - see that function documentation
 for how the normalisation is performed depending on the direction
 specified.</p>
 <p>Our normalisation will then look like this:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_dist2targ&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_dist2targ&quot;</span>))</span></code></pre></div>
 <p>It is also possible to specify the <code>cap_max</code> parameter of
 <code>n_dist2targ()</code> as follows:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_dist2targ&quot;</span>, <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">cap_max =</span> <span class="cn">TRUE</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_dist2targ&quot;</span>, <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">cap_max =</span> <span class="cn">TRUE</span>)))</span></code></pre></div>
 </div>
 </div>
 <div id="data-frames-and-vectors" class="section level1">
 <h1>Data frames and vectors</h1>
 <p>Normalising a data frame is very similar to normalising a coin,
 except the input is a data frame and output is also a data frame.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mtcars_n <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(mtcars, <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_dist2max&quot;</span>))</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars_n)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         mpg cyl      disp        hp      drat        wt      qsec vs am gear</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 0.4510638 0.5 0.2217511 0.2049470 0.5253456 0.2830478 0.2333333  0  1  0.5</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 0.4510638 0.5 0.2217511 0.2049470 0.5253456 0.3482485 0.3000000  0  1  0.5</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 0.5276596 0.0 0.0920429 0.1448763 0.5023041 0.2063411 0.4892857  1  1  0.5</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 0.4680851 0.5 0.4662010 0.2049470 0.1474654 0.4351828 0.5880952  1  0  0.0</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 0.3531915 1.0 0.7206286 0.4346290 0.1797235 0.4927129 0.3000000  0  0  0.0</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 0.3276596 0.5 0.3838863 0.1872792 0.0000000 0.4978266 0.6809524  1  0  0.0</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        carb</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 0.4285714</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 0.4285714</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 0.0000000</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 0.0000000</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 0.1428571</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 0.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>mtcars_n <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(mtcars, <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_dist2max&quot;</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="fu">head</span>(mtcars_n)</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt;         mpg cyl      disp        hp      drat        wt      qsec vs am gear</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co">#&gt; 1 0.4510638 0.5 0.2217511 0.2049470 0.5253456 0.2830478 0.2333333  0  1  0.5</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co">#&gt; 2 0.4510638 0.5 0.2217511 0.2049470 0.5253456 0.3482485 0.3000000  0  1  0.5</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#&gt; 3 0.5276596 0.0 0.0920429 0.1448763 0.5023041 0.2063411 0.4892857  1  1  0.5</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#&gt; 4 0.4680851 0.5 0.4662010 0.2049470 0.1474654 0.4351828 0.5880952  1  0  0.0</span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#&gt; 5 0.3531915 1.0 0.7206286 0.4346290 0.1797235 0.4927129 0.3000000  0  0  0.0</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt; 6 0.3276596 0.5 0.3838863 0.1872792 0.0000000 0.4978266 0.6809524  1  0  0.0</span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt;        carb</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt; 1 0.4285714</span></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co">#&gt; 2 0.4285714</span></span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#&gt; 3 0.0000000</span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt; 4 0.0000000</span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt; 5 0.1428571</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt; 6 0.0000000</span></span></code></pre></div>
 <p>As with coins, columns can be normalised with individual
 specifications using the <code>indiv_spec</code> argument in exactly the
 same way as with a coin. Note that non-numeric columns are always
 ignored:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Normalise</span>(iris) <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    22.222222    62.50000     6.779661    4.166667  setosa</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    16.666667    41.66667     6.779661    4.166667  setosa</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    11.111111    50.00000     5.084746    4.166667  setosa</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     8.333333    45.83333     8.474576    4.166667  setosa</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    19.444444    66.66667     6.779661    4.166667  setosa</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6    30.555556    79.16667    11.864407   12.500000  setosa</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">Normalise</span>(iris) <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="fu">head</span>()</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; 1    22.222222    62.50000     6.779661    4.166667  setosa</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; 2    16.666667    41.66667     6.779661    4.166667  setosa</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; 3    11.111111    50.00000     5.084746    4.166667  setosa</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt; 4     8.333333    45.83333     8.474576    4.166667  setosa</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; 5    19.444444    66.66667     6.779661    4.166667  setosa</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; 6    30.555556    79.16667    11.864407   12.500000  setosa</span></span></code></pre></div>
 <p>There is also a method for numeric vectors, although usually it is
 just as easy to call the underlying normalisation function directly.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># example vector</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># normalise using distance to reference (5th data point)</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>x_norm <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(x, <span class="at">f_n =</span> <span class="st">&quot;n_dist2ref&quot;</span>, <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">iref =</span> <span class="dv">5</span>))</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># view side by side</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(x, x_norm)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             x     x_norm</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  0.70727334 1.16725259</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  0.80095488 1.34416934</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  0.44627181 0.67435351</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  0.40686400 0.59993221</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  0.61870920 1.00000000</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  0.34570561 0.48443511</span></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7  0.78915508 1.32188552</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8  0.08918594 0.00000000</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9  0.12898008 0.07515087</span></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 0.98879199 1.69889807</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># example vector</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co"># normalise using distance to reference (5th data point)</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>x_norm <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(x, <span class="at">f_n =</span> <span class="st">&quot;n_dist2ref&quot;</span>, <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">iref =</span> <span class="dv">5</span>))</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co"># view side by side</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="fu">data.frame</span>(x, x_norm)</span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt;            x     x_norm</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt; 1  0.1703396 0.00000000</span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt; 2  0.9204453 0.94629280</span></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#&gt; 3  0.7819251 0.77154324</span></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt; 4  0.2229070 0.06631615</span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#&gt; 5  0.9630178 1.00000000</span></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co">#&gt; 6  0.3801415 0.26467475</span></span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="co">#&gt; 7  0.4021895 0.29248930</span></span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="co">#&gt; 8  0.4669191 0.37414865</span></span>
+<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">#&gt; 9  0.1856739 0.01934490</span></span>
+<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a><span class="co">#&gt; 10 0.1848585 0.01831620</span></span></code></pre></div>
 </div>
 <div id="purses" class="section level1">
 <h1>Purses</h1>
@@ -668,51 +668,51 @@ regenerating entire purses, but we are not there yet.</li>
 </ol>
 <p>Let’s anyway illustrate with an example. We build the example purse
 first.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">build_example_purse</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">build_example_purse</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Normalising a purse works in exactly the same way as normalising a
 coin, except for the <code>global</code> argument. By default,
 <code>global = TRUE</code>, which means that the normalisation will be
 applied over all time points simultaneously, with the aim of making the
 index comparable. Here, we will apply the default min-max approach to
 all coins:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
 <p>Now let’s examine the data set of the first coin. We’ll see what the
 max and min of a few indicators is:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get normalised data of first coin in purse</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(purse<span class="sc">$</span>coin[[<span class="dv">1</span>]], <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># get min and max of first four indicators (exclude uCode col)</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], min, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       0       0       0       0</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      LPI  Flights     Ship     Bord </span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 83.98913 88.79325 85.91861 93.62416</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># get normalised data of first coin in purse</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(purse<span class="sc">$</span>coin[[<span class="dv">1</span>]], <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="co"># get min and max of first four indicators (exclude uCode col)</span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], min, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co">#&gt;       0       0       0       0</span></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="co">#&gt;      LPI  Flights     Ship     Bord </span></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co">#&gt; 83.98913 88.79325 85.91861 93.62416</span></span></code></pre></div>
 <p>Here we see that the minimum values are zero, but the maximum values
 are <em>not</em> 100, because in other coins these indicators have
 higher values. To show that the global maximum is indeed 100, we can
 extract the whole normalised data set for all years and run the same
 check.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get entire normalised data set for all coins in one df</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>x1_global <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># get min and max of first four indicators (exclude Time and uCode cols)</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(x1_global[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>], min, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       0       0       0       0</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(x1_global[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>], max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     100     100     100     100</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co"># get entire normalised data set for all coins in one df</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>x1_global <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="co"># get min and max of first four indicators (exclude Time and uCode cols)</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="fu">sapply</span>(x1_global[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>], min, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt;       0       0       0       0</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="fu">sapply</span>(x1_global[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>], max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co">#&gt;     100     100     100     100</span></span></code></pre></div>
 <p>And this confirms our expectations: that the global maximum and
 minimum are 0 and 100 respectively.</p>
 <p>Any type of normalisation can be performed on a purse in this
@@ -729,28 +729,28 @@ for all time points. Therefore, consider carefully if this fits the
 intended meaning.</p>
 <p>Normalisation can also be performed independently on each coin, by
 setting <code>global = FALSE</code>.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="co"># get normalised data of first coin in purse</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(purse<span class="sc">$</span>coin[[<span class="dv">1</span>]], <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="co"># get min and max of first four indicators (exclude uCode col)</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], min, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       0       0       0       0</span></span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     100     100     100     100</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a><span class="co"># get normalised data of first coin in purse</span></span>
+<span id="cb20-14"><a href="#cb20-14" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(purse<span class="sc">$</span>coin[[<span class="dv">1</span>]], <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" tabindex="-1"></a><span class="co"># get min and max of first four indicators (exclude uCode col)</span></span>
+<span id="cb20-17"><a href="#cb20-17" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], min, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-18"><a href="#cb20-18" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
+<span id="cb20-19"><a href="#cb20-19" tabindex="-1"></a><span class="co">#&gt;       0       0       0       0</span></span>
+<span id="cb20-20"><a href="#cb20-20" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-21"><a href="#cb20-21" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
+<span id="cb20-22"><a href="#cb20-22" tabindex="-1"></a><span class="co">#&gt;     100     100     100     100</span></span></code></pre></div>
 <p>Now the normalised data set in each coin will have a min and max of 0
 and 100 respectively, for each indicator.</p>
 </div>
@@ -763,50 +763,50 @@ arguments more visible (they are not wrapped in lists). This function
 applies the same normalisation method to all indicators. It is also a
 generic so can be used on data frames, coins and purses. Let’s
 demonstrate on a data frame:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># some made up data</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">uCode =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>],</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">a =</span> <span class="fu">runif</span>(<span class="dv">10</span>),</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">b =</span> <span class="fu">runif</span>(<span class="dv">10</span>)<span class="sc">*</span><span class="dv">100</span>)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>X</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    uCode         a         b</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1      a 0.5160530 87.936139</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      b 0.6235721 77.568204</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3      c 0.4042715 88.209775</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4      d 0.7896606 55.229267</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5      e 0.8965914  8.631077</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6      f 0.4745613 37.545192</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7      g 0.6935580 81.937335</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8      h 0.9017201 11.927919</span></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9      i 0.7394026 42.635500</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10     j 0.7242468 90.510292</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># some made up data</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">uCode =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>],</span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>                <span class="at">a =</span> <span class="fu">runif</span>(<span class="dv">10</span>),</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>                <span class="at">b =</span> <span class="fu">runif</span>(<span class="dv">10</span>)<span class="sc">*</span><span class="dv">100</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>X</span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a><span class="co">#&gt;    uCode         a         b</span></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a><span class="co">#&gt; 1      a 0.5978053 27.840634</span></span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a><span class="co">#&gt; 2      b 0.5210077 22.953380</span></span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a><span class="co">#&gt; 3      c 0.4168349 64.783759</span></span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a><span class="co">#&gt; 4      d 0.5548105 94.965415</span></span>
+<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a><span class="co">#&gt; 5      e 0.5446098 60.739331</span></span>
+<span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a><span class="co">#&gt; 6      f 0.7403674 34.059239</span></span>
+<span id="cb21-14"><a href="#cb21-14" tabindex="-1"></a><span class="co">#&gt; 7      g 0.6394261 33.333917</span></span>
+<span id="cb21-15"><a href="#cb21-15" tabindex="-1"></a><span class="co">#&gt; 8      h 0.5303849 20.106878</span></span>
+<span id="cb21-16"><a href="#cb21-16" tabindex="-1"></a><span class="co">#&gt; 9      i 0.3747821  4.582959</span></span>
+<span id="cb21-17"><a href="#cb21-17" tabindex="-1"></a><span class="co">#&gt; 10     j 0.7808927 97.548393</span></span></code></pre></div>
 <p>By default, normalisation results in min-max on the <span class="math inline">\([0, 100]\)</span> interval:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qNormalise</span>(X)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    uCode         a         b</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1      a  22.47096  96.85616</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      b  44.08508  84.19368</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3      c   0.00000  97.19035</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4      d  77.47315  56.91089</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5      e  98.96900   0.00000</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6      f  14.13007  35.31313</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7      g  58.15404  89.52975</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8      h 100.00000   4.02647</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9      i  67.37000  41.52998</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10     j  64.32328 100.00000</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">qNormalise</span>(X)</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="co">#&gt;    uCode         a         b</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="co">#&gt; 1      a  54.91687  25.01755</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="co">#&gt; 2      b  36.00636  19.76049</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="co">#&gt; 3      c  10.35502  64.75611</span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co">#&gt; 4      d  44.32989  97.22157</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">#&gt; 5      e  41.81809  60.40565</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="co">#&gt; 6      f  90.02111  31.70671</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="co">#&gt; 7      g  65.16551  30.92650</span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="co">#&gt; 8      h  38.31538  16.69859</span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="co">#&gt; 9      i   0.00000   0.00000</span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a><span class="co">#&gt; 10     j 100.00000 100.00000</span></span></code></pre></div>
 <p>We can pass another normalisation function if we like, and the syntax
 is a bit easier than <code>Normalise()</code>:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qNormalise</span>(X, <span class="at">f_n =</span> <span class="st">&quot;n_dist2ref&quot;</span>, <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">iref =</span> <span class="dv">1</span>, <span class="at">cap_max =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    uCode         a          b</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1      a 1.0000000 1.00000000</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      b 1.0000000 0.86926515</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3      c 0.0000000 1.00000000</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4      d 1.0000000 0.58758153</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5      e 1.0000000 0.00000000</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6      f 0.6288146 0.36459356</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7      g 1.0000000 0.92435786</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8      h 1.0000000 0.04157165</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9      i 1.0000000 0.42877998</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10     j 1.0000000 1.00000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">qNormalise</span>(X, <span class="at">f_n =</span> <span class="st">&quot;n_dist2ref&quot;</span>, <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">iref =</span> <span class="dv">1</span>, <span class="at">cap_max =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="co">#&gt;    uCode         a         b</span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="co">#&gt; 1      a 1.0000000 1.0000000</span></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="co">#&gt; 2      b 0.6556521 0.7898649</span></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="co">#&gt; 3      c 0.1885581 1.0000000</span></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="co">#&gt; 4      d 0.8072181 1.0000000</span></span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">#&gt; 5      e 0.7614797 1.0000000</span></span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="co">#&gt; 6      f 1.0000000 1.0000000</span></span>
+<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a><span class="co">#&gt; 7      g 1.0000000 1.0000000</span></span>
+<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a><span class="co">#&gt; 8      h 0.6976979 0.6674751</span></span>
+<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a><span class="co">#&gt; 9      i 0.0000000 0.0000000</span></span>
+<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a><span class="co">#&gt; 10     j 1.0000000 1.0000000</span></span></code></pre></div>
 <p>The <code>qNormalise()</code> function works in a similar way for
 coins and purses.</p>
 </div>

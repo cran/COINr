@@ -354,38 +354,38 @@ have methods for coins and purses.</p>
 and so on, a new data set is created. Data sets live in the
 <code>.$Data</code> sub-list of the coin. We can retrieve a data set at
 any time using the <code>get_data()</code> function:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># build full example coin</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># retrieve normalised data set</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>dset_norm <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># view first few rows and cols</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dset_norm[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">5</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode      LPI    Flights     Ship      Bord</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   AUS 79.96112 12.3223217 66.14497   0.00000</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   AUT 94.07137 27.8763185  0.00000  42.01269</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   BEL 94.56023 23.3967426 97.14314 100.00000</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   BGD 27.63906  0.1243185 45.80661  10.85013</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   BGR 34.29965 10.8828790 37.40495  16.34359</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># build full example coin</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co"># retrieve normalised data set</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>dset_norm <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co"># view first few rows and cols</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="fu">head</span>(dset_norm[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">5</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt;   uCode      LPI    Flights     Ship      Bord</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt; 1   AUS 79.96112 12.3223217 66.14497   0.00000</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt; 2   AUT 94.07137 27.8763185  0.00000  42.01269</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt; 3   BEL 94.56023 23.3967426 97.14314 100.00000</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt; 4   BGD 27.63906  0.1243185 45.80661  10.85013</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt; 5   BGR 34.29965 10.8828790 37.40495  16.34359</span></span></code></pre></div>
 <p>By default, a data set in the coin consists of indicator columns plus
 the “uCode” column, which is the unique identifier of each row. You can
 also ask to attach unit metadata columns, such as unit names, groups,
 and anything else that was input when building the coin, using the
 <code>also_get</code> argument:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># retrieve normalised data set</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dset_norm2 <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">also_get =</span> <span class="fu">c</span>(<span class="st">&quot;uName&quot;</span>, <span class="st">&quot;GDP_group&quot;</span>))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># view first few rows and cols</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dset_norm2[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">5</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode      uName GDP_group      LPI    Flights</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   AUS  Australia        XL 79.96112 12.3223217</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   AUT    Austria         L 94.07137 27.8763185</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   BEL    Belgium         L 94.56023 23.3967426</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   BGD Bangladesh         M 27.63906  0.1243185</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   BGR   Bulgaria         S 34.29965 10.8828790</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># retrieve normalised data set</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>dset_norm2 <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">also_get =</span> <span class="fu">c</span>(<span class="st">&quot;uName&quot;</span>, <span class="st">&quot;GDP_group&quot;</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># view first few rows and cols</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="fu">head</span>(dset_norm2[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">5</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt;   uCode      uName GDP_group      LPI    Flights</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; 1   AUS  Australia        XL 79.96112 12.3223217</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; 2   AUT    Austria         L 94.07137 27.8763185</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 3   BEL    Belgium         L 94.56023 23.3967426</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; 4   BGD Bangladesh         M 27.63906  0.1243185</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; 5   BGR   Bulgaria         S 34.29965 10.8828790</span></span></code></pre></div>
 </div>
 <div id="data-subsets" class="section level1">
 <h1>Data subsets</h1>
@@ -398,16 +398,16 @@ subsets of data, based on e.g. indicator selection and grouping
 <h2>Indicators/columns</h2>
 <p>A simple example is to extract one or more named indicators from a
 target data set:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">get_data</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="fu">c</span>(<span class="st">&quot;Flights&quot;</span>, <span class="st">&quot;LPI&quot;</span>))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># see first few rows</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x, <span class="dv">5</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    uCode  Flights      LPI</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31   AUS 36.05498 3.793385</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    AUT 29.01725 4.097985</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    BEL 31.88546 4.108538</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 32   BGD  4.27955 2.663902</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    BGR  9.23588 2.807685</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">get_data</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="fu">c</span>(<span class="st">&quot;Flights&quot;</span>, <span class="st">&quot;LPI&quot;</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co"># see first few rows</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="fu">head</span>(x, <span class="dv">5</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt;    uCode  Flights      LPI</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; 31   AUS 36.05498 3.793385</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; 1    AUT 29.01725 4.097985</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; 2    BEL 31.88546 4.108538</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; 32   BGD  4.27955 2.663902</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; 3    BGR  9.23588 2.807685</span></span></code></pre></div>
 <p>By default, <code>get_data()</code> returns the requested indicators,
 plus the <code>uCode</code> identifier column. We can also set
 <code>also_get = &quot;none&quot;</code> to return only the indicator columns.</p>
@@ -415,29 +415,29 @@ plus the <code>uCode</code> identifier column. We can also set
 based on the structure of the index. In our example, indicators are
 aggregated into “pillars” (level 2) within groups. We can name an
 aggregation group and extract the underlying indicators:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">get_data</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="st">&quot;Political&quot;</span>, <span class="at">Level =</span> <span class="dv">1</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x, <span class="dv">5</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    uCode Embs IGOs   UNVote</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31   AUS   82  196 38.46245</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    AUT   88  227 42.63920</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    BEL   84  248 43.00308</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 32   BGD   52  145 38.60601</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    BGR   67  209 42.95986</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">get_data</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="st">&quot;Political&quot;</span>, <span class="at">Level =</span> <span class="dv">1</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">head</span>(x, <span class="dv">5</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt;    uCode Embs IGOs   UNVote</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; 31   AUS   82  196 38.46245</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; 1    AUT   88  227 42.63920</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; 2    BEL   84  248 43.00308</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; 32   BGD   52  145 38.60601</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; 3    BGR   67  209 42.95986</span></span></code></pre></div>
 <p>Here we have requested all the indicators in level 1 (the indicator
 level), that belong to the group called “Political” (one of the
 pillars). Specifying the level becomes more relevant when we look at the
 aggregated data set, which also includes the pillar, sub-index and index
 scores. Here, for example, we can ask for all the pillar scores (level
 2) which belong to the sustainability sub-index (level 3):</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">get_data</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="at">iCodes =</span> <span class="st">&quot;Sust&quot;</span>, <span class="at">Level =</span> <span class="dv">2</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x, <span class="dv">5</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode  Environ   Social SusEcFin</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   AUS 31.92211 71.88108 55.69987</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   AUT 69.47511 72.76415 62.88150</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   BEL 53.00859 86.16783 50.09020</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   BGD 81.66988 27.51138 64.58884</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   BGR 55.69922 53.30489 61.68677</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">get_data</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="at">iCodes =</span> <span class="st">&quot;Sust&quot;</span>, <span class="at">Level =</span> <span class="dv">2</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">head</span>(x, <span class="dv">5</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt;   uCode  Environ   Social SusEcFin</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; 1   AUS 31.92211 71.88108 55.69987</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; 2   AUT 69.47511 72.76415 62.88150</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; 3   BEL 53.00859 86.16783 50.09020</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; 4   BGD 81.66988 27.51138 64.58884</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; 5   BGR 55.69922 53.30489 61.68677</span></span></code></pre></div>
 <p>If this isn’t clear, look at the structure of the example index using
 e.g. <code>plot_framework(coin)</code>. If we wanted to select all the
 indicators within the “Sust” sub-index we would set
@@ -453,57 +453,57 @@ examining correlations within aggregation groups using
 <p>Units (rows) of the data set can also be selected (also in
 combination with selecting indicators). Starting with a simple example,
 let’s select specified units for a specific indicator:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_data</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="st">&quot;Goods&quot;</span>, <span class="at">uCodes =</span> <span class="fu">c</span>(<span class="st">&quot;AUT&quot;</span>, <span class="st">&quot;VNM&quot;</span>))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    uCode    Goods</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    AUT 278.4264</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 51   VNM 269.0766</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">get_data</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="st">&quot;Goods&quot;</span>, <span class="at">uCodes =</span> <span class="fu">c</span>(<span class="st">&quot;AUT&quot;</span>, <span class="st">&quot;VNM&quot;</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt;    uCode    Goods</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; 1    AUT 278.4264</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; 51   VNM 269.0766</span></span></code></pre></div>
 <p>Rows can also be sub-setted using groups, i.e. unit groupings that
 are defined using variables input with <code>iMeta$Type = &quot;Group&quot;</code>
 when building the coin. Recall that for our example coin we have several
 groups (a reminder that you can see some details about the coin using
 its print method):</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>coin</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A coin with...</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Input:</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Units: 51 (AUS, AUT, BEL, ...)</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Indicators: 49 (Goods, Services, FDI, ...)</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Denominators: 4 (Area, Energy, GDP, ...)</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Groups: 4 (GDP_group, GDPpc_group, Pop_group, ...)</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Structure:</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 1 Indicator: 49 indicators (FDI, ForPort, Goods, ...) </span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 2 Pillar: 8 groups (ConEcFin, Instit, P2P, ...) </span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 3 Sub-index: 2 groups (Conn, Sust) </span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 4 Index: 1 groups (Index) </span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Data sets:</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Raw (51 units)</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Denominated (51 units)</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Imputed (51 units)</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Screened (51 units)</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Treated (51 units)</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Normalised (51 units)</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Aggregated (51 units)</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>coin</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; A coin with...</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; Input:</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt;   Units: 51 (AUS, AUT, BEL, ...)</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt;   Indicators: 49 (Goods, Services, FDI, ...)</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt;   Denominators: 4 (Area, Energy, GDP, ...)</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;   Groups: 4 (GDP_group, GDPpc_group, Pop_group, ...)</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; Structure:</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt;   Level 1 Indicator: 49 indicators (FDI, ForPort, Goods, ...) </span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt;   Level 2 Pillar: 8 groups (ConEcFin, Instit, P2P, ...) </span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt;   Level 3 Sub-index: 2 groups (Conn, Sust) </span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt;   Level 4 Index: 1 groups (Index) </span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt; Data sets:</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt;   Raw (51 units)</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt;   Denominated (51 units)</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a><span class="co">#&gt;   Imputed (51 units)</span></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="co">#&gt;   Screened (51 units)</span></span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a><span class="co">#&gt;   Treated (51 units)</span></span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a><span class="co">#&gt;   Normalised (51 units)</span></span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a><span class="co">#&gt;   Aggregated (51 units)</span></span></code></pre></div>
 <p>The first way to subset by unit group is to name a grouping variable,
 and a group within that variable to select. For example, say we want to
 know the values of the “Goods” indicator for all the countries in the
 “XL” GDP group:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_data</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="st">&quot;Goods&quot;</span>, <span class="at">use_group =</span> <span class="fu">list</span>(<span class="at">GDP_group =</span> <span class="st">&quot;XL&quot;</span>))</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    uCode GDP_group     Goods</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    AUS        XL  288.4893</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8    CHN        XL 1713.6190</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11   DEU        XL 1919.1940</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13   ESP        XL  447.1229</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16   FRA        XL  849.3303</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17   GBR        XL  778.9052</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21   IDN        XL  222.4186</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22   IND        XL  288.9806</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24   ITA        XL  658.1981</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25   JPN        XL  732.2078</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 28   KOR        XL  568.9920</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 45   RUS        XL  343.8504</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">get_data</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="st">&quot;Goods&quot;</span>, <span class="at">use_group =</span> <span class="fu">list</span>(<span class="at">GDP_group =</span> <span class="st">&quot;XL&quot;</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt;    uCode GDP_group     Goods</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt; 1    AUS        XL  288.4893</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt; 8    CHN        XL 1713.6190</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; 11   DEU        XL 1919.1940</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; 13   ESP        XL  447.1229</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; 16   FRA        XL  849.3303</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; 17   GBR        XL  778.9052</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; 21   IDN        XL  222.4186</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; 22   IND        XL  288.9806</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; 24   ITA        XL  658.1981</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; 25   JPN        XL  732.2078</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt; 28   KOR        XL  568.9920</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt; 45   RUS        XL  343.8504</span></span></code></pre></div>
 <p>Since we have subsetted by group, this also returns the group column
 which was used.</p>
 <p>Another way of sub-setting is to combine <code>uCodes</code> and
@@ -513,21 +513,21 @@ result is to return the full group(s) to which the specified
 with its peers within a group. For example, we might want to see the
 values of the “Flights” indicator for a specific unit, as well as all
 other units within the same population group:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_data</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="st">&quot;Flights&quot;</span>, <span class="at">uCodes =</span> <span class="st">&quot;MLT&quot;</span>, <span class="at">use_group =</span> <span class="st">&quot;Pop_group&quot;</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    uCode Pop_group  Flights</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6    BRN         S  2.01900</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9    CYP         S  8.75467</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14   EST         S  3.12946</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19   HRV         S  9.24529</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23   IRL         S 34.17721</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 30   LTU         S  5.37919</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31   LUX         S  4.84458</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 32   LVA         S  6.77976</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 33   MLT         S  6.75251</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 35   MNG         S  0.98951</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 38   NOR         S 25.64994</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 39   NZL         S 13.37242</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48   SVN         S  1.51736</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">get_data</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">iCodes =</span> <span class="st">&quot;Flights&quot;</span>, <span class="at">uCodes =</span> <span class="st">&quot;MLT&quot;</span>, <span class="at">use_group =</span> <span class="st">&quot;Pop_group&quot;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt;    uCode Pop_group  Flights</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co">#&gt; 6    BRN         S  2.01900</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; 9    CYP         S  8.75467</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt; 14   EST         S  3.12946</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; 19   HRV         S  9.24529</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; 23   IRL         S 34.17721</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt; 30   LTU         S  5.37919</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt; 31   LUX         S  4.84458</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; 32   LVA         S  6.77976</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; 33   MLT         S  6.75251</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; 35   MNG         S  0.98951</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt; 38   NOR         S 25.64994</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt; 39   NZL         S 13.37242</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co">#&gt; 48   SVN         S  1.51736</span></span></code></pre></div>
 <p>Here, we have to specify <code>use_group</code> simply as a string
 rather than a list. Since MLT is in the “S” population group, it returns
 all units within that group.</p>
@@ -546,34 +546,34 @@ means that even without the helper functions mentioned, you can get at
 the data simply by exploring the coin yourself.</p>
 <p>The data sets live in the <code>.$Data</code> sub-list of the
 coin:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(coin<span class="sc">$</span>Data)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Raw&quot;         &quot;Denominated&quot; &quot;Imputed&quot;     &quot;Screened&quot;    &quot;Treated&quot;    </span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [6] &quot;Normalised&quot;  &quot;Aggregated&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">names</span>(coin<span class="sc">$</span>Data)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Raw&quot;         &quot;Denominated&quot; &quot;Imputed&quot;     &quot;Screened&quot;    &quot;Treated&quot;    </span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt; [6] &quot;Normalised&quot;  &quot;Aggregated&quot;</span></span></code></pre></div>
 <p>And we can access any of these directly:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data_raw <span class="ot">&lt;-</span> coin<span class="sc">$</span>Data<span class="sc">$</span>Raw</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_raw[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">5</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    uCode      LPI  Flights      Ship Bord</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31   AUS 3.793385 36.05498 14.004198    0</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    AUT 4.097985 29.01725  0.000000   35</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    BEL 4.108538 31.88546 20.567121   48</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 32   BGD 2.663902  4.27955  9.698165   16</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    BGR 2.807685  9.23588  7.919366   18</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>data_raw <span class="ot">&lt;-</span> coin<span class="sc">$</span>Data<span class="sc">$</span>Raw</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="fu">head</span>(data_raw[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">5</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co">#&gt;    uCode      LPI  Flights      Ship Bord</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">#&gt; 31   AUS 3.793385 36.05498 14.004198    0</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt; 1    AUT 4.097985 29.01725  0.000000   35</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; 2    BEL 4.108538 31.88546 20.567121   48</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt; 32   BGD 2.663902  4.27955  9.698165   16</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; 3    BGR 2.807685  9.23588  7.919366   18</span></span></code></pre></div>
 <p>The metadata lives in the <code>.$Meta</code> sub-list. For example,
 the unit metadata, which includes groups, names etc:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(coin<span class="sc">$</span>Meta<span class="sc">$</span>Unit)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:    51 obs. of  11 variables:</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ uCode        : chr  &quot;AUS&quot; &quot;AUT&quot; &quot;BEL&quot; &quot;BGD&quot; ...</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ uName        : chr  &quot;Australia&quot; &quot;Austria&quot; &quot;Belgium&quot; &quot;Bangladesh&quot; ...</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ GDP_group    : chr  &quot;XL&quot; &quot;L&quot; &quot;L&quot; &quot;M&quot; ...</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ GDPpc_group  : chr  &quot;XL&quot; &quot;XL&quot; &quot;L&quot; &quot;S&quot; ...</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Pop_group    : chr  &quot;L&quot; &quot;M&quot; &quot;L&quot; &quot;XL&quot; ...</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ EurAsia_group: chr  &quot;Asia&quot; &quot;Europe&quot; &quot;Europe&quot; &quot;Asia&quot; ...</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Time         : num  2018 2018 2018 2018 2018 ...</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Area         : num  7741220 83871 30528 148460 110879 ...</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Energy       : num  81.3 27 41.83 27.92 9.96 ...</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ GDP          : num  1304.5 390.8 468 220.8 53.2 ...</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Population   : num  24451 8735 11429 164670 7085 ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">str</span>(coin<span class="sc">$</span>Meta<span class="sc">$</span>Unit)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:    51 obs. of  11 variables:</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt;  $ uCode        : chr  &quot;AUS&quot; &quot;AUT&quot; &quot;BEL&quot; &quot;BGD&quot; ...</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt;  $ uName        : chr  &quot;Australia&quot; &quot;Austria&quot; &quot;Belgium&quot; &quot;Bangladesh&quot; ...</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt;  $ GDP_group    : chr  &quot;XL&quot; &quot;L&quot; &quot;L&quot; &quot;M&quot; ...</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt;  $ GDPpc_group  : chr  &quot;XL&quot; &quot;XL&quot; &quot;L&quot; &quot;S&quot; ...</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt;  $ Pop_group    : chr  &quot;L&quot; &quot;M&quot; &quot;L&quot; &quot;XL&quot; ...</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt;  $ EurAsia_group: chr  &quot;Asia&quot; &quot;Europe&quot; &quot;Europe&quot; &quot;Asia&quot; ...</span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt;  $ Time         : num  2018 2018 2018 2018 2018 ...</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt;  $ Area         : num  7741220 83871 30528 148460 110879 ...</span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co">#&gt;  $ Energy       : num  81.3 27 41.83 27.92 9.96 ...</span></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co">#&gt;  $ GDP          : num  1304.5 390.8 468 220.8 53.2 ...</span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="co">#&gt;  $ Population   : num  24451 8735 11429 164670 7085 ...</span></span></code></pre></div>
 <p>The point is that if COINr tools don’t get you where you want to go,
 knowing your way around the coin allows you to access the data exactly
 how you want.</p>

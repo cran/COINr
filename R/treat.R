@@ -158,6 +158,8 @@ Treat.purse <- function(x, dset, global_specs = NULL, indiv_specs = NULL,
 #' function will not be invoked when regenerating. Recommend to keep `TRUE` unless you have a good reason to do otherwise.
 #' @param write_to If specified, writes the aggregated data to `.$Data[[write_to]]`. Default `write_to = "Treated"`.
 #' @param ... arguments passed to or from other methods.
+#' @param disable Logical: if `TRUE` will disable data treatment completely and write the unaltered data set. This option is mainly useful
+#' in sensitivity and uncertainty analysis (to test the effect of turning imputation on/off).
 #'
 #' @return An updated coin with a new data set `.Data$Treated` added, plus analysis information in
 #' `.$Analysis$Treated`.
@@ -174,11 +176,28 @@ Treat.purse <- function(x, dset, global_specs = NULL, indiv_specs = NULL,
 #' head(coin$Analysis$Treated$Dets_Table)
 #'
 Treat.coin <- function(x, dset, global_specs = NULL, indiv_specs = NULL,
-                       combine_treat = FALSE, out2 = "coin", write_to = NULL, write2log = TRUE, ...){
+                       combine_treat = FALSE, out2 = "coin", write_to = NULL,
+                       write2log = TRUE, disable = FALSE, ...){
 
   # WRITE LOG ---------------------------------------------------------------
 
   coin <- write_log(x, dont_write = "x", write2log = write2log)
+
+  # potentially skip all imputation
+  stopifnot(is.logical(disable))
+  if(disable){
+    idata <- get_dset(coin, dset = dset)
+    # output list
+    if(out2 == "list"){
+      message("Returning data frame since treatment was disabled.")
+      return(idata)
+    } else {
+      if(is.null(write_to)){
+        write_to <- "Treated"
+      }
+      return(write_dset(coin, idata, dset = write_to))
+    }
+  }
 
   # GET DSET, CHECKS --------------------------------------------------------
 
@@ -411,8 +430,14 @@ Treat.data.frame <- function(x, global_specs = NULL, indiv_specs = NULL, combine
       }
     }
 
-    # run function
-    do.call("Treat.numeric", c(list(x = xi, combine_treat = combine_treat), specs))
+    # run function allowing for catching errors
+    tryCatch(
+      expr = do.call("Treat.numeric", c(list(x = xi, combine_treat = combine_treat), specs)),
+      error = function(e){
+        warning("Indicator could not be treated at column '", col_name, "' - returning untreated indicator. May be due to lack of unique values.", call. = FALSE)
+        list(x = xi)
+      }
+    )
   }
 
   # now run function
@@ -591,6 +616,7 @@ Treat.numeric <- function(x, f1, f1_para = NULL, f2 = NULL, f2_para = NULL,
     }
     if(is.na(pass1)){
       warning("f_pass has returned NA. Returning untreated vector.")
+      return(NA)
     }
     pass1
   }
@@ -666,6 +692,8 @@ Treat.numeric <- function(x, f1, f1_para = NULL, f2 = NULL, f2_para = NULL,
     # check output
     if(is.na(pass)){
       return(list(x = x,
+                  Dets_Table = l_table,
+                  Treated_Points = rep("", length(x)),
                   Passing = NA))
     }
   } else {
@@ -688,6 +716,8 @@ Treat.numeric <- function(x, f1, f1_para = NULL, f2 = NULL, f2_para = NULL,
     # check output
     if(is.na(pass)){
       return(list(x = x,
+                  Dets_Table = l_table,
+                  Treated_Points = rep("", length(x)),
                   Passing = NA))
     }
   } else {

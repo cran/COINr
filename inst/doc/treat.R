@@ -109,26 +109,26 @@ coin <- Treat(coin, dset = "Raw", indiv_specs = indiv_specs)
 perf_installed <- requireNamespace("performance", quietly = TRUE)
 
 ## ---- eval = perf_installed---------------------------------------------------
-library(performance)
-
-# the check_outliers function outputs a logical vector which flags specific points as outliers.
-# We need to wrap this to give a single TRUE/FALSE output, where FALSE means it doesn't pass,
-# i.e. there are outliers
-outlier_pass <- function(x){
-  # return FALSE if any outliers
-  !any(check_outliers(x))
-}
-
-# now call treat(), passing this function
-# we set f_pass_para to NULL to avoid passing default parameters to the new function
-coin <- Treat(coin, dset = "Raw",
-               global_specs = list(f_pass = "outlier_pass",
-                                    f_pass_para = NULL)
-)
-
-# see what happened
-coin$Analysis$Treated$Dets_Table |>
-  head(10)
+#  library(performance)
+#  
+#  # the check_outliers function outputs a logical vector which flags specific points as outliers.
+#  # We need to wrap this to give a single TRUE/FALSE output, where FALSE means it doesn't pass,
+#  # i.e. there are outliers
+#  outlier_pass <- function(x){
+#    # return FALSE if any outliers
+#    !any(check_outliers(x))
+#  }
+#  
+#  # now call treat(), passing this function
+#  # we set f_pass_para to NULL to avoid passing default parameters to the new function
+#  coin <- Treat(coin, dset = "Raw",
+#                 global_specs = list(f_pass = "outlier_pass",
+#                                      f_pass_para = NULL)
+#  )
+#  
+#  # see what happened
+#  coin$Analysis$Treated$Dets_Table |>
+#    head(10)
 
 ## -----------------------------------------------------------------------------
 # build example purse

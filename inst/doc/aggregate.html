@@ -481,18 +481,18 @@ methods described previously. The function of interest is
 purses and data frames. To demonstrate COINr’s <code>Aggregate()</code>
 function on a coin, we begin by loading the package, and building the
 example coin, up to the normalised data set.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># build example up to normalised data set</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">up_to =</span> <span class="st">&quot;Normalise&quot;</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iData checked and OK.</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iMeta checked and OK.</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Raw</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Imputed</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Screened</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># build example up to normalised data set</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">up_to =</span> <span class="st">&quot;Normalise&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; iData checked and OK.</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt; iMeta checked and OK.</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Raw</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Denominated</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Imputed</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Screened</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span></code></pre></div>
 <p>Consider what is needed to aggregate the normalised data into its
 higher levels. We need:</p>
 <ul>
@@ -513,9 +513,9 @@ argument). Weights were also attached to <code>iMeta</code>. Finally,
 specifications can be specified in the arguments of
 <code>Aggregate()</code>. Let’s begin with the simple case though: using
 the function defaults.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate normalised data set</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># aggregate normalised data set</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span></code></pre></div>
 <p>By default, the aggregation function performs the following
 steps:</p>
 <ul>
@@ -531,25 +531,25 @@ scores for each aggregation group, at each aggregation level.</li>
 <p>Let’s examine the new data set. The columns of each level are added
 successively, working from level 1 upwards, so the highest aggregation
 level (the index, here) will be the last column of the data frame.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dset_aggregated <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Aggregated&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>nc <span class="ot">&lt;-</span> <span class="fu">ncol</span>(dset_aggregated)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># view aggregated scores (last 11 columns here)</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>dset_aggregated[(nc <span class="sc">-</span> <span class="dv">10</span>) <span class="sc">:</span> nc] <span class="sc">|&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">signif</span>(<span class="dv">3</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   ConEcFin Environ Instit   P2P Physical Political Social SusEcFin Conn Sust</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     12.6    31.9   52.4 39.50     34.8      52.5   71.9     55.7 38.4 53.2</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     26.2    69.5   77.5 54.10     41.1      78.2   72.8     62.9 55.4 68.4</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     48.2    53.0   75.6 43.30     72.0      80.8   86.2     50.1 64.0 63.1</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     13.3    81.7   26.5  5.85     22.9      32.4   27.5     64.6 20.2 57.9</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5     24.6    55.7   75.9 27.10     28.4      67.5   53.3     61.7 44.7 56.9</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Index</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  45.8</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  61.9</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  63.5</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  39.0</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  50.8</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>dset_aggregated <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Aggregated&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>nc <span class="ot">&lt;-</span> <span class="fu">ncol</span>(dset_aggregated)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># view aggregated scores (last 11 columns here)</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>dset_aggregated[(nc <span class="sc">-</span> <span class="dv">10</span>) <span class="sc">:</span> nc] <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="fu">signif</span>(<span class="dv">3</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt;   ConEcFin Environ Instit   P2P Physical Political Social SusEcFin Conn Sust</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; 1     12.6    31.9   52.4 39.50     34.8      52.5   71.9     55.7 38.4 53.2</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; 2     26.2    69.5   77.5 54.10     41.1      78.2   72.8     62.9 55.4 68.4</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; 3     48.2    53.0   75.6 43.30     72.0      80.8   86.2     50.1 64.0 63.1</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; 4     13.3    81.7   26.5  5.85     22.9      32.4   27.5     64.6 20.2 57.9</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; 5     24.6    55.7   75.9 27.10     28.4      67.5   53.3     61.7 44.7 56.9</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt;   Index</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt; 1  45.8</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt; 2  61.9</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt; 3  63.5</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt; 4  39.0</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt; 5  50.8</span></span></code></pre></div>
 <p>Here we see the level 2 aggregated scores created by aggregating each
 group of indicators (the first eight columns), followed by the two
 sub-indexes (level 3) created by aggregating the scores of level 2, and
@@ -579,18 +579,18 @@ problem: the geometric mean will fail if any values to aggregate are
 less than or equal to zero. So to use the geometric mean we have to
 re-do the normalisation step to avoid this. Luckily this is
 straightforward in COINr:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Treated&quot;</span>,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_minmax&quot;</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">l_u =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">100</span>))))</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Treated&quot;</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>                   <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_minmax&quot;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>                                        <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">l_u =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">100</span>))))</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
 <p>Now, since the indicators are scaled between 1 and 100 (instead of 0
 and 100 as previously), they can be aggregated with the geometric
 mean.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>,</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">f_ag =</span> <span class="st">&quot;a_gmean&quot;</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                   <span class="at">f_ag =</span> <span class="st">&quot;a_gmean&quot;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
 </div>
 <div id="external-functions" class="section level2">
 <h2>External functions</h2>
@@ -603,13 +603,13 @@ matrixStats package and the Compind package. These are not imported by
 COINr, so the code here will only work if you have these installed. If
 this vignette was built on your computer, we have to check whether these
 packages are installed:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ms_installed <span class="ot">&lt;-</span> <span class="fu">requireNamespace</span>(<span class="st">&quot;matrixStats&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ms_installed</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>ci_installed <span class="ot">&lt;-</span> <span class="fu">requireNamespace</span>(<span class="st">&quot;Compind&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>ci_installed</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>ms_installed <span class="ot">&lt;-</span> <span class="fu">requireNamespace</span>(<span class="st">&quot;matrixStats&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>ms_installed</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>ci_installed <span class="ot">&lt;-</span> <span class="fu">requireNamespace</span>(<span class="st">&quot;Compind&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>ci_installed</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
 <p>If either of these have returned <code>FALSE</code>, in the following
 code chunks you will see some blanks. See the online version of this
 vignette to see the results, or install the above packages and rebuild
@@ -619,14 +619,14 @@ function from the matrixStats package. This has a number of arguments,
 but the ones we will use are <code>x</code> and <code>w</code> (with the
 same meanings as COINr functions), and <code>na.rm</code> which we need
 to set to <code>TRUE</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># RESTORE above eval=ms_installed</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># load matrixStats package</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(matrixStats)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate using weightedMedian()</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">f_ag =</span> <span class="st">&quot;weightedMedian&quot;</span>,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">f_ag_para =</span> <span class="fu">list</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># RESTORE above eval=ms_installed</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co"># load matrixStats package</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="fu">library</span>(matrixStats)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co"># aggregate using weightedMedian()</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>                   <span class="at">f_ag =</span> <span class="st">&quot;weightedMedian&quot;</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>                   <span class="at">f_ag_para =</span> <span class="fu">list</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <p>The weights <code>w</code> do not need to be specified in
 <code>f_ag_para</code> because they are automatically passed to
 <code>f_ag</code> unless specified otherwise.</p>
@@ -652,19 +652,19 @@ number of sophisticated aggregation approaches. The “benefit of the
 doubt” uses data envelopment analysis to aggregate indicators, however
 the function <code>Compind::ci_bod()</code> outputs a list. We can make
 a wrapper function to use this inside COINr:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># RESTORE ABOVE eval= ci_installed</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># load Compind</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(Compind))</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># wrapper to get output of interest from ci_bod</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># also suppress messages about missing values</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>ci_bod2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressMessages</span>(Compind<span class="sc">::</span><span class="fu">ci_bod</span>(x)<span class="sc">$</span>ci_bod_est)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>,</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>                   <span class="at">f_ag =</span> <span class="st">&quot;ci_bod2&quot;</span>, <span class="at">by_df =</span> <span class="cn">TRUE</span>, <span class="at">w =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># RESTORE ABOVE eval= ci_installed</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co"># load Compind</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(Compind))</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co"># wrapper to get output of interest from ci_bod</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co"># also suppress messages about missing values</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>ci_bod2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  <span class="fu">suppressMessages</span>(Compind<span class="sc">::</span><span class="fu">ci_bod</span>(x)<span class="sc">$</span>ci_bod_est)</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>}</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co"># aggregate</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>                   <span class="at">f_ag =</span> <span class="st">&quot;ci_bod2&quot;</span>, <span class="at">by_df =</span> <span class="cn">TRUE</span>, <span class="at">w =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <p>The benefit of the doubt approach automatically assigns individual
 weights to each unit, so we need to specify <code>w = &quot;none&quot;</code> to
 stop <code>Aggregate()</code> from attempting to pass weights to the
@@ -677,14 +677,14 @@ which tells <code>Aggregate()</code> to pass a data frame to
 <p>Many aggregation functions will return an aggregated value as long as
 at least one of the values passed to it is non-<code>NA</code>. For
 example, R’s <code>mean()</code> function:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data with all NAs except 1 value</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="dv">1</span>, <span class="cn">NA</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] NA</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># data with all NAs except 1 value</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="dv">1</span>, <span class="cn">NA</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="fu">mean</span>(x)</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt; [1] NA</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code></pre></div>
 <p>Depending on how we set <code>na.rm</code>, we either get an answer
 or <code>NA</code>, and this is the same for many other aggregation
 functions (e.g. the ones built into COINr). Sometimes we might want a
@@ -698,23 +698,23 @@ aggregation group, any unit that has a data availability lower than
 <code>dat_thresh</code> will get a <code>NA</code> value instead of an
 aggregated score. This is most easily illustrated on a data frame (see
 next section for more details on aggregating in data frames):</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">i1 =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">i2 =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="cn">NA</span>, <span class="cn">NA</span>),</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">i3 =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">1</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>df1</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   i1 i2 i3</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  1  3  1</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  2 NA NA</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  3 NA  1</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="at">i1 =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="at">i2 =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="cn">NA</span>, <span class="cn">NA</span>),</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="at">i3 =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">1</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>)</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>df1</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt;   i1 i2 i3</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; 1  1  3  1</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt; 2  2 NA NA</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; 3  3 NA  1</span></span></code></pre></div>
 <p>We will require that at least 2/3 of the indicators should be
 non-<code>NA</code> to give an aggregated value.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate with arithmetic mean, equal weight and data avail limit of 2/3</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Aggregate</span>(df1, <span class="at">f_ag =</span> <span class="st">&quot;a_amean&quot;</span>,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">f_ag_para =</span> <span class="fu">list</span>(<span class="at">w =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>)),</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">dat_thresh =</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.666667       NA 2.000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># aggregate with arithmetic mean, equal weight and data avail limit of 2/3</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">Aggregate</span>(df1, <span class="at">f_ag =</span> <span class="st">&quot;a_amean&quot;</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>           <span class="at">f_ag_para =</span> <span class="fu">list</span>(<span class="at">w =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>)),</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>           <span class="at">dat_thresh =</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">#&gt; [1] 1.666667       NA 2.000000</span></span></code></pre></div>
 <p>Here we see that the second row is aggregated to give <code>NA</code>
 because it only has 1/3 data availability.</p>
 </div>
@@ -723,9 +723,9 @@ because it only has 1/3 data availability.</p>
 <p>We can also use a different aggregation function for each aggregation
 level by specifying <code>f_ag</code> as a vector of function names
 rather than a single function.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">f_ag =</span> <span class="fu">c</span>(<span class="st">&quot;a_amean&quot;</span>, <span class="st">&quot;a_gmean&quot;</span>, <span class="st">&quot;a_amean&quot;</span>))</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">f_ag =</span> <span class="fu">c</span>(<span class="st">&quot;a_amean&quot;</span>, <span class="st">&quot;a_gmean&quot;</span>, <span class="st">&quot;a_amean&quot;</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
 <p>In this example, there are four levels in the index, which means
 there are three aggregation operations to be performed: from Level 1 to
 Level 2, from Level 2 to Level 3, and from Level 3 to Level 4. This
@@ -746,42 +746,42 @@ take vectors as inputs, rather than data frames, since it would
 otherwise be easier to go directly to the underlying function. In any
 case, here are a couple of examples. First, using a built in COINr
 function to compute the weighted harmonic mean of a data frame.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get some indicator data - take a few columns from built in data set</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> ASEM_iData[<span class="dv">12</span><span class="sc">:</span><span class="dv">15</span>]</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># normalise to avoid zeros - min max between 1 and 100</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(X,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_minmax&quot;</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">l_u =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">100</span>))))</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate using harmonic mean, with some weights</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(X, <span class="at">f_ag =</span> <span class="st">&quot;a_hmean&quot;</span>, <span class="at">f_ag_para =</span> <span class="fu">list</span>(<span class="at">w =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>)))</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(X, y) <span class="sc">|&gt;</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">signif</span>(<span class="dv">3</span>)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    LPI Flights Ship Bord     y</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 94.1   14.20  1.0 29.4  2.36</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 94.6   15.60 97.2 40.0 41.50</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 35.0    4.89 38.0 15.6 14.30</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 51.2    4.90 59.2 34.3 17.40</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 43.7    4.66 55.7  1.0  3.93</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># get some indicator data - take a few columns from built in data set</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>X <span class="ot">&lt;-</span> ASEM_iData[<span class="dv">12</span><span class="sc">:</span><span class="dv">15</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co"># normalise to avoid zeros - min max between 1 and 100</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(X,</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>                <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_minmax&quot;</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>                                     <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">l_u =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">100</span>))))</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co"># aggregate using harmonic mean, with some weights</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(X, <span class="at">f_ag =</span> <span class="st">&quot;a_hmean&quot;</span>, <span class="at">f_ag_para =</span> <span class="fu">list</span>(<span class="at">w =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>)))</span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="fu">cbind</span>(X, y) <span class="sc">|&gt;</span></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a>  <span class="fu">signif</span>(<span class="dv">3</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt;    LPI Flights Ship Bord     y</span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt; 1 94.1   14.20  1.0 29.4  2.36</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt; 2 94.6   15.60 97.2 40.0 41.50</span></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co">#&gt; 3 35.0    4.89 38.0 15.6 14.30</span></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="co">#&gt; 4 51.2    4.90 59.2 34.3 17.40</span></span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="co">#&gt; 5 43.7    4.66 55.7  1.0  3.93</span></span></code></pre></div>
 </div>
 <div id="purses" class="section level1">
 <h1>Purses</h1>
 <p>The purse method for <code>Aggregate()</code> is straightforward and
 simply applies the same aggregation specifications to each of the coins
 within. It has exactly the same parameters as the coin method.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build example purse up to normalised data set</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">build_example_purse</span>(<span class="at">up_to =</span> <span class="st">&quot;Normalise&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate using defaults</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># build example purse up to normalised data set</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">build_example_purse</span>(<span class="at">up_to =</span> <span class="st">&quot;Normalise&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co"># aggregate using defaults</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Aggregated</span></span></code></pre></div>
 </div>
 <div id="what-next" class="section level1">
 <h1>What next?</h1>

@@ -22,6 +22,9 @@
 #' @param use_group An optional grouping variable. If specified, the results table includes this group column,
 #' and if `use = "groupranks"`, ranks will be returned with respect to the groups in this column.
 #' @param out2 If `"df"`, outputs a data frame (tibble). Else if `"coin"` attaches to `.$Results` in an updated coin.
+#' @param dset_indicators Optional data set from which to take only indicator (level 1) data from. This can be set to `"Raw"`
+#' for example, so that all aggregates come from the aggregated data set, and the indicators come from the raw data set. This
+#' can make more sense in presenting results in many cases, so that the "real" indicator data is visible.
 #'
 #' @examples
 #' # build full example coin
@@ -37,7 +40,7 @@
 #'
 #' @export
 get_results <- function(coin, dset, tab_type = "Summ", also_get = NULL, use = "scores", order_by = NULL,
-                       nround = 2, use_group = NULL, out2 = "df"){
+                       nround = 2, use_group = NULL, dset_indicators = NULL, out2 = "df"){
 
   # CHECKS ------------------------------------------------------------------
 
@@ -46,6 +49,8 @@ get_results <- function(coin, dset, tab_type = "Summ", also_get = NULL, use = "s
             is.numeric(nround),
             out2 %in% c("df", "coin"))
 
+  check_coin_input(coin)
+
   # GET DATA ----------------------------------------------------------------
 
   # merge also_get with use_group
@@ -53,6 +58,18 @@ get_results <- function(coin, dset, tab_type = "Summ", also_get = NULL, use = "s
 
   # data
   iData <- get_data(coin, dset = dset, also_get = also_get, use_group = use_group)
+
+  # optionally indicator data from another data set (probably raw)
+  if(!is.null(dset_indicators)){
+    iDatai <- get_dset(coin, dset = dset_indicators)
+    # order rows by iData (also filter to only units in iData)
+    iDatai <- iDatai[match(iData$uCode, iDatai$uCode), ]
+    # get all iData cols which are indicators
+    ind_cols <- names(iData)[names(iData) %in% coin$Meta$Ind$iCode[which(coin$Meta$Ind$Type == "Indicator")]]
+    # hot swap
+    stopifnot(all(ind_cols %in% names(iDatai)))
+    iData[ind_cols] <- iDatai[ind_cols]
+  }
 
   # get meta col names
   mcols <- extract_iData(coin, iData, GET = "mCodes")
@@ -281,6 +298,7 @@ get_unit_summary <- function(coin, usel, Levels, dset = "Aggregated", nround = 2
 #' @param with_units If `TRUE` (default), includes indicator units in output tables.
 #' @param adjust_direction If `TRUE`, will adjust directions of indicators according to the "Direction" column
 #' of `IndMeta`. By default, this is `TRUE` *if* `dset = "Raw"`, and `FALSE` otherwise.
+#' @param sig_figs Number of significant figures to round values to. If `NULL` returns values as they are.
 #'
 #' @examples
 #' # build example coin
@@ -296,7 +314,7 @@ get_unit_summary <- function(coin, usel, Levels, dset = "Aggregated", nround = 2
 
 get_str_weak <- function(coin, dset, usel = NULL, topN = 5, bottomN = 5, withcodes = TRUE,
                              use_group = NULL, unq_discard = NULL, min_discard = TRUE, report_level = NULL,
-                             with_units = TRUE, adjust_direction = NULL){
+                             with_units = TRUE, adjust_direction = NULL, sig_figs = 3){
 
   # PREP --------------------------------------------------------------------
 
@@ -334,7 +352,6 @@ get_str_weak <- function(coin, dset, usel = NULL, topN = 5, bottomN = 5, withcod
     }
   }
   stopifnot(is.logical(adjust_direction))
-
 
   # GET S&W -----------------------------------------------------------------
 
@@ -387,6 +404,16 @@ get_str_weak <- function(coin, dset, usel = NULL, topN = 5, bottomN = 5, withcod
   lin <- coin$Meta$Lineage
   agcolname <- names(lin)[report_level]
 
+  # get values and round if asked
+  sValues <- as.numeric(data_scrs[data_scrs$uCode == usel ,Scodes])
+  wValues <- as.numeric(data_scrs[data_scrs$uCode == usel ,Wcodes])
+
+  if(!is.null(sig_figs)){
+    stopifnot(sig_figs %in% 0:100)
+    sValues <- signif(sValues, sig_figs)
+    wValues <- signif(wValues, sig_figs)
+  }
+
 
   # MAKE TABLES -------------------------------------------------------------
 
@@ -395,7 +422,7 @@ get_str_weak <- function(coin, dset, usel = NULL, topN = 5, bottomN = 5, withcod
     Name = iMeta_$iName[match(Scodes, iMeta_$iCode)],
     Dimension = lin[[agcolname]][match(Scodes, lin[[1]])],
     Rank = as.numeric(rnks_usel[Scodes]),
-    Value = signif(as.numeric(data_scrs[data_scrs$uCode == usel ,Scodes]),3)
+    Value = sValues
   )
   names(strengths)[3] <- agcolname
 
@@ -404,7 +431,7 @@ get_str_weak <- function(coin, dset, usel = NULL, topN = 5, bottomN = 5, withcod
     Name = iMeta_$iName[match(Wcodes, iMeta_$iCode)],
     Dimension = lin[[agcolname]][match(Wcodes, lin[[1]])],
     Rank = as.numeric(rnks_usel[Wcodes]),
-    Value = signif(as.numeric(data_scrs[data_scrs$uCode == usel ,Wcodes]),3)
+    Value = wValues
   )
   names(weaks)[3] <- agcolname
 

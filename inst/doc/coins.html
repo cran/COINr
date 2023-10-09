@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(COINr)</span></code></pre></div>
 <p>This vignette gives a guide to building “coins”, which are the object
 class representing a composite indicator used throughout COINr, and
 “purses”, which are time-indexed collections of coins.</p>
@@ -405,25 +405,25 @@ at the built in <a href="https://composite-indicators.jrc.ec.europa.eu/asem-sust
 data set. This data set is from a composite indicator covering 51
 countries with 49 indicators, and is used for examples throughout
 COINr:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ASEM_iData[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>], <span class="dv">5</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      uName uCode GDP_group GDPpc_group Pop_group EurAsia_group Time   Area</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  Austria   AUT         L          XL         M        Europe 2018  83871</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  Belgium   BEL         L           L         L        Europe 2018  30528</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Bulgaria   BGR         S           S         M        Europe 2018 110879</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  Croatia   HRV         S           M         S        Europe 2018  56594</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   Cyprus   CYP         S           L         S        Europe 2018   9251</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Energy       GDP Population      LPI  Flights      Ship Bord       Elec</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  27.00 390.79999   8735.453 4.097985 29.01725  0.000000   35 35.3697298</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  41.83 467.95527  11429.336 4.108538 31.88546 20.567121   48 26.5330467</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   9.96  53.23964   7084.571 2.807685  9.23588  7.919366   18 11.2775842</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   7.01  51.23100   4189.353 3.160829  9.24529 12.440452   41 19.5283620</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   1.43  20.04623   1179.551 2.999061  8.75467 11.689495    0  0.4393643</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      Gas ConSpeed Cov4G     Goods</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  0.273     14.1 98.00 278.42640</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 36.100     16.3 99.89 597.87230</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  0.312     15.5 56.73  42.82515</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  0.422      8.6 98.00  28.36795</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  0.029      6.9 60.00   8.76681</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">head</span>(ASEM_iData[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>], <span class="dv">5</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt;      uName uCode GDP_group GDPpc_group Pop_group EurAsia_group Time   Area</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; 1  Austria   AUT         L          XL         M        Europe 2018  83871</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; 2  Belgium   BEL         L           L         L        Europe 2018  30528</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; 3 Bulgaria   BGR         S           S         M        Europe 2018 110879</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; 4  Croatia   HRV         S           M         S        Europe 2018  56594</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; 5   Cyprus   CYP         S           L         S        Europe 2018   9251</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt;   Energy       GDP Population      LPI  Flights      Ship Bord       Elec</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 1  27.00 390.79999   8735.453 4.097985 29.01725  0.000000   35 35.3697298</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; 2  41.83 467.95527  11429.336 4.108538 31.88546 20.567121   48 26.5330467</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; 3   9.96  53.23964   7084.571 2.807685  9.23588  7.919366   18 11.2775842</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 4   7.01  51.23100   4189.353 3.160829  9.24529 12.440452   41 19.5283620</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; 5   1.43  20.04623   1179.551 2.999061  8.75467 11.689495    0  0.4393643</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt;      Gas ConSpeed Cov4G     Goods</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 1  0.273     14.1 98.00 278.42640</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 2 36.100     16.3 99.89 597.87230</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt; 3  0.312     15.5 56.73  42.82515</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; 4  0.422      8.6 98.00  28.36795</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt; 5  0.029      6.9 60.00   8.76681</span></span></code></pre></div>
 <p>Here only a few rows and columns are shown to illustrate. The ASEM
 data covers covering 51 Asian and European countries, at the national
 level, and uses 49 indicators. Notice that each row is an observation
@@ -461,8 +461,8 @@ character vectors.</li>
 <p>The <code>iData</code> data frame will be checked when it is passed
 to <code>new_coin()</code>. You can also perform this check yourself in
 advance by calling <code>check_iData()</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_iData</span>(ASEM_iData)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iData checked and OK.</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">check_iData</span>(ASEM_iData)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; iData checked and OK.</span></span></code></pre></div>
 <p>If there are issues with your <code>iData</code> data frame this
 should produce informative error messages which can help to correct the
 problem.</p>
@@ -475,19 +475,19 @@ group, or something else; its name, its units, and where it appears in
 the <em>structure</em> of the index. <code>iMeta</code> also requires
 entries for any aggregates which will be created by aggregating
 indicators. Let’s look at the built-in example.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ASEM_iMeta, <span class="dv">5</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level   iCode                                    iName Direction Weight</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     1     LPI              Logistics Performance Index         1      1</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     1 Flights International flights passenger capacity         1      1</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     1    Ship        Liner Shipping Connectivity Index         1      1</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     1    Bord                         Border crossings         1      1</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5     1    Elec                     Trade in electricity         1      1</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  Unit     Target Denominator   Parent      Type</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1           Score 1-5   4.118031        &lt;NA&gt; Physical Indicator</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2      Thousand seats 200.332655  Population Physical Indicator</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3               Score  20.113377        &lt;NA&gt; Physical Indicator</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 Number of crossings 115.900000        Area Physical Indicator</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5                 TWh 104.670585      Energy Physical Indicator</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">head</span>(ASEM_iMeta, <span class="dv">5</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt;   Level   iCode                                    iName Direction Weight</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; 1     1     LPI              Logistics Performance Index         1      1</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; 2     1 Flights International flights passenger capacity         1      1</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; 3     1    Ship        Liner Shipping Connectivity Index         1      1</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; 4     1    Bord                         Border crossings         1      1</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; 5     1    Elec                     Trade in electricity         1      1</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt;                  Unit     Target Denominator   Parent      Type</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; 1           Score 1-5   4.118031        &lt;NA&gt; Physical Indicator</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; 2      Thousand seats 200.332655  Population Physical Indicator</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; 3               Score  20.113377        &lt;NA&gt; Physical Indicator</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; 4 Number of crossings 115.900000        Area Physical Indicator</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; 5                 TWh 104.670585      Energy Physical Indicator</span></span></code></pre></div>
 <p>Required columns for <code>iMeta</code> are:</p>
 <ul>
 <li><code>Level</code>: The level in aggregation, where 1 is indicator
@@ -547,59 +547,59 @@ scaling (denominating) other indicators. Finally, set to
 Any other entries here will cause an error.</p>
 <p>Apart from the indicator entries shown above, we can see aggregate
 entries:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ASEM_iMeta[ASEM_iMeta<span class="sc">$</span>Type <span class="sc">==</span> <span class="st">&quot;Aggregate&quot;</span>, ]</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Level     iCode                        iName Direction Weight  Unit Target</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 50     2  Physical                     Physical         1      1 Score     NA</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 51     2  ConEcFin Economic and Financial (Con)         1      1 Score     NA</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 52     2 Political                    Political         1      1 Score     NA</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 53     2    Instit                Institutional         1      1 Score     NA</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 54     2       P2P             People to People         1      1 Score     NA</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 55     2   Environ                Environmental         1      1 Score     NA</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 56     2    Social                       Social         1      1 Score     NA</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 57     2  SusEcFin Economic and Financial (Sus)         1      1 Score     NA</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 58     3      Conn                 Connectivity         1      1 Score     NA</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 59     3      Sust               Sustainability         1      1 Score     NA</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 60     4     Index     Sustainable Connectivity         1      1 Score     NA</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Denominator Parent      Type</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 50        &lt;NA&gt;   Conn Aggregate</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 51        &lt;NA&gt;   Conn Aggregate</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 52        &lt;NA&gt;   Conn Aggregate</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 53        &lt;NA&gt;   Conn Aggregate</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 54        &lt;NA&gt;   Conn Aggregate</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 55        &lt;NA&gt;   Sust Aggregate</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 56        &lt;NA&gt;   Sust Aggregate</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 57        &lt;NA&gt;   Sust Aggregate</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 58        &lt;NA&gt;  Index Aggregate</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 59        &lt;NA&gt;  Index Aggregate</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 60        &lt;NA&gt;   &lt;NA&gt; Aggregate</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>ASEM_iMeta[ASEM_iMeta<span class="sc">$</span>Type <span class="sc">==</span> <span class="st">&quot;Aggregate&quot;</span>, ]</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt;    Level     iCode                        iName Direction Weight  Unit Target</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; 50     2  Physical                     Physical         1      1 Score     NA</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; 51     2  ConEcFin Economic and Financial (Con)         1      1 Score     NA</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; 52     2 Political                    Political         1      1 Score     NA</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; 53     2    Instit                Institutional         1      1 Score     NA</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; 54     2       P2P             People to People         1      1 Score     NA</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; 55     2   Environ                Environmental         1      1 Score     NA</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; 56     2    Social                       Social         1      1 Score     NA</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; 57     2  SusEcFin Economic and Financial (Sus)         1      1 Score     NA</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; 58     3      Conn                 Connectivity         1      1 Score     NA</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; 59     3      Sust               Sustainability         1      1 Score     NA</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; 60     4     Index     Sustainable Connectivity         1      1 Score     NA</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt;    Denominator Parent      Type</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt; 50        &lt;NA&gt;   Conn Aggregate</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt; 51        &lt;NA&gt;   Conn Aggregate</span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt; 52        &lt;NA&gt;   Conn Aggregate</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt; 53        &lt;NA&gt;   Conn Aggregate</span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt; 54        &lt;NA&gt;   Conn Aggregate</span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co">#&gt; 55        &lt;NA&gt;   Sust Aggregate</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co">#&gt; 56        &lt;NA&gt;   Sust Aggregate</span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="co">#&gt; 57        &lt;NA&gt;   Sust Aggregate</span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co">#&gt; 58        &lt;NA&gt;  Index Aggregate</span></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co">#&gt; 59        &lt;NA&gt;  Index Aggregate</span></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="co">#&gt; 60        &lt;NA&gt;   &lt;NA&gt; Aggregate</span></span></code></pre></div>
 <p>These are the aggregates that will be created by aggregating
 indicators. These values will only be created when we call the
 <code>Aggregate()</code> function (see relevant vignette). We also have
 groups:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ASEM_iMeta[ASEM_iMeta<span class="sc">$</span>Type <span class="sc">==</span> <span class="st">&quot;Group&quot;</span>, ]</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Level         iCode                iName Direction Weight Unit Target</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 61    NA     GDP_group            GDP group        NA     NA &lt;NA&gt;     NA</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 62    NA   GDPpc_group GDP per capita group        NA     NA &lt;NA&gt;     NA</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 63    NA     Pop_group     Population group        NA     NA &lt;NA&gt;     NA</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 64    NA EurAsia_group       Europe or Asia        NA     NA &lt;NA&gt;     NA</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Denominator Parent  Type</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 61        &lt;NA&gt;   &lt;NA&gt; Group</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 62        &lt;NA&gt;   &lt;NA&gt; Group</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 63        &lt;NA&gt;   &lt;NA&gt; Group</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 64        &lt;NA&gt;   &lt;NA&gt; Group</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>ASEM_iMeta[ASEM_iMeta<span class="sc">$</span>Type <span class="sc">==</span> <span class="st">&quot;Group&quot;</span>, ]</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt;    Level         iCode                iName Direction Weight Unit Target</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; 61    NA     GDP_group            GDP group        NA     NA &lt;NA&gt;     NA</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; 62    NA   GDPpc_group GDP per capita group        NA     NA &lt;NA&gt;     NA</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; 63    NA     Pop_group     Population group        NA     NA &lt;NA&gt;     NA</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; 64    NA EurAsia_group       Europe or Asia        NA     NA &lt;NA&gt;     NA</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt;    Denominator Parent  Type</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; 61        &lt;NA&gt;   &lt;NA&gt; Group</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; 62        &lt;NA&gt;   &lt;NA&gt; Group</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; 63        &lt;NA&gt;   &lt;NA&gt; Group</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; 64        &lt;NA&gt;   &lt;NA&gt; Group</span></span></code></pre></div>
 <p>Notice that the <code>iCode</code> entries here correspond to column
 names of <code>iData</code>. There are also denominators:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ASEM_iMeta[ASEM_iMeta<span class="sc">$</span>Type <span class="sc">==</span> <span class="st">&quot;Denominator&quot;</span>, ]</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Level      iCode              iName Direction Weight               Unit</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 65    NA       Area          Land area        NA     NA Thousand square km</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 66    NA     Energy Energy consumption        NA     NA               Unit</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 67    NA        GDP                GDP        NA     NA             USD Bn</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 68    NA Population         Population        NA     NA          Thousands</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Target Denominator Parent        Type</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 65     NA        &lt;NA&gt;   &lt;NA&gt; Denominator</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 66     NA        &lt;NA&gt;   &lt;NA&gt; Denominator</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 67     NA        &lt;NA&gt;   &lt;NA&gt; Denominator</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 68     NA        &lt;NA&gt;   &lt;NA&gt; Denominator</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>ASEM_iMeta[ASEM_iMeta<span class="sc">$</span>Type <span class="sc">==</span> <span class="st">&quot;Denominator&quot;</span>, ]</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt;    Level      iCode              iName Direction Weight               Unit</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; 65    NA       Area          Land area        NA     NA Thousand square km</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; 66    NA     Energy Energy consumption        NA     NA               Unit</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; 67    NA        GDP                GDP        NA     NA             USD Bn</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; 68    NA Population         Population        NA     NA          Thousands</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt;    Target Denominator Parent        Type</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; 65     NA        &lt;NA&gt;   &lt;NA&gt; Denominator</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; 66     NA        &lt;NA&gt;   &lt;NA&gt; Denominator</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; 67     NA        &lt;NA&gt;   &lt;NA&gt; Denominator</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; 68     NA        &lt;NA&gt;   &lt;NA&gt; Denominator</span></span></code></pre></div>
 <p>Denominators are used to divide or “scale” other indicators. They are
 ideally included in <code>iData</code> because this ensures that they
 match the units and possibly the time points.</p>
@@ -619,8 +619,8 @@ aggregation level or for groups, denominators and other
 <code>new_coin()</code>) to check the validity of your
 <code>iMeta</code>. Informative error messages are included where
 possible to help correct any errors.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_iMeta</span>(ASEM_iMeta)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iMeta checked and OK.</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">check_iMeta</span>(ASEM_iMeta)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; iMeta checked and OK.</span></span></code></pre></div>
 <p>When <code>new_coin()</code> is run, additional cross-checks are run
 between <code>iData</code> and <code>iMeta</code>.</p>
 </div>
@@ -630,13 +630,13 @@ between <code>iData</code> and <code>iMeta</code>.</p>
 prepared, you can build a coin using the <code>new_coin()</code>
 function. This has some other arguments and options that we will see in
 a minute, but by default it looks like this:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build a new coin using example data</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">new_coin</span>(<span class="at">iData =</span> ASEM_iData,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">iMeta =</span> ASEM_iMeta,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">level_names =</span> <span class="fu">c</span>(<span class="st">&quot;Indicator&quot;</span>, <span class="st">&quot;Pillar&quot;</span>, <span class="st">&quot;Sub-index&quot;</span>, <span class="st">&quot;Index&quot;</span>))</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iData checked and OK.</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iMeta checked and OK.</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Raw</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># build a new coin using example data</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">new_coin</span>(<span class="at">iData =</span> ASEM_iData,</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>                 <span class="at">iMeta =</span> ASEM_iMeta,</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>                 <span class="at">level_names =</span> <span class="fu">c</span>(<span class="st">&quot;Indicator&quot;</span>, <span class="st">&quot;Pillar&quot;</span>, <span class="st">&quot;Sub-index&quot;</span>, <span class="st">&quot;Index&quot;</span>))</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt; iData checked and OK.</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; iMeta checked and OK.</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Raw</span></span></code></pre></div>
 <p>The <code>new_coin()</code> function checks and cross-checks both
 input data frames, and outputs a coin-class object. It also tells us
 that it has written a data set to <code>.$Data$Raw</code> - this is the
@@ -645,24 +645,24 @@ time we run a coin-building function.</p>
 <p>We can see a summary of the coin by calling the coin print method -
 this is done simply by calling the name of the coin at the command line,
 or equivalently <code>print(coin)</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>coin</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A coin with...</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Input:</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Units: 51 (AUS, AUT, BEL, ...)</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Indicators: 49 (Goods, Services, FDI, ...)</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Denominators: 4 (Area, Energy, GDP, ...)</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Groups: 4 (GDP_group, GDPpc_group, Pop_group, ...)</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Structure:</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 1 Indicator: 49 indicators (FDI, ForPort, Goods, ...) </span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 2 Pillar: 8 groups (ConEcFin, Instit, P2P, ...) </span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 3 Sub-index: 2 groups (Conn, Sust) </span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 4 Index: 1 groups (Index) </span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Data sets:</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Raw (51 units)</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>coin</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt; A coin with...</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; Input:</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt;   Units: 51 (AUS, AUT, BEL, ...)</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt;   Indicators: 49 (Goods, Services, FDI, ...)</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt;   Denominators: 4 (Area, Energy, GDP, ...)</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt;   Groups: 4 (GDP_group, GDPpc_group, Pop_group, ...)</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; Structure:</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="co">#&gt;   Level 1 Indicator: 49 indicators (FDI, ForPort, Goods, ...) </span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt;   Level 2 Pillar: 8 groups (ConEcFin, Instit, P2P, ...) </span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="co">#&gt;   Level 3 Sub-index: 2 groups (Conn, Sust) </span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="co">#&gt;   Level 4 Index: 1 groups (Index) </span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co">#&gt; Data sets:</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co">#&gt;   Raw (51 units)</span></span></code></pre></div>
 <p>This tells us some details about the coin - the number of units,
 indicators, denominators and groups; the structure of the index (notice
 that the <code>level_names</code> argument is used to describe each
@@ -672,61 +672,61 @@ default when we run <code>new_coin()</code>, and simply consists of the
 indicator data plus the <code>uCode</code> column. Indeed, we can
 retrieve any data set from within a coin at any time using the
 <code>get_dset()</code> function:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first few cols and rows of Raw data set</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>data_raw <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(coin, <span class="st">&quot;Raw&quot;</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_raw[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">5</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    uCode      LPI  Flights      Ship Bord</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31   AUS 3.793385 36.05498 14.004198    0</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    AUT 4.097985 29.01725  0.000000   35</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    BEL 4.108538 31.88546 20.567121   48</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 32   BGD 2.663902  4.27955  9.698165   16</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    BGR 2.807685  9.23588  7.919366   18</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># first few cols and rows of Raw data set</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>data_raw <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(coin, <span class="st">&quot;Raw&quot;</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="fu">head</span>(data_raw[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">5</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co">#&gt;    uCode      LPI  Flights      Ship Bord</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">#&gt; 31   AUS 3.793385 36.05498 14.004198    0</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt; 1    AUT 4.097985 29.01725  0.000000   35</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; 2    BEL 4.108538 31.88546 20.567121   48</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt; 32   BGD 2.663902  4.27955  9.698165   16</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; 3    BGR 2.807685  9.23588  7.919366   18</span></span></code></pre></div>
 <p>By default, calling <code>get_dset()</code> returns only the unit
 code plus the indicator/aggregate columns. We can also attach other
 columns such as groups and names by using the <code>also_get</code>
 argument. This can be used to attach any of the <code>iData</code>
 “metadata” columns that were originally passed when calling
 <code>new_coin()</code>, such as groups, etc.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_dset</span>(coin, <span class="st">&quot;Raw&quot;</span>, <span class="at">also_get =</span> <span class="fu">c</span>(<span class="st">&quot;uName&quot;</span>, <span class="st">&quot;Pop_group&quot;</span>))[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   uCode      uName Pop_group      LPI  Flights</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   AUS  Australia         L 3.793385 36.05498</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   AUT    Austria         M 4.097985 29.01725</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   BEL    Belgium         L 4.108538 31.88546</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   BGD Bangladesh        XL 2.663902  4.27955</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   BGR   Bulgaria         M 2.807685  9.23588</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">get_dset</span>(coin, <span class="st">&quot;Raw&quot;</span>, <span class="at">also_get =</span> <span class="fu">c</span>(<span class="st">&quot;uName&quot;</span>, <span class="st">&quot;Pop_group&quot;</span>))[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#&gt;   uCode      uName Pop_group      LPI  Flights</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt; 1   AUS  Australia         L 3.793385 36.05498</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt; 2   AUT    Austria         M 4.097985 29.01725</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt; 3   BEL    Belgium         L 4.108538 31.88546</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt; 4   BGD Bangladesh        XL 2.663902  4.27955</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt; 5   BGR   Bulgaria         M 2.807685  9.23588</span></span></code></pre></div>
 <p>Apart from the <code>level_names</code> argument,
 <code>new_coin()</code> also gives the possibility to only pass forward
 a subset of the indicators in <code>iMeta</code>. This is done using the
 <code>exclude</code> argument, which is useful when testing alternative
 sets of indicators - see vignette on adjustments and comparisons.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># exclude two indicators</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">new_coin</span>(<span class="at">iData =</span> ASEM_iData,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">iMeta =</span> ASEM_iMeta,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">level_names =</span> <span class="fu">c</span>(<span class="st">&quot;Indicator&quot;</span>, <span class="st">&quot;Pillar&quot;</span>, <span class="st">&quot;Sub-index&quot;</span>, <span class="st">&quot;Index&quot;</span>),</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">exclude =</span> <span class="fu">c</span>(<span class="st">&quot;LPI&quot;</span>, <span class="st">&quot;Flights&quot;</span>))</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iData checked and OK.</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iMeta checked and OK.</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Raw</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>coin</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A coin with...</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Input:</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Units: 51 (AUS, AUT, BEL, ...)</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Indicators: 47 (Goods, Services, FDI, ...)</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Denominators: 4 (Area, Energy, GDP, ...)</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Groups: 4 (GDP_group, GDPpc_group, Pop_group, ...)</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Structure:</span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 1 Indicator: 47 indicators (FDI, ForPort, Goods, ...) </span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 2 Pillar: 8 groups (ConEcFin, Instit, P2P, ...) </span></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 3 Sub-index: 2 groups (Conn, Sust) </span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 4 Index: 1 groups (Index) </span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Data sets:</span></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Raw (51 units)</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># exclude two indicators</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">new_coin</span>(<span class="at">iData =</span> ASEM_iData,</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>                 <span class="at">iMeta =</span> ASEM_iMeta,</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>                 <span class="at">level_names =</span> <span class="fu">c</span>(<span class="st">&quot;Indicator&quot;</span>, <span class="st">&quot;Pillar&quot;</span>, <span class="st">&quot;Sub-index&quot;</span>, <span class="st">&quot;Index&quot;</span>),</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>                 <span class="at">exclude =</span> <span class="fu">c</span>(<span class="st">&quot;LPI&quot;</span>, <span class="st">&quot;Flights&quot;</span>))</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co">#&gt; iData checked and OK.</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#&gt; iMeta checked and OK.</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Raw</span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>coin</span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt; A coin with...</span></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#&gt; Input:</span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt;   Units: 51 (AUS, AUT, BEL, ...)</span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt;   Indicators: 47 (Goods, Services, FDI, ...)</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt;   Denominators: 4 (Area, Energy, GDP, ...)</span></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co">#&gt;   Groups: 4 (GDP_group, GDPpc_group, Pop_group, ...)</span></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="co">#&gt; Structure:</span></span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a><span class="co">#&gt;   Level 1 Indicator: 47 indicators (FDI, ForPort, Goods, ...) </span></span>
+<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a><span class="co">#&gt;   Level 2 Pillar: 8 groups (ConEcFin, Instit, P2P, ...) </span></span>
+<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a><span class="co">#&gt;   Level 3 Sub-index: 2 groups (Conn, Sust) </span></span>
+<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a><span class="co">#&gt;   Level 4 Index: 1 groups (Index) </span></span>
+<span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a><span class="co">#&gt; Data sets:</span></span>
+<span id="cb13-27"><a href="#cb13-27" tabindex="-1"></a><span class="co">#&gt;   Raw (51 units)</span></span></code></pre></div>
 <p>Here, <code>new_coin()</code> has removed the indicator columns from
 <code>iData</code> and the corresponding entries in <code>iMeta</code>.
 However, the full original <code>iData</code> and <code>iMeta</code>
@@ -745,32 +745,32 @@ learning how the package works, testing and is used in COINr
 documentation extensively because many functions require a coin as an
 input. Here we build the example coin (which is again from the ASEM data
 set built into COINr) and inspect its contents:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>ASEM</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A coin with...</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Input:</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Units: 51 (AUS, AUT, BEL, ...)</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Indicators: 49 (Goods, Services, FDI, ...)</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Denominators: 4 (Area, Energy, GDP, ...)</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Groups: 4 (GDP_group, GDPpc_group, Pop_group, ...)</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Structure:</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 1 Indicator: 49 indicators (FDI, ForPort, Goods, ...) </span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 2 Pillar: 8 groups (ConEcFin, Instit, P2P, ...) </span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 3 Sub-index: 2 groups (Conn, Sust) </span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 4 Index: 1 groups (Index) </span></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Data sets:</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Raw (51 units)</span></span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Denominated (51 units)</span></span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Imputed (51 units)</span></span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Screened (51 units)</span></span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Treated (51 units)</span></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Normalised (51 units)</span></span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Aggregated (51 units)</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>ASEM</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; A coin with...</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; --------------</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt; Input:</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt;   Units: 51 (AUS, AUT, BEL, ...)</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt;   Indicators: 49 (Goods, Services, FDI, ...)</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt;   Denominators: 4 (Area, Energy, GDP, ...)</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt;   Groups: 4 (GDP_group, GDPpc_group, Pop_group, ...)</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#&gt; Structure:</span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co">#&gt;   Level 1 Indicator: 49 indicators (FDI, ForPort, Goods, ...) </span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co">#&gt;   Level 2 Pillar: 8 groups (ConEcFin, Instit, P2P, ...) </span></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co">#&gt;   Level 3 Sub-index: 2 groups (Conn, Sust) </span></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co">#&gt;   Level 4 Index: 1 groups (Index) </span></span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="co">#&gt; Data sets:</span></span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="co">#&gt;   Raw (51 units)</span></span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="co">#&gt;   Denominated (51 units)</span></span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="co">#&gt;   Imputed (51 units)</span></span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="co">#&gt;   Screened (51 units)</span></span>
+<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="co">#&gt;   Treated (51 units)</span></span>
+<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a><span class="co">#&gt;   Normalised (51 units)</span></span>
+<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="co">#&gt;   Aggregated (51 units)</span></span></code></pre></div>
 <p>This shows that the example is a fully populated coin with various
 data sets, each resulting from running COINr functions, up to the
 aggregation step.</p>
@@ -794,48 +794,48 @@ The difference is that <code>iData</code> must now have a
 which time point each observation is from. To see an example, we can
 look at the built-in (artificial) panel data set
 <code>ASEM_iData_p</code>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample of 2018 observations</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ASEM_iData_p[ASEM_iData_p<span class="sc">$</span>Time <span class="sc">==</span> <span class="dv">2018</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>] <span class="sc">|&gt;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      uName uCode GDP_group GDPpc_group Pop_group EurAsia_group Time   Area</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  Austria   AUT         L          XL         M        Europe 2018  83871</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  Belgium   BEL         L           L         L        Europe 2018  30528</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Bulgaria   BGR         S           S         M        Europe 2018 110879</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  Croatia   HRV         S           M         S        Europe 2018  56594</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   Cyprus   CYP         S           L         S        Europe 2018   9251</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Energy       GDP Population      LPI  Flights      Ship Bord</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  27.00 390.79999   8735.453 4.097985 29.01725  0.000000   35</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  41.83 467.95527  11429.336 4.108538 31.88546 20.567121   48</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   9.96  53.23964   7084.571 2.807685  9.23588  7.919366   18</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   7.01  51.23100   4189.353 3.160829  9.24529 12.440452   41</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5   1.43  20.04623   1179.551 2.999061  8.75467 11.689495    0</span></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co"># sample of 2019 observations</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>ASEM_iData_p[ASEM_iData_p<span class="sc">$</span>Time <span class="sc">==</span> <span class="dv">2019</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>] <span class="sc">|&gt;</span></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       uName uCode GDP_group GDPpc_group Pop_group EurAsia_group Time   Area</span></span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 52  Austria   AUT         L          XL         M        Europe 2019  83871</span></span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 53  Belgium   BEL         L           L         L        Europe 2019  30528</span></span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 54 Bulgaria   BGR         S           S         M        Europe 2019 110879</span></span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 55  Croatia   HRV         S           M         S        Europe 2019  56594</span></span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 56   Cyprus   CYP         S           L         S        Europe 2019   9251</span></span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Energy       GDP Population      LPI  Flights       Ship      Bord</span></span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 52  27.00 390.79999   8735.453 4.153182 37.53763  0.6054851 39.752508</span></span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 53  41.83 467.95527  11429.336 4.149371 41.53901 21.2045607 52.123937</span></span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 54   9.96  53.23964   7084.571 2.868647 15.82871  7.9467542 23.203648</span></span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 55   7.01  51.23100   4189.353 3.230168 16.06586 13.0958316 46.566308</span></span>
-<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 56   1.43  20.04623   1179.551 3.098577 10.92502 12.3571194  3.993825</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># sample of 2018 observations</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>ASEM_iData_p[ASEM_iData_p<span class="sc">$</span>Time <span class="sc">==</span> <span class="dv">2018</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>] <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt;      uName uCode GDP_group GDPpc_group Pop_group EurAsia_group Time   Area</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt; 1  Austria   AUT         L          XL         M        Europe 2018  83871</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt; 2  Belgium   BEL         L           L         L        Europe 2018  30528</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt; 3 Bulgaria   BGR         S           S         M        Europe 2018 110879</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#&gt; 4  Croatia   HRV         S           M         S        Europe 2018  56594</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt; 5   Cyprus   CYP         S           L         S        Europe 2018   9251</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt;   Energy       GDP Population      LPI  Flights      Ship Bord</span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt; 1  27.00 390.79999   8735.453 4.097985 29.01725  0.000000   35</span></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#&gt; 2  41.83 467.95527  11429.336 4.108538 31.88546 20.567121   48</span></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt; 3   9.96  53.23964   7084.571 2.807685  9.23588  7.919366   18</span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#&gt; 4   7.01  51.23100   4189.353 3.160829  9.24529 12.440452   41</span></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co">#&gt; 5   1.43  20.04623   1179.551 2.999061  8.75467 11.689495    0</span></span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="co"># sample of 2019 observations</span></span>
+<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a>ASEM_iData_p[ASEM_iData_p<span class="sc">$</span>Time <span class="sc">==</span> <span class="dv">2019</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>] <span class="sc">|&gt;</span></span>
+<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span>
+<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a><span class="co">#&gt;       uName uCode GDP_group GDPpc_group Pop_group EurAsia_group Time   Area</span></span>
+<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a><span class="co">#&gt; 52  Austria   AUT         L          XL         M        Europe 2019  83871</span></span>
+<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a><span class="co">#&gt; 53  Belgium   BEL         L           L         L        Europe 2019  30528</span></span>
+<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a><span class="co">#&gt; 54 Bulgaria   BGR         S           S         M        Europe 2019 110879</span></span>
+<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a><span class="co">#&gt; 55  Croatia   HRV         S           M         S        Europe 2019  56594</span></span>
+<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a><span class="co">#&gt; 56   Cyprus   CYP         S           L         S        Europe 2019   9251</span></span>
+<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a><span class="co">#&gt;    Energy       GDP Population      LPI  Flights       Ship      Bord</span></span>
+<span id="cb15-27"><a href="#cb15-27" tabindex="-1"></a><span class="co">#&gt; 52  27.00 390.79999   8735.453 4.153182 37.53763  0.6054851 39.752508</span></span>
+<span id="cb15-28"><a href="#cb15-28" tabindex="-1"></a><span class="co">#&gt; 53  41.83 467.95527  11429.336 4.149371 41.53901 21.2045607 52.123937</span></span>
+<span id="cb15-29"><a href="#cb15-29" tabindex="-1"></a><span class="co">#&gt; 54   9.96  53.23964   7084.571 2.868647 15.82871  7.9467542 23.203648</span></span>
+<span id="cb15-30"><a href="#cb15-30" tabindex="-1"></a><span class="co">#&gt; 55   7.01  51.23100   4189.353 3.230168 16.06586 13.0958316 46.566308</span></span>
+<span id="cb15-31"><a href="#cb15-31" tabindex="-1"></a><span class="co">#&gt; 56   1.43  20.04623   1179.551 3.098577 10.92502 12.3571194  3.993825</span></span></code></pre></div>
 <p>This data set has five years of data, spanning 2018-2022 (the data
 are artificially generated - at some point I will replace this with a
 real example). This means that each row now corresponds to a set of
 indicator values for a unit, for a given time point.</p>
 <p>To build a purse from this data, we input it into
 <code>new_coin()</code></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build purse from panel data</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">new_coin</span>(<span class="at">iData =</span> ASEM_iData_p,</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">iMeta =</span> ASEM_iMeta,</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">split_to =</span> <span class="st">&quot;all&quot;</span>,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># build purse from panel data</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">new_coin</span>(<span class="at">iData =</span> ASEM_iData_p,</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>                  <span class="at">iMeta =</span> ASEM_iMeta,</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>                  <span class="at">split_to =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>                  <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Notice here that the <code>iMeta</code> argument is the same as when
 we assembled a single coin - this is because a purse is supposed to
 consist of coins with the same indicators and structure, i.e. the aim is
@@ -850,36 +850,36 @@ data. Alternatively, you can only include a subset of time points by
 specifying them as a vector.</p>
 <p>A quick way to check the contents of the purse is to call its print
 method:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>purse</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -----------------------------</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A purse with... 5 coins </span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -----------------------------</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Time n_Units n_Inds n_dsets</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2018      51     49       1</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2019      51     49       1</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2020      51     49       1</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2021      51     49       1</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2022      51     49       1</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -----------------------------------</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sample from first coin (2018):</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -----------------------------------</span></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Input:</span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Units: 51 (AUS, AUT, BEL, ...)</span></span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Indicators: 49 (Goods, Services, FDI, ...)</span></span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Denominators: 4 (Area, Energy, GDP, ...)</span></span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Groups: 4 (GDP_group, GDPpc_group, Pop_group, ...)</span></span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Structure:</span></span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 1 : 49 indicators (FDI, ForPort, Goods, ...) </span></span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 2 : 8 groups (ConEcFin, Instit, P2P, ...) </span></span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 3 : 2 groups (Conn, Sust) </span></span>
-<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 4 : 1 groups (Index) </span></span>
-<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Data sets:</span></span>
-<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Raw (51 units)</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>purse</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="co">#&gt; -----------------------------</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="co">#&gt; A purse with... 5 coins </span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co">#&gt; -----------------------------</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="co">#&gt;  Time n_Units n_Inds n_dsets</span></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co">#&gt;  2018      51     49       1</span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="co">#&gt;  2019      51     49       1</span></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="co">#&gt;  2020      51     49       1</span></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="co">#&gt;  2021      51     49       1</span></span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="co">#&gt;  2022      51     49       1</span></span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a><span class="co">#&gt; -----------------------------------</span></span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a><span class="co">#&gt; Sample from first coin (2018):</span></span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a><span class="co">#&gt; -----------------------------------</span></span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a><span class="co">#&gt; Input:</span></span>
+<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a><span class="co">#&gt;   Units: 51 (AUS, AUT, BEL, ...)</span></span>
+<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a><span class="co">#&gt;   Indicators: 49 (Goods, Services, FDI, ...)</span></span>
+<span id="cb17-20"><a href="#cb17-20" tabindex="-1"></a><span class="co">#&gt;   Denominators: 4 (Area, Energy, GDP, ...)</span></span>
+<span id="cb17-21"><a href="#cb17-21" tabindex="-1"></a><span class="co">#&gt;   Groups: 4 (GDP_group, GDPpc_group, Pop_group, ...)</span></span>
+<span id="cb17-22"><a href="#cb17-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-23"><a href="#cb17-23" tabindex="-1"></a><span class="co">#&gt; Structure:</span></span>
+<span id="cb17-24"><a href="#cb17-24" tabindex="-1"></a><span class="co">#&gt;   Level 1 : 49 indicators (FDI, ForPort, Goods, ...) </span></span>
+<span id="cb17-25"><a href="#cb17-25" tabindex="-1"></a><span class="co">#&gt;   Level 2 : 8 groups (ConEcFin, Instit, P2P, ...) </span></span>
+<span id="cb17-26"><a href="#cb17-26" tabindex="-1"></a><span class="co">#&gt;   Level 3 : 2 groups (Conn, Sust) </span></span>
+<span id="cb17-27"><a href="#cb17-27" tabindex="-1"></a><span class="co">#&gt;   Level 4 : 1 groups (Index) </span></span>
+<span id="cb17-28"><a href="#cb17-28" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb17-29"><a href="#cb17-29" tabindex="-1"></a><span class="co">#&gt; Data sets:</span></span>
+<span id="cb17-30"><a href="#cb17-30" tabindex="-1"></a><span class="co">#&gt;   Raw (51 units)</span></span></code></pre></div>
 <p>This tells us how many coins there are, the number of indicators and
 units, and gives some structural information from one of the coins.</p>
 <p>A purse is an S3 class object like a coin. In fact, it is simply a
@@ -890,42 +890,42 @@ you try to view it in R Studio, for example, it can be a little
 messy.</p>
 <p>As with coins, the purse class also has a function in COINr which
 produces an example purse:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ASEM_purse <span class="ot">&lt;-</span> <span class="fu">build_example_purse</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>ASEM_purse</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -----------------------------</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A purse with... 5 coins </span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -----------------------------</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Time n_Units n_Inds n_dsets</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2018      51     49       5</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2019      51     49       5</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2020      51     49       5</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2021      51     49       5</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2022      51     49       5</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -----------------------------------</span></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sample from first coin (2018):</span></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -----------------------------------</span></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Input:</span></span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Units: 51 (AUS, AUT, BEL, ...)</span></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Indicators: 49 (Goods, Services, FDI, ...)</span></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Denominators: 4 (Area, Energy, GDP, ...)</span></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Groups: 4 (GDP_group, GDPpc_group, Pop_group, ...)</span></span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Structure:</span></span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 1 Indicator: 49 indicators (FDI, ForPort, Goods, ...) </span></span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 2 Pillar: 8 groups (ConEcFin, Instit, P2P, ...) </span></span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 3 Sub-index: 2 groups (Conn, Sust) </span></span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Level 4 Index: 1 groups (Index) </span></span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Data sets:</span></span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Raw (51 units)</span></span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Screened (46 units)</span></span>
-<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Treated (46 units)</span></span>
-<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Normalised (46 units)</span></span>
-<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Aggregated (46 units)</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>ASEM_purse <span class="ot">&lt;-</span> <span class="fu">build_example_purse</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>ASEM_purse</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="co">#&gt; -----------------------------</span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="co">#&gt; A purse with... 5 coins </span></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co">#&gt; -----------------------------</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="co">#&gt;  Time n_Units n_Inds n_dsets</span></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="co">#&gt;  2018      51     49       5</span></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co">#&gt;  2019      51     49       5</span></span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a><span class="co">#&gt;  2020      51     49       5</span></span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a><span class="co">#&gt;  2021      51     49       5</span></span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a><span class="co">#&gt;  2022      51     49       5</span></span>
+<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a><span class="co">#&gt; -----------------------------------</span></span>
+<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a><span class="co">#&gt; Sample from first coin (2018):</span></span>
+<span id="cb18-17"><a href="#cb18-17" tabindex="-1"></a><span class="co">#&gt; -----------------------------------</span></span>
+<span id="cb18-18"><a href="#cb18-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb18-19"><a href="#cb18-19" tabindex="-1"></a><span class="co">#&gt; Input:</span></span>
+<span id="cb18-20"><a href="#cb18-20" tabindex="-1"></a><span class="co">#&gt;   Units: 51 (AUS, AUT, BEL, ...)</span></span>
+<span id="cb18-21"><a href="#cb18-21" tabindex="-1"></a><span class="co">#&gt;   Indicators: 49 (Goods, Services, FDI, ...)</span></span>
+<span id="cb18-22"><a href="#cb18-22" tabindex="-1"></a><span class="co">#&gt;   Denominators: 4 (Area, Energy, GDP, ...)</span></span>
+<span id="cb18-23"><a href="#cb18-23" tabindex="-1"></a><span class="co">#&gt;   Groups: 4 (GDP_group, GDPpc_group, Pop_group, ...)</span></span>
+<span id="cb18-24"><a href="#cb18-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb18-25"><a href="#cb18-25" tabindex="-1"></a><span class="co">#&gt; Structure:</span></span>
+<span id="cb18-26"><a href="#cb18-26" tabindex="-1"></a><span class="co">#&gt;   Level 1 Indicator: 49 indicators (FDI, ForPort, Goods, ...) </span></span>
+<span id="cb18-27"><a href="#cb18-27" tabindex="-1"></a><span class="co">#&gt;   Level 2 Pillar: 8 groups (ConEcFin, Instit, P2P, ...) </span></span>
+<span id="cb18-28"><a href="#cb18-28" tabindex="-1"></a><span class="co">#&gt;   Level 3 Sub-index: 2 groups (Conn, Sust) </span></span>
+<span id="cb18-29"><a href="#cb18-29" tabindex="-1"></a><span class="co">#&gt;   Level 4 Index: 1 groups (Index) </span></span>
+<span id="cb18-30"><a href="#cb18-30" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb18-31"><a href="#cb18-31" tabindex="-1"></a><span class="co">#&gt; Data sets:</span></span>
+<span id="cb18-32"><a href="#cb18-32" tabindex="-1"></a><span class="co">#&gt;   Raw (51 units)</span></span>
+<span id="cb18-33"><a href="#cb18-33" tabindex="-1"></a><span class="co">#&gt;   Screened (46 units)</span></span>
+<span id="cb18-34"><a href="#cb18-34" tabindex="-1"></a><span class="co">#&gt;   Treated (46 units)</span></span>
+<span id="cb18-35"><a href="#cb18-35" tabindex="-1"></a><span class="co">#&gt;   Normalised (46 units)</span></span>
+<span id="cb18-36"><a href="#cb18-36" tabindex="-1"></a><span class="co">#&gt;   Aggregated (46 units)</span></span></code></pre></div>
 <p>The purse class can be used directly with COINr functions - this
 allows to impute/normalise/treat/aggregate all coins with a single
 command, for example.</p>

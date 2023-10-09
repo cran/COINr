@@ -392,34 +392,34 @@ sections.</p>
 <h1>Numeric vectors</h1>
 <p>The clearest way to demonstrate the <code>Treat()</code> function is
 on a numeric vector. Let’s make a vector with a couple of outliers:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># numbers between 1 and 10</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># two outliers</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(x, <span class="dv">30</span>, <span class="dv">100</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># numbers between 1 and 10</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># two outliers</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(x, <span class="dv">30</span>, <span class="dv">100</span>)</span></code></pre></div>
 <p>We can check the skew and kurtosis of this vector:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">skew</span>(x)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.063241</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kurt</span>(x)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 9.741391</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">skew</span>(x)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; [1] 3.063241</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="fu">kurt</span>(x)</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; [1] 9.741391</span></span></code></pre></div>
 <p>The skew and kurtosis are both high. If we follow the default limits
 in COINr (absolute skew capped at 2, and kurtosis capped at 3.5), this
 would be classed as a vector with outliers. Indeed we can confirm this
 using the <code>check_SkewKurt()</code> function, which is the default
 pass/fail function used in <code>Treat()</code>. This also anyway
 outputs the skew and kurtosis:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_SkewKurt</span>(x)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Pass</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Skew</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.063241</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Kurt</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 9.741391</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">check_SkewKurt</span>(x)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; $Pass</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; $Skew</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; [1] 3.063241</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; $Kurt</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; [1] 9.741391</span></span></code></pre></div>
 <p>Now we know that <code>x</code> has outliers, we can treat it (if we
 want). We use the <code>Treat()</code> function to specify that our
 function for checking for outliers
@@ -428,24 +428,24 @@ treating outliers is <code>f1 = &quot;winsorise&quot;</code>. We also pass an
 additional parameter to <code>winsorise()</code>, which is
 <code>winmax = 2</code>. You can check the <code>winsorise()</code>
 function documentation to better understand how it works.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>l_treat <span class="ot">&lt;-</span> <span class="fu">Treat</span>(x, <span class="at">f1 =</span> <span class="st">&quot;winsorise&quot;</span>, <span class="at">f1_para =</span> <span class="fu">list</span>(<span class="at">winmax =</span> <span class="dv">2</span>),</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">f_pass =</span> <span class="st">&quot;check_SkewKurt&quot;</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, l_treat<span class="sc">$</span>x)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>l_treat <span class="ot">&lt;-</span> <span class="fu">Treat</span>(x, <span class="at">f1 =</span> <span class="st">&quot;winsorise&quot;</span>, <span class="at">f1_para =</span> <span class="fu">list</span>(<span class="at">winmax =</span> <span class="dv">2</span>),</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>                 <span class="at">f_pass =</span> <span class="st">&quot;check_SkewKurt&quot;</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">plot</span>(x, l_treat<span class="sc">$</span>x)</span></code></pre></div>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAFQCAMAAABQwF3SAAAAYFBMVEUAAAAAADoAAGYAOpAAZrY6AAA6ADo6AGY6kNtmAABmADpmOpBmZmZmtttmtv+QOgCQOjqQOmaQZgCQ2/+2ZgC2/7a2///bkDrb2//b/9vb////tmb/25D//7b//9v////K28qbAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAIhUlEQVR4nO2dcXebNhRHaZKudrfF28LCVhL7+3/LIoQ5S1ecSE8Pyz/uPadp/6iesG8kPYQkmhNI01z7AsAXBIuDYHEQLA6CxUGwOAgWB8HiIFgcBIuDYHEQLA6CxUGwOAgWB8HiIFgcBIuDYHEQLA6CxUGwOAgWB8HiIFgcBIuDYHEQLA6CxUGwOAgWB8HiIFgcBIuDYHEQLA6CxUGwOAgWB8HiIFgcBIuDYHEQLA6CxUGwOAgWB8HiIFgcBIuDYHEQLA6CxUGwOAgWB8HiIFgcBIuDYHEQLA6CxUGwOAgWB8HiIFgcBIuDYHEQLA6CxUGwOAgWB8HiIFgcBIuDYHEQLA6CxSksuIGVuJbgsuFgCQSLsw3BCT3V7fP2w25CcLN2hdfkhw+7BcHN6jVekR8/7MqC05O7EpX+56c8VxbsFe4DdSH4IwULX8dKMAZ/sFzhy1gPsugPFCt8FWXDwRIIFgfB4iBYHASLg2BxECwOgsVBsDgIFgfB4iBYHASLg2BxXAS/7nfDz75pmrvnAuHAgJ/g7v5b+NejPRwYcBM8qR01G8OBATfBL59Hwf1CJ43glaAFi+MkOCyMfTid0y1jODDgdZs0OP70NCTSC34RvBbcB4uzhZ0Nm8ZJcDcojEkWWfR18RHcDePv6z5kWQi+Mi6Cj4fd+HO4RULwlXG6TYoTlO39NwRfGccWPNA+IPjKOI3Bk9bhbhjB18Uti46d9PGA4OvCRIc4CBYHweIgWBwEi4NgcRAsDoLFQbA4CBYnXfDxn1XrBRvpguOD/EH0n0vbUorWCzYyuug+rJc8dcv7jorWCzZyxuDjIayaW1oQW7hesJGVZAXDC5vKitcLNnIEt03z+6FZ2JNSul6wkZNkNXH3L2PwLZAh+NfYdLOyaBa+rw0THeIkC27D2DtvXPCvF2ykCg57Fk798GPa4O1eL9hIFDxOYx0PYS6rNaXRCF6JRMHtmxdbGuY6ELwSyS14F3toWvCNkDoGt3fPsYde3rxftl6wkZ5FN03Mo5mLvgm4DxYnYybr69P499IJWIXrBRv5gpc2hhauF2wkJ1lFbpIQvBr5LXilesEGSZY4GYLjQYUXzoIuWi/YyBAcjlZ54GHDjZCzomN36sMBSctTlZz4Xg85gh9PL1+exz8LcOJ7PWTsbDjsxkz6HcGcF10HGWNwmOFod+910Zz4XgdZy2YfLhyAFaAF14PLfTAnvteD10QHJ75XQo7gQd79t5bnwTdBzu7CT0/DyLrY+V6OwsL3lcm7TeounARduF6wkTfREQTzwP8myG/BF1ZVnh9HXHgkgeCVyB6Du0t7VxZPEU6vF2xkZtHNeIzDMnFpbYl6wYbXfXD/zuY0BK9E3hi8Yr1gIy+LXrFesJGTZJnuj1LrBRtZZ3SwJut2YFWlOGxdEYetK+KwdUUctq6IY0qyjn9ku0bwSiBYHASLg2BxECwOgsVBsDg3IJg1thbqF9wk/W/4geqfJjUetW+IlQWn72xAsI3EL/oDK55d6kVwLrV30bGt4zebygWPdsmiDdQtmP7ZDILFQbA4NQtuyLDsVCx4SrDwa6JewXTPRUCwOAgWp1rBJFhlqFUwU1iFqFQw/XMpECwOgsWpUjBTWOWoUTBTWAWpUDDdc0kQLA6CxXERbHpvEglWUfwEZ743iSmssrgJznzrCv1zYdwE//y9Se8ufEdwYWjB4jgJzn1vEhlWabxuk/Lem0SGVZyq7oPpn8uDYHEQLE5Vgk9kWMWpSHDIrsiwSlOPYFqvC9UIZvz1AcHiIFicWgQzR+lEJYKZo/SiDsH0z24gWBwEi1OFYDIsP2oQTIblSAWC6Z89QbA4CBbHSfDx8M6Rw/8bg5PCw4fxEdydF9strrr7SRYNHrgIPh5mranroqEwTuui5x1JqTsboDBXa8GwEh6ChzF4asLLK9/zAvvF2PxlpJU6v7xjof3aL6d4jM1fhtuguflvtnQIBHuFuO3LQPAqMRDsFWPzl4HgVWIg2CvG5i8DwavEEBQMdYBgcRAsDoLFQbA4CBYHweIgWBwEi4NgcRAsDoLFQbA4PoL7Jpw6nM24Q2ZnDtSOawMNIV4+x+OxDTG64ZM8WkK8fHl+Uzw1jovgPpwpnS/meBjKduGrNQXqx8WfhhD9UP51b7qMbjxd+zE/xOt+3GIwF0+O4yE4LpBvH3LLx/dCdHfPpkCv+yDYECIWNV3G8fAQS+aG6ONGv7l4ehwPwbMgU5Th99QUqLv/axBsCPHyy9RQ8mPMgjND9M1u3CQ0F0+P4yJ4/GZ6o+B2+DiGQEPZMAYbQvR3f+/HVMAQ49xF54eIgs/F0+N4CI5jhGEQHoMMX60hUOjLgmBDiC70jqENWj7PlBPlhxhlzsXT49QquD/nWLl2BrlWwZ+m1mKIMXRDQ/9q+VWtUXCBLjrubssPNJY0dtFxpBtGPcNlzGOnVBdtT7KmowTyA3XTJstHw7XEr3H4SvNjzA3OEKLCJMt6mzRvUzUGam23SXG/e2+5TYo+TCH6Cm+TrBMdYdAqEag1TnR051+Q/BjnMTg/RF/hRMfYQxpSrKl/DRFMgeJUpSFEf54xzY/RWkNM4+1cPDUODxvEQbA4CBYHweIgWBwEi4NgcRAsDoLFQbA4CBYHweIgWBwEi4NgcRAsDoLFQbA4CBYHweIgWBwEi4NgcRAsDoLFQbA4CBYHweIgWBwEi7N1wWGz/Ov+3bch3y5bFxw2eC+9zlyCrQsOp2F9NZ33VDmbF3xqm/zDRG4ABPfTiS+ibF7w8fCb8czFutm84O7+34NwEr15weEwLOuxqVWzdcHxsDThNGvrguVBsDgIFgfB4iBYHASLg2BxECwOgsVBsDgIFgfB4iBYHASLg2BxECwOgsVBsDgIFgfB4iBYHASLg2BxECzOd2iBSaVxcAV8AAAAAElFTkSuQmCC" /><!-- --></p>
 <p>The result of this data treatment is shown in the scatter plot: one
 point from <code>x</code> has been Winsorised (reassigned the next
 highest value). We can check the skew and kurtosis of the treated
 vector:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">check_SkewKurt</span>(l_treat<span class="sc">$</span>x)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Pass</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Skew</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.712038</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Kurt</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.815781</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">check_SkewKurt</span>(l_treat<span class="sc">$</span>x)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co">#&gt; $Pass</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; $Skew</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; [1] 1.712038</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; $Kurt</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; [1] 1.815781</span></span></code></pre></div>
 <p>Clearly, Winsorising one point was enough in this case to bring the
 skew and kurtosis within the specified thresholds.</p>
 </div>
@@ -455,85 +455,85 @@ skew and kurtosis within the specified thresholds.</p>
 the same as treating a numeric vector, because the data frame method
 passes each column of the data frame to the numeric method. Here, we use
 some data from the COINr package to demonstrate.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select three indicators</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> ASEM_iData[<span class="fu">c</span>(<span class="st">&quot;Flights&quot;</span>, <span class="st">&quot;Goods&quot;</span>, <span class="st">&quot;Services&quot;</span>)]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># treat the data frame using defaults</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>l_treat <span class="ot">&lt;-</span> <span class="fu">Treat</span>(df1)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(l_treat, <span class="at">max.level =</span> <span class="dv">1</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; List of 3</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ x_treat       :&#39;data.frame&#39;:  51 obs. of  3 variables:</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Dets_Table    :&#39;data.frame&#39;:  3 obs. of  8 variables:</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Treated_Points:&#39;data.frame&#39;:  51 obs. of  3 variables:</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># select three indicators</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> ASEM_iData[<span class="fu">c</span>(<span class="st">&quot;Flights&quot;</span>, <span class="st">&quot;Goods&quot;</span>, <span class="st">&quot;Services&quot;</span>)]</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co"># treat the data frame using defaults</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>l_treat <span class="ot">&lt;-</span> <span class="fu">Treat</span>(df1)</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="fu">str</span>(l_treat, <span class="at">max.level =</span> <span class="dv">1</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; List of 3</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt;  $ x_treat       :&#39;data.frame&#39;:  51 obs. of  3 variables:</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt;  $ Dets_Table    :&#39;data.frame&#39;:  3 obs. of  8 variables:</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt;  $ Treated_Points:&#39;data.frame&#39;:  51 obs. of  3 variables:</span></span></code></pre></div>
 <p>We can see the output is a list with <code>x_treat</code>, the
 treated data frame; <code>Dets_Table</code>, a table describing what
 happened to each indicator; and <code>Treated_Points</code>, which marks
 which individual points were adjusted. This is effectively the same
 output as for treating a numeric vector.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>l_treat<span class="sc">$</span>Dets_Table</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      iCode check_SkewKurt0.Pass check_SkewKurt0.Skew check_SkewKurt0.Kurt</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  Flights                FALSE             2.103287             4.508879</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    Goods                FALSE             2.649973             8.266610</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Services                 TRUE             1.701085             2.375656</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   winsorise.nwin check_SkewKurt1.Pass check_SkewKurt1.Skew check_SkewKurt1.Kurt</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1              1                 TRUE             1.900658            3.3360647</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2              2                 TRUE             1.140608            0.1572047</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3             NA                   NA                   NA                   NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>l_treat<span class="sc">$</span>Dets_Table</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt;      iCode check_SkewKurt0.Pass check_SkewKurt0.Skew check_SkewKurt0.Kurt</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; 1  Flights                FALSE             2.103287             4.508879</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; 2    Goods                FALSE             2.649973             8.266610</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; 3 Services                 TRUE             1.701085             2.375656</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt;   winsorise.nwin check_SkewKurt1.Pass check_SkewKurt1.Skew check_SkewKurt1.Kurt</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; 1              1                 TRUE             1.900658            3.3360647</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; 2              2                 TRUE             1.140608            0.1572047</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; 3             NA                   NA                   NA                   NA</span></span></code></pre></div>
 <p>We also check the individual points:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>l_treat<span class="sc">$</span>Treated_Points</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Flights Goods Services</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                        </span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2                        </span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3                        </span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4                        </span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5                        </span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6                        </span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7                        </span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8                        </span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9                        </span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10                       </span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11         winhi         </span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12                       </span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13                       </span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14                       </span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15                       </span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16                       </span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17                       </span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18                       </span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19                       </span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20                       </span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21                       </span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22                       </span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23                       </span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24                       </span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25                       </span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26                       </span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 27                       </span></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 28                       </span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 29                       </span></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 30   winhi               </span></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 31                       </span></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 32                       </span></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 33                       </span></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 34                       </span></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 35         winhi         </span></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 36                       </span></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 37                       </span></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 38                       </span></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 39                       </span></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 40                       </span></span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 41                       </span></span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 42                       </span></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 43                       </span></span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 44                       </span></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 45                       </span></span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 46                       </span></span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 47                       </span></span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48                       </span></span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 49                       </span></span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 50                       </span></span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 51</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>l_treat<span class="sc">$</span>Treated_Points</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt;    Flights Goods Services</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt; 1                        </span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt; 2                        </span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; 3                        </span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; 4                        </span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; 5                        </span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; 6                        </span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; 7                        </span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; 8                        </span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; 9                        </span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; 10                       </span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt; 11         winhi         </span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt; 12                       </span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt; 13                       </span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="co">#&gt; 14                       </span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="co">#&gt; 15                       </span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="co">#&gt; 16                       </span></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="co">#&gt; 17                       </span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="co">#&gt; 18                       </span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="co">#&gt; 19                       </span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a><span class="co">#&gt; 20                       </span></span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a><span class="co">#&gt; 21                       </span></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="co">#&gt; 22                       </span></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a><span class="co">#&gt; 23                       </span></span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a><span class="co">#&gt; 24                       </span></span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a><span class="co">#&gt; 25                       </span></span>
+<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a><span class="co">#&gt; 26                       </span></span>
+<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a><span class="co">#&gt; 27                       </span></span>
+<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a><span class="co">#&gt; 28                       </span></span>
+<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a><span class="co">#&gt; 29                       </span></span>
+<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a><span class="co">#&gt; 30   winhi               </span></span>
+<span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a><span class="co">#&gt; 31                       </span></span>
+<span id="cb8-34"><a href="#cb8-34" tabindex="-1"></a><span class="co">#&gt; 32                       </span></span>
+<span id="cb8-35"><a href="#cb8-35" tabindex="-1"></a><span class="co">#&gt; 33                       </span></span>
+<span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a><span class="co">#&gt; 34                       </span></span>
+<span id="cb8-37"><a href="#cb8-37" tabindex="-1"></a><span class="co">#&gt; 35         winhi         </span></span>
+<span id="cb8-38"><a href="#cb8-38" tabindex="-1"></a><span class="co">#&gt; 36                       </span></span>
+<span id="cb8-39"><a href="#cb8-39" tabindex="-1"></a><span class="co">#&gt; 37                       </span></span>
+<span id="cb8-40"><a href="#cb8-40" tabindex="-1"></a><span class="co">#&gt; 38                       </span></span>
+<span id="cb8-41"><a href="#cb8-41" tabindex="-1"></a><span class="co">#&gt; 39                       </span></span>
+<span id="cb8-42"><a href="#cb8-42" tabindex="-1"></a><span class="co">#&gt; 40                       </span></span>
+<span id="cb8-43"><a href="#cb8-43" tabindex="-1"></a><span class="co">#&gt; 41                       </span></span>
+<span id="cb8-44"><a href="#cb8-44" tabindex="-1"></a><span class="co">#&gt; 42                       </span></span>
+<span id="cb8-45"><a href="#cb8-45" tabindex="-1"></a><span class="co">#&gt; 43                       </span></span>
+<span id="cb8-46"><a href="#cb8-46" tabindex="-1"></a><span class="co">#&gt; 44                       </span></span>
+<span id="cb8-47"><a href="#cb8-47" tabindex="-1"></a><span class="co">#&gt; 45                       </span></span>
+<span id="cb8-48"><a href="#cb8-48" tabindex="-1"></a><span class="co">#&gt; 46                       </span></span>
+<span id="cb8-49"><a href="#cb8-49" tabindex="-1"></a><span class="co">#&gt; 47                       </span></span>
+<span id="cb8-50"><a href="#cb8-50" tabindex="-1"></a><span class="co">#&gt; 48                       </span></span>
+<span id="cb8-51"><a href="#cb8-51" tabindex="-1"></a><span class="co">#&gt; 49                       </span></span>
+<span id="cb8-52"><a href="#cb8-52" tabindex="-1"></a><span class="co">#&gt; 50                       </span></span>
+<span id="cb8-53"><a href="#cb8-53" tabindex="-1"></a><span class="co">#&gt; 51</span></span></code></pre></div>
 </div>
 <div id="coins" class="section level1">
 <h1>Coins</h1>
@@ -543,16 +543,16 @@ passes it to the data frame method. So more or less, the same arguments
 are present.</p>
 <p>We begin by building the example coin, which will be used for the
 examples here.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">up_to =</span> <span class="st">&quot;new_coin&quot;</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iData checked and OK.</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; iMeta checked and OK.</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Raw</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">build_example_coin</span>(<span class="at">up_to =</span> <span class="st">&quot;new_coin&quot;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co">#&gt; iData checked and OK.</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co">#&gt; iMeta checked and OK.</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Raw</span></span></code></pre></div>
 <div id="default-treatment" class="section level2">
 <h2>Default treatment</h2>
 <p>The <code>Treat()</code> function can be applied directly to a coin
 with completely default options:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Treat</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Treat</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span></code></pre></div>
 <p>For each indicator, the <code>Treat()</code> function:</p>
 <ol style="list-style-type: decimal">
 <li>Checks skew and kurtosis using the <code>check_SkewKurt()</code>
@@ -567,22 +567,22 @@ is returned without further treatment.</p>
 <p>When we run <code>Treat()</code> on a coin, it also stores
 information returned from <code>f1</code>, <code>f2</code> and
 <code>f_pass</code> in the coin:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary of treatment for each indicator</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(coin<span class="sc">$</span>Analysis<span class="sc">$</span>Treated<span class="sc">$</span>Dets_Table)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     iCode check_SkewKurt0.Pass check_SkewKurt0.Skew check_SkewKurt0.Kurt</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     LPI                 TRUE           -0.3042681           -0.6567514</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Flights                FALSE            2.1032872            4.5088794</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3    Ship                 TRUE           -0.5756680           -0.6814795</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    Bord                FALSE            2.1482360            5.7914905</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5    Elec                FALSE            2.2252736            5.7910268</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6     Gas                FALSE            2.8294486           10.3346494</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   winsorise.nwin check_SkewKurt1.Pass check_SkewKurt1.Skew check_SkewKurt1.Kurt</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1             NA                   NA                   NA                   NA</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2              1                 TRUE             1.900658             3.336065</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3             NA                   NA                   NA                   NA</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4              1                 TRUE             1.899211             4.346298</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5              1                 TRUE             1.717744             2.586062</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6              1                 TRUE             1.602518             1.525576</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># summary of treatment for each indicator</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">head</span>(coin<span class="sc">$</span>Analysis<span class="sc">$</span>Treated<span class="sc">$</span>Dets_Table)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co">#&gt;     iCode check_SkewKurt0.Pass check_SkewKurt0.Skew check_SkewKurt0.Kurt</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co">#&gt; 1     LPI                 TRUE           -0.3042681           -0.6567514</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">#&gt; 2 Flights                FALSE            2.1032872            4.5088794</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt; 3    Ship                 TRUE           -0.5756680           -0.6814795</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; 4    Bord                FALSE            2.1482360            5.7914905</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt; 5    Elec                FALSE            2.2252736            5.7910268</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; 6     Gas                FALSE            2.8294486           10.3346494</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="co">#&gt;   winsorise.nwin check_SkewKurt1.Pass check_SkewKurt1.Skew check_SkewKurt1.Kurt</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="co">#&gt; 1             NA                   NA                   NA                   NA</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="co">#&gt; 2              1                 TRUE             1.900658             3.336065</span></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="co">#&gt; 3             NA                   NA                   NA                   NA</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a><span class="co">#&gt; 4              1                 TRUE             1.899211             4.346298</span></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="co">#&gt; 5              1                 TRUE             1.717744             2.586062</span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a><span class="co">#&gt; 6              1                 TRUE             1.602518             1.525576</span></span></code></pre></div>
 <p>Notice that only one treatment function was used here, since after
 Winsorisation (<code>f1</code>), all indicators passed the skew and
 kurtosis test (<code>f_pass</code>).</p>
@@ -600,19 +600,19 @@ procedure is applied to all indicators. This process is specified by the
 <code>global_specs</code> argument. To see how to use this, it is
 easiest to show the default of this argument which is built into the
 <code>treat()</code> function:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># default treatment for all cols</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>specs_def <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">f1 =</span> <span class="st">&quot;winsorise&quot;</span>,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">f1_para =</span> <span class="fu">list</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">winmax =</span> <span class="dv">5</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">skew_thresh =</span> <span class="dv">2</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">kurt_thresh =</span> <span class="fl">3.5</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">force_win =</span> <span class="cn">FALSE</span>),</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">f2 =</span> <span class="st">&quot;log_CT&quot;</span>,</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">f2_para =</span> <span class="fu">list</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">f_pass =</span> <span class="st">&quot;check_SkewKurt&quot;</span>,</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">f_pass_para =</span> <span class="fu">list</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">skew_thresh =</span> <span class="dv">2</span>,</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">kurt_thresh =</span> <span class="fl">3.5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># default treatment for all cols</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>specs_def <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">f1 =</span> <span class="st">&quot;winsorise&quot;</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>                  <span class="at">f1_para =</span> <span class="fu">list</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>                                 <span class="at">winmax =</span> <span class="dv">5</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>                                 <span class="at">skew_thresh =</span> <span class="dv">2</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>                                 <span class="at">kurt_thresh =</span> <span class="fl">3.5</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>                                 <span class="at">force_win =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>                  <span class="at">f2 =</span> <span class="st">&quot;log_CT&quot;</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>                  <span class="at">f2_para =</span> <span class="fu">list</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>                  <span class="at">f_pass =</span> <span class="st">&quot;check_SkewKurt&quot;</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>                  <span class="at">f_pass_para =</span> <span class="fu">list</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>                                     <span class="at">skew_thresh =</span> <span class="dv">2</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a>                                     <span class="at">kurt_thresh =</span> <span class="fl">3.5</span>))</span></code></pre></div>
 <p>Notice that there are six entries in the list:</p>
 <ul>
 <li><code>f1</code> which is a string referring to the first treatment
@@ -651,58 +651,58 @@ need to specify the entire list. So for example, if we want to change
 the maximum Winsorisation limit <code>winmax</code>, we can just pass
 this part of the list (notice we still have to wrap the parameter inside
 a list):</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># treat with max winsorisation of 3 points</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Treat</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f1_para =</span> <span class="fu">list</span>(<span class="at">winmax =</span> <span class="dv">1</span>)))</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># see what happened</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>coin<span class="sc">$</span>Analysis<span class="sc">$</span>Treated<span class="sc">$</span>Dets_Table <span class="sc">|&gt;</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       iCode check_SkewKurt0.Pass check_SkewKurt0.Skew check_SkewKurt0.Kurt</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       LPI                 TRUE           -0.3042681           -0.6567514</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   Flights                FALSE            2.1032872            4.5088794</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3      Ship                 TRUE           -0.5756680           -0.6814795</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4      Bord                FALSE            2.1482360            5.7914905</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5      Elec                FALSE            2.2252736            5.7910268</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6       Gas                FALSE            2.8294486           10.3346494</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7  ConSpeed                 TRUE            0.4622037            0.1873214</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8     Cov4G                 TRUE           -1.3725191            0.5419314</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9     Goods                FALSE            2.6499733            8.2666095</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Services                 TRUE            1.7010849            2.3756557</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    winsorise.nwin check_SkewKurt1.Pass check_SkewKurt1.Skew</span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1              NA                   NA                   NA</span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2               1                 TRUE             1.900658</span></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3              NA                   NA                   NA</span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4               1                 TRUE             1.899211</span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5               1                 TRUE             1.717744</span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6               1                 TRUE             1.602518</span></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7              NA                   NA                   NA</span></span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8              NA                   NA                   NA</span></span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9               1                FALSE             2.469910</span></span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10             NA                   NA                   NA</span></span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    check_SkewKurt1.Kurt check_SkewKurt2.Pass check_SkewKurt2.Skew</span></span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                    NA                   NA                   NA</span></span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2              3.336065                   NA                   NA</span></span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3                    NA                   NA                   NA</span></span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4              4.346298                   NA                   NA</span></span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5              2.586062                   NA                   NA</span></span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6              1.525576                   NA                   NA</span></span>
-<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7                    NA                   NA                   NA</span></span>
-<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8                    NA                   NA                   NA</span></span>
-<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9              7.087309                 TRUE           0.03104001</span></span>
-<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10                   NA                   NA                   NA</span></span>
-<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    check_SkewKurt2.Kurt</span></span>
-<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                    NA</span></span>
-<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2                    NA</span></span>
-<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3                    NA</span></span>
-<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4                    NA</span></span>
-<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5                    NA</span></span>
-<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6                    NA</span></span>
-<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7                    NA</span></span>
-<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8                    NA</span></span>
-<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9            -0.8888965</span></span>
-<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10                   NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># treat with max winsorisation of 3 points</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Treat</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f1_para =</span> <span class="fu">list</span>(<span class="at">winmax =</span> <span class="dv">1</span>)))</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co"># see what happened</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>coin<span class="sc">$</span>Analysis<span class="sc">$</span>Treated<span class="sc">$</span>Dets_Table <span class="sc">|&gt;</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#&gt;       iCode check_SkewKurt0.Pass check_SkewKurt0.Skew check_SkewKurt0.Kurt</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt; 1       LPI                 TRUE           -0.3042681           -0.6567514</span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt; 2   Flights                FALSE            2.1032872            4.5088794</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt; 3      Ship                 TRUE           -0.5756680           -0.6814795</span></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co">#&gt; 4      Bord                FALSE            2.1482360            5.7914905</span></span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#&gt; 5      Elec                FALSE            2.2252736            5.7910268</span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt; 6       Gas                FALSE            2.8294486           10.3346494</span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt; 7  ConSpeed                 TRUE            0.4622037            0.1873214</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt; 8     Cov4G                 TRUE           -1.3725191            0.5419314</span></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co">#&gt; 9     Goods                FALSE            2.6499733            8.2666095</span></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="co">#&gt; 10 Services                 TRUE            1.7010849            2.3756557</span></span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="co">#&gt;    winsorise.nwin check_SkewKurt1.Pass check_SkewKurt1.Skew</span></span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a><span class="co">#&gt; 1              NA                   NA                   NA</span></span>
+<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a><span class="co">#&gt; 2               1                 TRUE             1.900658</span></span>
+<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a><span class="co">#&gt; 3              NA                   NA                   NA</span></span>
+<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a><span class="co">#&gt; 4               1                 TRUE             1.899211</span></span>
+<span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a><span class="co">#&gt; 5               1                 TRUE             1.717744</span></span>
+<span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a><span class="co">#&gt; 6               1                 TRUE             1.602518</span></span>
+<span id="cb13-27"><a href="#cb13-27" tabindex="-1"></a><span class="co">#&gt; 7              NA                   NA                   NA</span></span>
+<span id="cb13-28"><a href="#cb13-28" tabindex="-1"></a><span class="co">#&gt; 8              NA                   NA                   NA</span></span>
+<span id="cb13-29"><a href="#cb13-29" tabindex="-1"></a><span class="co">#&gt; 9               1                FALSE             2.469910</span></span>
+<span id="cb13-30"><a href="#cb13-30" tabindex="-1"></a><span class="co">#&gt; 10             NA                   NA                   NA</span></span>
+<span id="cb13-31"><a href="#cb13-31" tabindex="-1"></a><span class="co">#&gt;    check_SkewKurt1.Kurt check_SkewKurt2.Pass check_SkewKurt2.Skew</span></span>
+<span id="cb13-32"><a href="#cb13-32" tabindex="-1"></a><span class="co">#&gt; 1                    NA                   NA                   NA</span></span>
+<span id="cb13-33"><a href="#cb13-33" tabindex="-1"></a><span class="co">#&gt; 2              3.336065                   NA                   NA</span></span>
+<span id="cb13-34"><a href="#cb13-34" tabindex="-1"></a><span class="co">#&gt; 3                    NA                   NA                   NA</span></span>
+<span id="cb13-35"><a href="#cb13-35" tabindex="-1"></a><span class="co">#&gt; 4              4.346298                   NA                   NA</span></span>
+<span id="cb13-36"><a href="#cb13-36" tabindex="-1"></a><span class="co">#&gt; 5              2.586062                   NA                   NA</span></span>
+<span id="cb13-37"><a href="#cb13-37" tabindex="-1"></a><span class="co">#&gt; 6              1.525576                   NA                   NA</span></span>
+<span id="cb13-38"><a href="#cb13-38" tabindex="-1"></a><span class="co">#&gt; 7                    NA                   NA                   NA</span></span>
+<span id="cb13-39"><a href="#cb13-39" tabindex="-1"></a><span class="co">#&gt; 8                    NA                   NA                   NA</span></span>
+<span id="cb13-40"><a href="#cb13-40" tabindex="-1"></a><span class="co">#&gt; 9              7.087309                 TRUE           0.03104001</span></span>
+<span id="cb13-41"><a href="#cb13-41" tabindex="-1"></a><span class="co">#&gt; 10                   NA                   NA                   NA</span></span>
+<span id="cb13-42"><a href="#cb13-42" tabindex="-1"></a><span class="co">#&gt;    check_SkewKurt2.Kurt</span></span>
+<span id="cb13-43"><a href="#cb13-43" tabindex="-1"></a><span class="co">#&gt; 1                    NA</span></span>
+<span id="cb13-44"><a href="#cb13-44" tabindex="-1"></a><span class="co">#&gt; 2                    NA</span></span>
+<span id="cb13-45"><a href="#cb13-45" tabindex="-1"></a><span class="co">#&gt; 3                    NA</span></span>
+<span id="cb13-46"><a href="#cb13-46" tabindex="-1"></a><span class="co">#&gt; 4                    NA</span></span>
+<span id="cb13-47"><a href="#cb13-47" tabindex="-1"></a><span class="co">#&gt; 5                    NA</span></span>
+<span id="cb13-48"><a href="#cb13-48" tabindex="-1"></a><span class="co">#&gt; 6                    NA</span></span>
+<span id="cb13-49"><a href="#cb13-49" tabindex="-1"></a><span class="co">#&gt; 7                    NA</span></span>
+<span id="cb13-50"><a href="#cb13-50" tabindex="-1"></a><span class="co">#&gt; 8                    NA</span></span>
+<span id="cb13-51"><a href="#cb13-51" tabindex="-1"></a><span class="co">#&gt; 9            -0.8888965</span></span>
+<span id="cb13-52"><a href="#cb13-52" tabindex="-1"></a><span class="co">#&gt; 10                   NA</span></span></code></pre></div>
 <p>Having imposed a much stricter Winsorisation limit (only one point),
 we can see that now one indicator has been passed to the second
 treatment function <code>f2</code>, which has performed a log
@@ -736,17 +736,17 @@ simple, let’s say that we keep the defaults for all indicators except
 one, where we change the Winsorisation limit. We will set the
 Winsorisation limit of the indicator “Flights” to zero, to force it to
 be log-transformed.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change individual specs for Flights</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>indiv_specs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Flights =</span> <span class="fu">list</span>(</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">f1_para =</span> <span class="fu">list</span>(<span class="at">winmax =</span> <span class="dv">0</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># re-run data treatment</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Treat</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">indiv_specs =</span> indiv_specs)</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># change individual specs for Flights</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>indiv_specs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="at">Flights =</span> <span class="fu">list</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>    <span class="at">f1_para =</span> <span class="fu">list</span>(<span class="at">winmax =</span> <span class="dv">0</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  )</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>)</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co"># re-run data treatment</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Treat</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">indiv_specs =</span> indiv_specs)</span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
 <p>The only thing to remember here is to make sure the list is created
 correctly. Each indicator to assign individual treatment must have its
 own list - here containing <code>f1_para</code>. Then
@@ -756,15 +756,15 @@ wrapped into a single list to pass to <code>indiv_specs</code>. This
 looks a bit convoluted for changing a single parameter, but gives a high
 degree of control over how data treatment is performed.</p>
 <p>We can now see what happened to “Flights”:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>coin<span class="sc">$</span>Analysis<span class="sc">$</span>Treated<span class="sc">$</span>Dets_Table[</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  coin<span class="sc">$</span>Analysis<span class="sc">$</span>Treated<span class="sc">$</span>Dets_Table<span class="sc">$</span>iCode <span class="sc">==</span> <span class="st">&quot;Flights&quot;</span>, </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     iCode check_SkewKurt0.Pass check_SkewKurt0.Skew check_SkewKurt0.Kurt</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Flights                FALSE             2.103287             4.508879</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   winsorise.nwin check_SkewKurt1.Pass check_SkewKurt1.Skew check_SkewKurt1.Kurt</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2              0                FALSE             2.103287             4.508879</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   check_SkewKurt2.Pass check_SkewKurt2.Skew check_SkewKurt2.Kurt</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2                 TRUE          -0.09502644           -0.8305217</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>coin<span class="sc">$</span>Analysis<span class="sc">$</span>Treated<span class="sc">$</span>Dets_Table[</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  coin<span class="sc">$</span>Analysis<span class="sc">$</span>Treated<span class="sc">$</span>Dets_Table<span class="sc">$</span>iCode <span class="sc">==</span> <span class="st">&quot;Flights&quot;</span>, </span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>]</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt;     iCode check_SkewKurt0.Pass check_SkewKurt0.Skew check_SkewKurt0.Kurt</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt; 2 Flights                FALSE             2.103287             4.508879</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt;   winsorise.nwin check_SkewKurt1.Pass check_SkewKurt1.Skew check_SkewKurt1.Kurt</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt; 2              0                FALSE             2.103287             4.508879</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#&gt;   check_SkewKurt2.Pass check_SkewKurt2.Skew check_SkewKurt2.Kurt</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt; 2                 TRUE          -0.09502644           -0.8305217</span></span></code></pre></div>
 <p>Now we see that “Flights” didn’t pass the first Winsorisation step
 (because nothing happened to it), and was passed to the log transform.
 After that, the indicator passed the skew and kurtosis check.</p>
@@ -772,16 +772,16 @@ After that, the indicator passed the skew and kurtosis check.</p>
 treatment completely. To do this, we can set the corresponding entries
 in <code>indiv_specs</code> to <code>&quot;none&quot;</code>. This is the only
 case where we don’t have to pass a list for each indicator.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change individual specs for two indicators</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>indiv_specs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Flights =</span> <span class="st">&quot;none&quot;</span>,</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">LPI =</span> <span class="st">&quot;none&quot;</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># re-run data treatment</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Treat</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">indiv_specs =</span> indiv_specs)</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co"># change individual specs for two indicators</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>indiv_specs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  <span class="at">Flights =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>  <span class="at">LPI =</span> <span class="st">&quot;none&quot;</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>)</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co"># re-run data treatment</span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Treat</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">indiv_specs =</span> indiv_specs)</span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
 <p>Now if we examine the treatment table, we will find that these
 indicators have been excluded from the table, as they were not subjected
 to treatment.</p>
@@ -794,39 +794,26 @@ outlier detection function ` from the <a href="https://easystats.github.io/perfo
 package</p>
 <p>The following code chunk will only run if you have the ‘performance’
 package installed.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the check_outliers function outputs a logical vector which flags specific points as outliers.</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># We need to wrap this to give a single TRUE/FALSE output, where FALSE means it doesn&#39;t pass,</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># i.e. there are outliers</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>outlier_pass <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># return FALSE if any outliers</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="sc">!</span><span class="fu">any</span>(<span class="fu">check_outliers</span>(x))</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># now call treat(), passing this function</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># we set f_pass_para to NULL to avoid passing default parameters to the new function</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Treat</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>,</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_pass =</span> <span class="st">&quot;outlier_pass&quot;</span>,</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">f_pass_para =</span> <span class="cn">NULL</span>)</span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="co"># see what happened</span></span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>coin<span class="sc">$</span>Analysis<span class="sc">$</span>Treated<span class="sc">$</span>Dets_Table <span class="sc">|&gt;</span></span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       iCode outlier_pass0 winsorise.nwin outlier_pass1 outlier_pass2</span></span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1       LPI         FALSE              0         FALSE         FALSE</span></span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   Flights         FALSE              1         FALSE          TRUE</span></span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3      Ship         FALSE              0         FALSE         FALSE</span></span>
-<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4      Bord         FALSE              1         FALSE         FALSE</span></span>
-<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5      Elec         FALSE              1         FALSE          TRUE</span></span>
-<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6       Gas         FALSE              1         FALSE         FALSE</span></span>
-<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7  ConSpeed         FALSE              0         FALSE         FALSE</span></span>
-<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8     Cov4G         FALSE              0         FALSE         FALSE</span></span>
-<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9     Goods         FALSE              2         FALSE          TRUE</span></span>
-<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Services         FALSE              0         FALSE          TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="co"># the check_outliers function outputs a logical vector which flags specific points as outliers.</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co"># We need to wrap this to give a single TRUE/FALSE output, where FALSE means it doesn&#39;t pass,</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co"># i.e. there are outliers</span></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>outlier_pass <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>  <span class="co"># return FALSE if any outliers</span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>  <span class="sc">!</span><span class="fu">any</span>(<span class="fu">check_outliers</span>(x))</span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a>}</span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="co"># now call treat(), passing this function</span></span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a><span class="co"># we set f_pass_para to NULL to avoid passing default parameters to the new function</span></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Treat</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>,</span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a>               <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_pass =</span> <span class="st">&quot;outlier_pass&quot;</span>,</span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a>                                    <span class="at">f_pass_para =</span> <span class="cn">NULL</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a>)</span>
+<span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a><span class="co"># see what happened</span></span>
+<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a>coin<span class="sc">$</span>Analysis<span class="sc">$</span>Treated<span class="sc">$</span>Dets_Table <span class="sc">|&gt;</span></span>
+<span id="cb17-20"><a href="#cb17-20" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div>
 <p>Here we see that the test for outliers is much stricter and very few
 of the indicators pass the test, even after applying a log
 transformation. Clearly, how an outlier is defined can vary and depend
@@ -839,16 +826,16 @@ on your application.</p>
 It takes almost the same arguments as the coin method, and applies the
 same specifications to each coin. Here we simply demonstrate it on the
 example purse.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build example purse</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">build_example_purse</span>(<span class="at">up_to =</span> <span class="st">&quot;new_coin&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># apply treatment to all coins in purse (default specs)</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">Treat</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># build example purse</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">build_example_purse</span>(<span class="at">up_to =</span> <span class="st">&quot;new_coin&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="co"># apply treatment to all coins in purse (default specs)</span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">Treat</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Treated</span></span></code></pre></div>
 </div>
 <div id="simplified-function" class="section level1">
 <h1>Simplified function</h1>
@@ -870,25 +857,25 @@ to <code>check_SkewKurt()</code>.</li>
 <p>The <code>qTreat()</code> function is a generic with methods for data
 frames, coins and purses. Here, we’ll just demonstrate it on a data
 frame.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select three indicators</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> ASEM_iData[<span class="fu">c</span>(<span class="st">&quot;Flights&quot;</span>, <span class="st">&quot;Goods&quot;</span>, <span class="st">&quot;Services&quot;</span>)]</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># treat data frame, changing winmax and skew/kurtosis limits</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>l_treat <span class="ot">&lt;-</span> <span class="fu">qTreat</span>(df1, <span class="at">winmax =</span> <span class="dv">1</span>, <span class="at">skew_thresh =</span> <span class="fl">1.5</span>, <span class="at">kurt_thresh =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co"># select three indicators</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> ASEM_iData[<span class="fu">c</span>(<span class="st">&quot;Flights&quot;</span>, <span class="st">&quot;Goods&quot;</span>, <span class="st">&quot;Services&quot;</span>)]</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="co"># treat data frame, changing winmax and skew/kurtosis limits</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>l_treat <span class="ot">&lt;-</span> <span class="fu">qTreat</span>(df1, <span class="at">winmax =</span> <span class="dv">1</span>, <span class="at">skew_thresh =</span> <span class="fl">1.5</span>, <span class="at">kurt_thresh =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p>Now we check what the results are:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>l_treat<span class="sc">$</span>Dets_Table</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      iCode check_SkewKurt0.Pass check_SkewKurt0.Skew check_SkewKurt0.Kurt</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  Flights                FALSE             2.103287             4.508879</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    Goods                FALSE             2.649973             8.266610</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Services                 TRUE             1.701085             2.375656</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   winsorise.nwin check_SkewKurt1.Pass check_SkewKurt1.Skew check_SkewKurt1.Kurt</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1              1                FALSE             1.900658             3.336065</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2              1                FALSE             2.469910             7.087309</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3             NA                   NA                   NA                   NA</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   check_SkewKurt2.Pass check_SkewKurt2.Skew check_SkewKurt2.Kurt</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                 TRUE          -0.09502644           -0.8305217</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2                 TRUE           0.03104001           -0.8888965</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3                   NA                   NA                   NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>l_treat<span class="sc">$</span>Dets_Table</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="co">#&gt;      iCode check_SkewKurt0.Pass check_SkewKurt0.Skew check_SkewKurt0.Kurt</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt; 1  Flights                FALSE             2.103287             4.508879</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt; 2    Goods                FALSE             2.649973             8.266610</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt; 3 Services                 TRUE             1.701085             2.375656</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="co">#&gt;   winsorise.nwin check_SkewKurt1.Pass check_SkewKurt1.Skew check_SkewKurt1.Kurt</span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; 1              1                FALSE             1.900658             3.336065</span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="co">#&gt; 2              1                FALSE             2.469910             7.087309</span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt; 3             NA                   NA                   NA                   NA</span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt;   check_SkewKurt2.Pass check_SkewKurt2.Skew check_SkewKurt2.Kurt</span></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="co">#&gt; 1                 TRUE          -0.09502644           -0.8305217</span></span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a><span class="co">#&gt; 2                 TRUE           0.03104001           -0.8888965</span></span>
+<span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a><span class="co">#&gt; 3                   NA                   NA                   NA</span></span></code></pre></div>
 <p>We can see that in this case, Winsorsing by one point was not enough
 to bring “Flights” and “Goods” within the specified skew/kurtosis
 limits. Consequently, <code>f2</code> was invoked, which uses a log
