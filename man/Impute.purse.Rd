@@ -14,6 +14,7 @@
   use_group = NULL,
   normalise_first = NULL,
   write_to = NULL,
+  warn_on_NAs = TRUE,
   ...
 )
 }
@@ -46,6 +47,9 @@ imputation. By default this is \code{FALSE} unless \code{impute_by = "row"}. See
 \item{write_to}{Optional character string for naming the resulting data set in each coin. Data will be written to
 \code{.$Data[[write_to]]}. Default is \code{write_to == "Imputed"}.}
 
+\item{warn_on_NAs}{Logical: if \code{TRUE} will issue a warning if there are any \code{NA}s detected in the data frame
+after imputation has been applied. Set \code{FALSE} to suppress these warnings.}
+
 \item{...}{arguments passed to or from other methods.}
 }
 \value{
@@ -54,9 +58,10 @@ An updated purse with imputed data sets added to each coin.
 \description{
 This function imputes the target data set \code{dset} in each coin using the imputation function \code{f_i}. This is performed
 in the same way as the coin method \code{\link[=Impute.coin]{Impute.coin()}}, but with one "special case" for panel data. If \verb{f_i = "impute_panel},
-the data sets inside the purse are imputed using the last available data point, using the \code{\link[=impute_panel]{impute_panel()}}
+the data sets inside the purse are imputed using the \code{\link[=impute_panel]{impute_panel()}}
 function. In this case, coins are not imputed individually, but treated as a single data set. In this
-case, optionally set \code{f_i_para = list(max_time = .)} where \code{.} should be substituted with the maximum
+case, optionally set the imputation method as \code{f_i_para = list(imp_type = .)}
+and \code{f_i_para = list(max_time = .)} where \code{.} should be substituted with the maximum
 number of time points to search backwards for a non-\code{NA} value. See \code{\link[=impute_panel]{impute_panel()}} for more details.
 No further arguments need to be passed to \code{\link[=impute_panel]{impute_panel()}}. See \code{vignette("imputation")} for more
 details. See also \code{\link[=Impute.coin]{Impute.coin()}} documentation.

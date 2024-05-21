@@ -1,3 +1,32 @@
+# COINr 1.1.14
+
+- Minor bug fixes: spaces in uCodes, issue exporting 2-level composite indicators to Excel
+- Add scaling parameter to `n_scaled()`
+- Option to disable outlier treatment for purses
+
+# COINr 1.1.12
+
+- Enable custom operations on coins and purses: new generic `Custom()` with methods
+for coins and purses.
+- Enable different `by_df` and `w` by aggregation level in `Aggregate.coin()`
+- Add possibility to impute panel data using "constant" method from `stats::aprox()`.
+
+# COINr 1.1.11
+
+- Allow retention of units with no data in split to purse
+- Allow NAs in group vector for `i_median_grp()`
+- Enable linear interpolation in panel data with `impute_panel()`
+- Updated documentation on aggregation and imputation functions
+
+# COINr 1.1.9
+
+- Fixed results tables which rounded before converting to ranks, resulting in precision errors
+
+# COINr 1.1.8
+
+- Added possibility to set normalisation parameters in `iMeta`, added more explanation and examples in the normalisation vignette.
+- Fixed bug correlation directions
+
 # COINr 1.1.7
 
 I have skipped a number of version number iterations. Here's what's changed since last time:

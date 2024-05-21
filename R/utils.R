@@ -267,8 +267,9 @@ directionalise <- function(iData, coin){
 
   })
   df_out <- as.data.frame(df_out)
+  names(df_out) <- names(iData)
 
-  stopifnot(identical(names(df_out), names(iData)))
+  #stopifnot(identical(names(df_out), names(iData)))
 
   df_out
 
@@ -302,4 +303,34 @@ df_int_2_numeric <- function(X){
   names(X) <- col_names
   X
 
+}
+
+
+# FOR TESTS ---------------------------------------------------------------
+
+# function that imputes using mean, but then adds an NA - used in imputation testing
+NA_imputer <- function(x){
+
+  NA_location <- which(is.na(x))
+  x_imp <- i_mean(x)
+
+  if(length(NA_location) > 0){
+    insert_NA_at <- NA_location[1]
+    x_imp[insert_NA_at] <- NA
+  }
+  x_imp
+}
+
+
+# A silly aggregation function used only for unit tests - takes weights and chucks
+# them away, then makes up some numbers for the aggregation
+# Takes a data frame as input.
+silly_aggregate <- function(x, w, start_at = 1){
+  message("Weights received and thrown away: ", toString(w))
+  1:nrow(x) + (start_at - 1)
+}
+
+# same but with no weights... here just takes first column
+silly_aggregate_no_wts <- function(x){
+  as.numeric(x[,1])
 }

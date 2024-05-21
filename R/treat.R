@@ -11,6 +11,8 @@
 #' rather than the treated output of `f1`. If `combine_treat = TRUE`, `f2` will instead be applied to the output
 #' of `f1`, so the two treatments will be combined.
 #' @param write_to If specified, writes the aggregated data to `.$Data[[write_to]]`. Default `write_to = "Treated"`.
+#' @param disable Logical: if `TRUE` will disable data treatment completely and write the unaltered data set. This option is mainly useful
+#' in sensitivity and uncertainty analysis (to test the effect of turning imputation on/off).
 #' @param ... arguments passed to or from other methods.
 #'
 #' @return An updated purse with new treated data sets added at `.$Data$Treated` in each coin, plus
@@ -20,16 +22,56 @@
 #' @examples
 #' # See `vignette("treat")`.
 Treat.purse <- function(x, dset, global_specs = NULL, indiv_specs = NULL,
-                         combine_treat = FALSE, write_to = NULL, ...){
+                         combine_treat = FALSE, write_to = NULL, disable = FALSE, ...){
 
   # input check
   check_purse(x)
 
+  # if(global){
+  #
+  #   iDatas <- get_dset(x, dset)
+  #   iDatas_ <- iDatas[names(iDatas) != "Time"]
+  #
+  #   # run global dset through Treat (as data frame), excluding Time col
+  #   iDatas_t <- Treat(iDatas_, global_specs = global_specs,
+  #                         indiv_specs = indiv_specs, combine_treat = combine_treat)
+  #   # split by Time
+  #   iDatas_t_l <- split(iDatas_n, iDatas$Time)
+  #
+  #   # now write dsets to coins
+  #   x$coin <- lapply(x$coin, function(coin){
+  #
+  #     # get Time
+  #     tt <- coin$Meta$Unit$Time[[1]]
+  #     if(is.null(tt)){
+  #       stop("Time index is NULL or not found in writing treated data set to coin.")
+  #     }
+  #
+  #     if(is.null(write_to)){
+  #       write_to <- "Treated"
+  #     }
+  #
+  #     # write dset first
+  #     coin <- write_dset(coin, iDatas_t_l[[which(names(iDatas_t_l) == tt)]], dset = write_to)
+  #
+  #     # also write to log - we signal that coin can't be regenerated any more
+  #     coin$Log$can_regen <- FALSE
+  #     coin$Log$message <- "Coin was treated inside a purse with global = TRUE. Cannot be regenerated."
+  #
+  #     coin
+  #   })
+  #
+  # } else {
+
   # apply treatment to each coin
   x$coin <- lapply(x$coin, function(coin){
     Treat.coin(coin, dset = dset, global_specs = global_specs,
-                indiv_specs = indiv_specs, combine_treat = combine_treat, write_to = write_to)
+               indiv_specs = indiv_specs, combine_treat = combine_treat,
+               write_to = write_to, disable = disable)
   })
+
+  #}
+
   # make sure still purse class
   class(x) <- c("purse", "data.frame")
   x
@@ -415,7 +457,8 @@ Treat.data.frame <- function(x, global_specs = NULL, indiv_specs = NULL, combine
           }
         }
         # merge with defaults (overwrites any differences)
-        specs <- utils::modifyList(specs_def, indiv_specs_col)
+        #specs <- utils::modifyList(specs_def, indiv_specs_col)
+        specs <- modify_treat_specs(specs_def, indiv_specs_col)
       } else {
         # otherwise, use defaults
         specs <- specs_def
@@ -1182,4 +1225,32 @@ check_SkewKurt <- function(x, na.rm = FALSE, skew_thresh = 2, kurt_thresh = 3.5)
 
   # output
   list(Pass = ans, Skew = sk, Kurt = kt)
+}
+
+
+modify_treat_specs <- function(l_def, l_mod){
+
+  if(is.null(l_mod)){
+    return(l_def)
+  }
+
+  l_out <- l_def
+
+  # if any functions have changed we completely delete the function parameters
+  # to avoid passing unused arguments
+  if(!identical(l_def$f1, l_mod$f1)){
+    l_out$f1_para <- NULL
+  }
+  if(!identical(l_def$f2, l_mod$f2)){
+    l_out$f2_para <- NULL
+  }
+  if(!identical(l_def$f_pass, l_mod$f_pass)){
+    l_out$f_pass_para <- NULL
+  }
+
+  # now, merge lists
+  l_out <- utils::modifyList(l_out, l_mod)
+
+  l_out
+
 }

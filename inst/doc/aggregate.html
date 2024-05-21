@@ -573,6 +573,8 @@ some requirements. COINr’s inbuilt aggregation functions begin with
 <li><code>a_copeland()</code>: the Copeland method (note: requires
 <code>by_df = TRUE</code>)</li>
 </ul>
+<p>For details of these methods, see <a href="#approaches">Approaches</a> above and the function documentation
+of each of the functions listed.</p>
 <p>By default, the arithmetic mean is called but we can easily change
 this to the geometric mean, for example. However here we run into a
 problem: the geometric mean will fail if any values to aggregate are
@@ -598,18 +600,21 @@ mean.</p>
 format (try e.g. <code>?a_gmean</code>), and are built into the COINr
 package. But what if we want to use another type of aggregation
 function? The process is exactly the same.</p>
+<p><em>NOTE: the compind package has been disabled here from running the
+commands in this vignette because of changes to a dependent package
+which are causing problems with the R CMD check. The commands should
+still work if you run them, but the results will not be shown
+here.</em></p>
 <p>In this section we use some functions from other packages: the
 matrixStats package and the Compind package. These are not imported by
 COINr, so the code here will only work if you have these installed. If
 this vignette was built on your computer, we have to check whether these
 packages are installed:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>ms_installed <span class="ot">&lt;-</span> <span class="fu">requireNamespace</span>(<span class="st">&quot;matrixStats&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>ms_installed</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>ci_installed <span class="ot">&lt;-</span> <span class="fu">requireNamespace</span>(<span class="st">&quot;Compind&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>ci_installed</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># ms_installed &lt;- requireNamespace(&quot;matrixStats&quot;, quietly = TRUE)</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co"># ms_installed</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co"># ci_installed &lt;- requireNamespace(&quot;Compind&quot;, quietly = TRUE)</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co"># ci_installed</span></span></code></pre></div>
 <p>If either of these have returned <code>FALSE</code>, in the following
 code chunks you will see some blanks. See the online version of this
 vignette to see the results, or install the above packages and rebuild
@@ -621,12 +626,12 @@ same meanings as COINr functions), and <code>na.rm</code> which we need
 to set to <code>TRUE</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># RESTORE above eval=ms_installed</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co"># load matrixStats package</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="fu">library</span>(matrixStats)</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co"># aggregate using weightedMedian()</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>                   <span class="at">f_ag =</span> <span class="st">&quot;weightedMedian&quot;</span>,</span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>                   <span class="at">f_ag_para =</span> <span class="fu">list</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co"># library(matrixStats)</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co"># # aggregate using weightedMedian()</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co"># coin &lt;- Aggregate(coin, dset = &quot;Normalised&quot;,</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#                    f_ag = &quot;weightedMedian&quot;,</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#                    f_ag_para = list(na.rm = TRUE))</span></span></code></pre></div>
 <p>The weights <code>w</code> do not need to be specified in
 <code>f_ag_para</code> because they are automatically passed to
 <code>f_ag</code> unless specified otherwise.</p>
@@ -650,21 +655,24 @@ and <code>w</code>, should be included in the named list
 satisfy these requirements. For example, the ‘Compind’ package has a
 number of sophisticated aggregation approaches. The “benefit of the
 doubt” uses data envelopment analysis to aggregate indicators, however
-the function <code>Compind::ci_bod()</code> outputs a list. We can make
-a wrapper function to use this inside COINr:</p>
+the function Compind::ci_bod() outputs a list. We can make a wrapper
+function to use this inside COINr:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># RESTORE ABOVE eval= ci_installed</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co"># load Compind</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(Compind))</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: this chunk disabled - see comments above.</span></span>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co"># wrapper to get output of interest from ci_bod</span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co"># also suppress messages about missing values</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>ci_bod2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  <span class="fu">suppressMessages</span>(Compind<span class="sc">::</span><span class="fu">ci_bod</span>(x)<span class="sc">$</span>ci_bod_est)</span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>}</span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co"># aggregate</span></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Aggregate</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>,</span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>                   <span class="at">f_ag =</span> <span class="st">&quot;ci_bod2&quot;</span>, <span class="at">by_df =</span> <span class="cn">TRUE</span>, <span class="at">w =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co"># load Compind</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co"># suppressPackageStartupMessages(library(Compind))</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co"># # wrapper to get output of interest from ci_bod</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co"># # also suppress messages about missing values</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co"># ci_bod2 &lt;- function(x){</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#   suppressMessages(Compind::ci_bod(x)$ci_bod_est)</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co"># # aggregate</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co"># coin &lt;- Aggregate(coin, dset = &quot;Normalised&quot;,</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="co">#                    f_ag = &quot;ci_bod2&quot;, by_df = TRUE, w = &quot;none&quot;)</span></span></code></pre></div>
 <p>The benefit of the doubt approach automatically assigns individual
 weights to each unit, so we need to specify <code>w = &quot;none&quot;</code> to
 stop <code>Aggregate()</code> from attempting to pass weights to the

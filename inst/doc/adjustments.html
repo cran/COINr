@@ -420,13 +420,14 @@ list:</p>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co"># look in log</span></span>
 <span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="fu">str</span>(coin<span class="sc">$</span>Log, <span class="at">max.level =</span> <span class="dv">2</span>)</span>
 <span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt; List of 2</span></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt;  $ new_coin :List of 5</span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt;   ..$ iData      :&#39;data.frame&#39;:  51 obs. of  60 variables:</span></span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt;   ..$ iMeta      :&#39;data.frame&#39;:  68 obs. of  10 variables:</span></span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt;   ..$ exclude    : NULL</span></span>
-<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt;   ..$ level_names: chr [1:4] &quot;Indicator&quot; &quot;Pillar&quot; &quot;Sub-index&quot; &quot;Index&quot;</span></span>
-<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co">#&gt;   ..$ quietly    : logi FALSE</span></span>
-<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co">#&gt;  $ can_regen: logi TRUE</span></span></code></pre></div>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt;  $ new_coin :List of 6</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt;   ..$ iData                     :&#39;data.frame&#39;:   51 obs. of  60 variables:</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt;   ..$ iMeta                     :&#39;data.frame&#39;:   68 obs. of  10 variables:</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt;   ..$ exclude                   : NULL</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt;   ..$ level_names               : chr [1:4] &quot;Indicator&quot; &quot;Pillar&quot; &quot;Sub-index&quot; &quot;Index&quot;</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co">#&gt;   ..$ retain_all_uCodes_on_split: logi FALSE</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co">#&gt;   ..$ quietly                   : logi FALSE</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co">#&gt;  $ can_regen: logi TRUE</span></span></code></pre></div>
 <p>Looking in the log, we can see that it is a list with an entry
 “new_coin”, which contains exactly the arguments that we passed to
 <code>new_coin()</code>: <code>iData</code>, <code>iMeta</code>, the
@@ -443,21 +444,22 @@ the <code>Normalise()</code> function:</p>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co"># view log</span></span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="fu">str</span>(coin<span class="sc">$</span>Log, <span class="at">max.level =</span> <span class="dv">2</span>)</span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; List of 3</span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt;  $ new_coin :List of 5</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;   ..$ iData      :&#39;data.frame&#39;:  51 obs. of  60 variables:</span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;   ..$ iMeta      :&#39;data.frame&#39;:  68 obs. of  10 variables:</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;   ..$ exclude    : NULL</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt;   ..$ level_names: chr [1:4] &quot;Indicator&quot; &quot;Pillar&quot; &quot;Sub-index&quot; &quot;Index&quot;</span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt;   ..$ quietly    : logi FALSE</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt;  $ can_regen: logi TRUE</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt;  $ Normalise:List of 7</span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt;   ..$ dset        : chr &quot;Raw&quot;</span></span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt;   ..$ global_specs: NULL</span></span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt;   ..$ indiv_specs : NULL</span></span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt;   ..$ directions  : NULL</span></span>
-<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt;   ..$ out2        : chr &quot;coin&quot;</span></span>
-<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co">#&gt;   ..$ write_to    : NULL</span></span>
-<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="co">#&gt;   ..$ write2log   : logi TRUE</span></span></code></pre></div>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt;  $ new_coin :List of 6</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;   ..$ iData                     :&#39;data.frame&#39;:   51 obs. of  60 variables:</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;   ..$ iMeta                     :&#39;data.frame&#39;:   68 obs. of  10 variables:</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;   ..$ exclude                   : NULL</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt;   ..$ level_names               : chr [1:4] &quot;Indicator&quot; &quot;Pillar&quot; &quot;Sub-index&quot; &quot;Index&quot;</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt;   ..$ retain_all_uCodes_on_split: logi FALSE</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt;   ..$ quietly                   : logi FALSE</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt;  $ can_regen: logi TRUE</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt;  $ Normalise:List of 7</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt;   ..$ dset        : chr &quot;Raw&quot;</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt;   ..$ global_specs: NULL</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt;   ..$ indiv_specs : NULL</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt;   ..$ directions  : NULL</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co">#&gt;   ..$ out2        : chr &quot;coin&quot;</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="co">#&gt;   ..$ write_to    : NULL</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co">#&gt;   ..$ write2log   : logi TRUE</span></span></code></pre></div>
 <p>Now we additionally have a “Normalise” entry, with all the function
 arguments that we specified, plus defaults.</p>
 <p>Now, the reason that building functions write to the log, is that it

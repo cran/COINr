@@ -421,7 +421,24 @@ only contains one parameter.</p>
 in</strong>, all of which are of the form <code>n_*()</code>, such as
 <code>n_minmax()</code>, <code>n_borda()</code>, etc. Type
 <code>n_</code> in the R Studio console and press the Tab key to see a
-list, or else browse the COINr functions alphabetically.</p>
+list, or else browse the COINr functions alphabetically. These are also
+listed explicitly in <a href="#built-in-normalisation-functions">Built-in normalisation
+functions</a>.</p>
+<ul>
+<li><code>n_borda()</code>: Calculates <a href="https://en.wikipedia.org/wiki/Borda_count">Borda scores</a> scaled
+on<br />
+</li>
+<li><code>n_dist2max()</code>:</li>
+<li><code>n_dist2ref()</code>:</li>
+<li><code>n_dist2targ()</code>:</li>
+<li><code>n_fracmax()</code>:</li>
+<li><code>n_goalposts()</code>:</li>
+<li><code>n_minmax()</code>:</li>
+<li><code>n_prank()</code>:</li>
+<li><code>n_rank()</code>:</li>
+<li><code>n_scaled()</code>:</li>
+<li><code>n_zscore()</code>:</li>
+</ul>
 <div id="calling-external-functions" class="section level2">
 <h2>Calling external functions</h2>
 <p>Since <code>f_n</code> points to a function name, any function can be
@@ -493,6 +510,136 @@ re-normalise:</p>
 <span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
 <span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
 </div>
+<div id="goalposts-targets-and-imeta-specification" class="section level2">
+<h2>Goalposts, targets and iMeta specification</h2>
+<p>For some normalisation methods we may use the same basic
+normalisation function for all indicators but use different parameters
+for each indicator - for example, using distance to target normalisation
+or goalpost normalisation. COINr now supports specifying these
+parameters in the <code>iMeta</code> table. This is intended to give an
+easier interface to these normalisation methods, as opposed to using the
+full individual specifications list (see the next section on that).</p>
+<p>The basic idea is that you specify the parameters as columns in the
+<code>iMeta</code> data frame. COINr currently supports this for a
+selected subset of inbuilt normalisation functions:</p>
+<ul>
+<li><code>n_minmax()</code></li>
+<li><code>n_scaled()</code></li>
+<li><code>n_zscore()</code></li>
+<li><code>n_dist2targ()</code></li>
+<li><code>n_goalposts()</code></li>
+</ul>
+<p>To use this approach, you have to (a) add the relevant columns to
+<code>iMeta</code> <em>before</em> building the coin, and (b) set
+<code>f_n_para = &quot;use_iMeta&quot;</code> within the <code>global_specs</code>
+list when calling <code>Normalise()</code>.</p>
+<p>Let’s clarify this with an example. We will apply distance to target
+normalisation using individual targets contained within
+<code>iMeta</code>. In fact, the example data with COINr already has a
+“Target” column which can be used for this purpose:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># show first few rows of iCode and Target cols in built-in iMeta</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">head</span>(ASEM_iMeta[<span class="fu">c</span>(<span class="st">&quot;iCode&quot;</span>, <span class="st">&quot;Target&quot;</span>)])</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co">#&gt;     iCode     Target</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; 1     LPI   4.118031</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt; 2 Flights 200.332655</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt; 3    Ship  20.113377</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; 4    Bord 115.900000</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt; 5    Elec 104.670585</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt; 6     Gas  90.060420</span></span></code></pre></div>
+<p>The <a href="https://bluefoxr.github.io/COINr/reference/n_dist2targ.html?q=n_dist#null">documentation</a>
+for the <code>n_dist2targ()</code> function explains that the required
+<code>iMeta</code> columns for this function are <code>Target</code>,
+and <code>dist2targ_cap_max</code>. This latter parameter (which
+specifies whether to cap values that surpass the target) is included for
+completeness, even though it is unlikely you would want to vary it from
+one indicator to another. Since the Target column is already present, we
+will just add the missing column:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># copy built in data</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>iMeta <span class="ot">&lt;-</span> ASEM_iMeta</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co"># set cap_max</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>iMeta<span class="sc">$</span>dist2targ_cap_max <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span></code></pre></div>
+<p>Now we build the coin and normalise.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># build coin</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">new_coin</span>(ASEM_iData, iMeta, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co"># normalise, referencing iMeta columns</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_dist2targ&quot;</span>, <span class="at">f_n_para =</span> <span class="st">&quot;use_iMeta&quot;</span>))</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span></code></pre></div>
+<p>Note that the <code>global_specs$f_n_para</code> is set to
+<code>&quot;use_iMeta&quot;</code>, telling the function to use the
+<code>iMeta</code> columns. Let us visualise the result for a selected
+indicator:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">plot_scatter</span>(coin, <span class="at">dsets =</span> <span class="fu">c</span>(<span class="st">&quot;Raw&quot;</span>, <span class="st">&quot;Normalised&quot;</span>), <span class="at">iCodes =</span> <span class="st">&quot;LPI&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>This simply shows that (a) the indicator is now scaled between 0 and
+1, and any raw values of LPI above the target of 4.1 are capped at a
+value of 1.</p>
+<p>We now take another example using the “goalposts” approach, also
+known as “distance to frontier”. In this method, each indicator is
+scaled as a distance between an upper and lower bound. The following
+equation is for a positive direction indicator.</p>
+<p><span class="math display">\[ x_n = \frac{x - G_{low}}{G_{high} -
+G_{low}} \]</span></p>
+<p>where <span class="math inline">\(x_n\)</span> is the normalised
+indicator value and <span class="math inline">\(G_{low}\)</span> and
+<span class="math inline">\(G_{high}\)</span> are respectively the lower
+and upper goalpost values. The negative direction formula is
+analogous.</p>
+<p>To use this approach we again need to define the necessary columns in
+<code>iMeta</code>. Referencing again the documentation of the relevant
+function <code>n_goalposts()</code>, we need to add columns
+<code>goalpost_lower</code>, <code>goalpost_upper</code>,
+<code>goalpost_scale</code> and <code>goalpost_trunc2posts</code>, which
+correspond to arguments to the <code>n_goalposts()</code> function.</p>
+<p>For the sake of this example, we just define goalposts as 5% of the
+range from the maximum and minimum of each indicator. We set the scaling
+to 1 and truncation to <code>TRUE</code>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># get iCodes and raw data</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>iCodes <span class="ot">&lt;-</span> iMeta<span class="sc">$</span>iCode[iMeta<span class="sc">$</span>Type <span class="sc">==</span> <span class="st">&quot;Indicator&quot;</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co"># set general parameters</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>iMeta<span class="sc">$</span>goalpost_scale <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>iMeta<span class="sc">$</span>goalpost_trunc2posts <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co"># set goalposts for each indicator</span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="cf">for</span>(iCode <span class="cf">in</span> iCodes){</span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>  maxx <span class="ot">&lt;-</span> <span class="fu">max</span>(ASEM_iData[[iCode]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>  minx <span class="ot">&lt;-</span> <span class="fu">min</span>(ASEM_iData[[iCode]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>  rx <span class="ot">&lt;-</span> maxx <span class="sc">-</span> minx</span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>  <span class="co"># fake goalposts in 5% of range</span></span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a>  iMeta<span class="sc">$</span>goalpost_lower[iMeta<span class="sc">$</span>iCode <span class="sc">==</span> iCode] <span class="ot">&lt;-</span> minx <span class="sc">+</span> <span class="fl">0.05</span><span class="sc">*</span>rx</span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>  iMeta<span class="sc">$</span>goalpost_upper[iMeta<span class="sc">$</span>iCode <span class="sc">==</span> iCode] <span class="ot">&lt;-</span> maxx <span class="sc">-</span> <span class="fl">0.05</span><span class="sc">*</span>rx</span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>}</span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co"># build coin</span></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">new_coin</span>(ASEM_iData, iMeta, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a><span class="co"># normalise using minmax</span></span>
+<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, </span>
+<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a>                  <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_goalposts&quot;</span>, <span class="at">f_n_para =</span> <span class="st">&quot;use_iMeta&quot;</span>))</span>
+<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span></code></pre></div>
+<p>Again, let’s plot an indicator before and after normalisation:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">plot_scatter</span>(coin, <span class="at">dsets =</span> <span class="fu">c</span>(<span class="st">&quot;Raw&quot;</span>, <span class="st">&quot;Normalised&quot;</span>), <span class="at">iCodes =</span> <span class="st">&quot;Cov4G&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Here we see that goalposts act like distance to target, but also cap
+at both ends.</p>
+<p>For both the distance to target method and the goalposts method,
+<em>directionality is automatically accounted for</em>. That is, if an
+indicator has Direction -1 in <code>iMeta</code>, the distance to target
+function will assume that values higher than the target are worse and
+will give lower scores. , and values below the target will get a full
+score. Similarly, the goalposts function will measure the progress from
+the higher goalpost to the lower one for negative directionality
+indicators. This means that in defining the goalposts in
+<code>iMeta</code>, always assign the goalpost with the higher value to
+“goalpost_upper” - COINr will account for the directionality.</p>
+<p>Importantly, all of the functions mentioned in this section can also
+be used without the special columns in <code>iMeta</code>, either by
+specifying a single set of parameters to apply to all indicators using
+<code>global_specs</code>, OR by providing detailed individual
+specifications via the <code>indiv_specs</code> argument (see the next
+section).</p>
+</div>
 <div id="individual-normalisation" class="section level2">
 <h2>Individual normalisation</h2>
 <p>Finally let’s explore how to specify different normalisation methods
@@ -506,34 +653,34 @@ apply min-max to all indicators except two. For those, we apply a rank
 transformation and distance to maximum approach. Note, that since the
 default of <code>global_specs</code> is min-max, we don’t need to
 specify that at all here.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># individual specifications:</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="co"># LPI - borda scores</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co"># Flights - z-scores with mean 10 and sd 2</span></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>indiv_specs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  <span class="at">LPI =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_borda&quot;</span>),</span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  <span class="at">Flights =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_zscore&quot;</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>                 <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">m_sd =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">2</span>)))</span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>)</span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co"># normalise</span></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">indiv_specs =</span> indiv_specs)</span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a></span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co"># a quick look at the first three indicators</span></span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="fu">get_dset</span>(coin, <span class="st">&quot;Normalised&quot;</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="sc">|&gt;</span></span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="co">#&gt;    uCode LPI   Flights      Ship</span></span>
-<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="co">#&gt; 1    AUS  36  9.889993  66.14497</span></span>
-<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="co">#&gt; 2    AUT  44  9.588735   0.00000</span></span>
-<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="co">#&gt; 3    BEL  45  9.711512  97.14314</span></span>
-<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="co">#&gt; 4    BGD   4  8.529810  45.80661</span></span>
-<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a><span class="co">#&gt; 5    BGR   7  8.741971  37.40495</span></span>
-<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a><span class="co">#&gt; 6    BRN   9  8.433044  35.38920</span></span>
-<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a><span class="co">#&gt; 7    CHE  42 10.563483   0.00000</span></span>
-<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a><span class="co">#&gt; 8    CHN  30 13.235114 100.00000</span></span>
-<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a><span class="co">#&gt; 9    CYP  14  8.721372  55.21211</span></span>
-<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a><span class="co">#&gt; 10   CZE  31  9.001961   0.00000</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># individual specifications:</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co"># LPI - borda scores</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co"># Flights - z-scores with mean 10 and sd 2</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>indiv_specs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>  <span class="at">LPI =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_borda&quot;</span>),</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>  <span class="at">Flights =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_zscore&quot;</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>                 <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">m_sd =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">2</span>)))</span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>)</span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co"># normalise</span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">indiv_specs =</span> indiv_specs)</span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co"># a quick look at the first three indicators</span></span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="fu">get_dset</span>(coin, <span class="st">&quot;Normalised&quot;</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="sc">|&gt;</span></span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">#&gt;    uCode LPI   Flights      Ship</span></span>
+<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a><span class="co">#&gt; 1    AUS  36  9.889993  66.14497</span></span>
+<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a><span class="co">#&gt; 2    AUT  44  9.588735   0.00000</span></span>
+<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a><span class="co">#&gt; 3    BEL  45  9.711512  97.14314</span></span>
+<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a><span class="co">#&gt; 4    BGD   4  8.529810  45.80661</span></span>
+<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a><span class="co">#&gt; 5    BGR   7  8.741971  37.40495</span></span>
+<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a><span class="co">#&gt; 6    BRN   9  8.433044  35.38920</span></span>
+<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a><span class="co">#&gt; 7    CHE  42 10.563483   0.00000</span></span>
+<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a><span class="co">#&gt; 8    CHN  30 13.235114 100.00000</span></span>
+<span id="cb15-27"><a href="#cb15-27" tabindex="-1"></a><span class="co">#&gt; 9    CYP  14  8.721372  55.21211</span></span>
+<span id="cb15-28"><a href="#cb15-28" tabindex="-1"></a><span class="co">#&gt; 10   CZE  31  9.001961   0.00000</span></span></code></pre></div>
 <p>This example is meant to be illustrative of the functionality of
 <code>Normalise()</code>, rather than being a sensible normalisation
 strategy, because the indicators are now on very different ranges.</p>
@@ -541,102 +688,62 @@ strategy, because the indicators are now on very different ranges.</p>
 is a good idea to keep the indicators on similar ranges, otherwise the
 effects will be very unequal in the aggregation step.</p>
 </div>
-<div id="use-of-targets" class="section level2">
-<h2>Use of targets</h2>
-<p>A particular type of normalisation is “distance to target”. This
-normalises indicators by the distance of each value to a specified
-target. Targets may often have a political or business meaning, such as
-e.g. emissions targets or sales targets.</p>
-<p>Targets should be input into a coin using the <code>iMeta</code>
-argument when building the coin using <code>new_coin()</code>. In fact,
-the built-in example data has targets for all indicators:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">head</span>(ASEM_iMeta[<span class="fu">c</span>(<span class="st">&quot;iCode&quot;</span>, <span class="st">&quot;Target&quot;</span>)])</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt;     iCode     Target</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="co">#&gt; 1     LPI   4.118031</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="co">#&gt; 2 Flights 200.332655</span></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co">#&gt; 3    Ship  20.113377</span></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#&gt; 4    Bord 115.900000</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt; 5    Elec 104.670585</span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; 6     Gas  90.060420</span></span></code></pre></div>
-<p><em>(Note that these targets are fabricated just for the purposes of
-an example)</em></p>
-<p>To use distance-to-target normalisation, we call the
-<code>n_dist2targ()</code> function. Like other built in normalisation
-functions, this normalises a vector using a specified target. We can’t
-use the <code>f_n_para</code> entry in <code>Normalise()</code> here
-because this would only pass a single target value, whereas we need to
-use a different target for each indicator.</p>
-<p>However, COINr has a special case built in so that targets from
-<code>iMeta</code> can be used automatically. Simply set
-<code>global_specs = list(f_n = &quot;n_dist2targ&quot;)</code>, and the
-<code>Normalise()</code> function will automatically retrieve targets
-from <code>iMeta$Target</code>. If targets are not present, this will
-generate an error. Note that the directions of indicators are also
-passed to <code>n_dist2targ()</code> - see that function documentation
-for how the normalisation is performed depending on the direction
-specified.</p>
-<p>Our normalisation will then look like this:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_dist2targ&quot;</span>))</span></code></pre></div>
-<p>It is also possible to specify the <code>cap_max</code> parameter of
-<code>n_dist2targ()</code> as follows:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>coin <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(coin, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_dist2targ&quot;</span>, <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">cap_max =</span> <span class="cn">TRUE</span>)))</span></code></pre></div>
-</div>
 </div>
 <div id="data-frames-and-vectors" class="section level1">
 <h1>Data frames and vectors</h1>
 <p>Normalising a data frame is very similar to normalising a coin,
 except the input is a data frame and output is also a data frame.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>mtcars_n <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(mtcars, <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_dist2max&quot;</span>))</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="fu">head</span>(mtcars_n)</span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt;         mpg cyl      disp        hp      drat        wt      qsec vs am gear</span></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co">#&gt; 1 0.4510638 0.5 0.2217511 0.2049470 0.5253456 0.2830478 0.2333333  0  1  0.5</span></span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co">#&gt; 2 0.4510638 0.5 0.2217511 0.2049470 0.5253456 0.3482485 0.3000000  0  1  0.5</span></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#&gt; 3 0.5276596 0.0 0.0920429 0.1448763 0.5023041 0.2063411 0.4892857  1  1  0.5</span></span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#&gt; 4 0.4680851 0.5 0.4662010 0.2049470 0.1474654 0.4351828 0.5880952  1  0  0.0</span></span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#&gt; 5 0.3531915 1.0 0.7206286 0.4346290 0.1797235 0.4927129 0.3000000  0  0  0.0</span></span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt; 6 0.3276596 0.5 0.3838863 0.1872792 0.0000000 0.4978266 0.6809524  1  0  0.0</span></span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt;        carb</span></span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt; 1 0.4285714</span></span>
-<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co">#&gt; 2 0.4285714</span></span>
-<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#&gt; 3 0.0000000</span></span>
-<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt; 4 0.0000000</span></span>
-<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt; 5 0.1428571</span></span>
-<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt; 6 0.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>mtcars_n <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(mtcars, <span class="at">global_specs =</span> <span class="fu">list</span>(<span class="at">f_n =</span> <span class="st">&quot;n_dist2max&quot;</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="fu">head</span>(mtcars_n)</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co">#&gt;         mpg cyl      disp        hp      drat        wt      qsec vs am gear</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co">#&gt; 1 0.4510638 0.5 0.2217511 0.2049470 0.5253456 0.2830478 0.2333333  0  1  0.5</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="co">#&gt; 2 0.4510638 0.5 0.2217511 0.2049470 0.5253456 0.3482485 0.3000000  0  1  0.5</span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co">#&gt; 3 0.5276596 0.0 0.0920429 0.1448763 0.5023041 0.2063411 0.4892857  1  1  0.5</span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt; 4 0.4680851 0.5 0.4662010 0.2049470 0.1474654 0.4351828 0.5880952  1  0  0.0</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="co">#&gt; 5 0.3531915 1.0 0.7206286 0.4346290 0.1797235 0.4927129 0.3000000  0  0  0.0</span></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="co">#&gt; 6 0.3276596 0.5 0.3838863 0.1872792 0.0000000 0.4978266 0.6809524  1  0  0.0</span></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="co">#&gt;        carb</span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a><span class="co">#&gt; 1 0.4285714</span></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="co">#&gt; 2 0.4285714</span></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a><span class="co">#&gt; 3 0.0000000</span></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a><span class="co">#&gt; 4 0.0000000</span></span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a><span class="co">#&gt; 5 0.1428571</span></span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a><span class="co">#&gt; 6 0.0000000</span></span></code></pre></div>
 <p>As with coins, columns can be normalised with individual
 specifications using the <code>indiv_spec</code> argument in exactly the
 same way as with a coin. Note that non-numeric columns are always
 ignored:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">Normalise</span>(iris) <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="fu">head</span>()</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt; 1    22.222222    62.50000     6.779661    4.166667  setosa</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; 2    16.666667    41.66667     6.779661    4.166667  setosa</span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; 3    11.111111    50.00000     5.084746    4.166667  setosa</span></span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt; 4     8.333333    45.83333     8.474576    4.166667  setosa</span></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; 5    19.444444    66.66667     6.779661    4.166667  setosa</span></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; 6    30.555556    79.16667    11.864407   12.500000  setosa</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">Normalise</span>(iris) <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  <span class="fu">head</span>()</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co">#&gt; 1    22.222222    62.50000     6.779661    4.166667  setosa</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co">#&gt; 2    16.666667    41.66667     6.779661    4.166667  setosa</span></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="co">#&gt; 3    11.111111    50.00000     5.084746    4.166667  setosa</span></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co">#&gt; 4     8.333333    45.83333     8.474576    4.166667  setosa</span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="co">#&gt; 5    19.444444    66.66667     6.779661    4.166667  setosa</span></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="co">#&gt; 6    30.555556    79.16667    11.864407   12.500000  setosa</span></span></code></pre></div>
 <p>There is also a method for numeric vectors, although usually it is
 just as easy to call the underlying normalisation function directly.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># example vector</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co"># normalise using distance to reference (5th data point)</span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>x_norm <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(x, <span class="at">f_n =</span> <span class="st">&quot;n_dist2ref&quot;</span>, <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">iref =</span> <span class="dv">5</span>))</span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co"># view side by side</span></span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="fu">data.frame</span>(x, x_norm)</span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#&gt;            x     x_norm</span></span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt; 1  0.1703396 0.00000000</span></span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt; 2  0.9204453 0.94629280</span></span>
-<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#&gt; 3  0.7819251 0.77154324</span></span>
-<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#&gt; 4  0.2229070 0.06631615</span></span>
-<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#&gt; 5  0.9630178 1.00000000</span></span>
-<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co">#&gt; 6  0.3801415 0.26467475</span></span>
-<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="co">#&gt; 7  0.4021895 0.29248930</span></span>
-<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="co">#&gt; 8  0.4669191 0.37414865</span></span>
-<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">#&gt; 9  0.1856739 0.01934490</span></span>
-<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a><span class="co">#&gt; 10 0.1848585 0.01831620</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># example vector</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="co"># normalise using distance to reference (5th data point)</span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>x_norm <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(x, <span class="at">f_n =</span> <span class="st">&quot;n_dist2ref&quot;</span>, <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">iref =</span> <span class="dv">5</span>))</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co"># view side by side</span></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="fu">data.frame</span>(x, x_norm)</span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="co">#&gt;             x    x_norm</span></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co">#&gt; 1  0.72649044 0.9070981</span></span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a><span class="co">#&gt; 2  0.69014298 0.8603513</span></span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a><span class="co">#&gt; 3  0.71527202 0.8926700</span></span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a><span class="co">#&gt; 4  0.02118719 0.0000000</span></span>
+<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a><span class="co">#&gt; 5  0.79872519 1.0000000</span></span>
+<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a><span class="co">#&gt; 6  0.71026957 0.8862363</span></span>
+<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a><span class="co">#&gt; 7  0.67692102 0.8433463</span></span>
+<span id="cb18-17"><a href="#cb18-17" tabindex="-1"></a><span class="co">#&gt; 8  0.60600435 0.7521397</span></span>
+<span id="cb18-18"><a href="#cb18-18" tabindex="-1"></a><span class="co">#&gt; 9  0.46573485 0.5717375</span></span>
+<span id="cb18-19"><a href="#cb18-19" tabindex="-1"></a><span class="co">#&gt; 10 0.75824102 0.9479329</span></span></code></pre></div>
 </div>
 <div id="purses" class="section level1">
 <h1>Purses</h1>
@@ -668,51 +775,51 @@ regenerating entire purses, but we are not there yet.</li>
 </ol>
 <p>Let’s anyway illustrate with an example. We build the example purse
 first.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">build_example_purse</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">build_example_purse</span>(<span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Normalising a purse works in exactly the same way as normalising a
 coin, except for the <code>global</code> argument. By default,
 <code>global = TRUE</code>, which means that the normalisation will be
 applied over all time points simultaneously, with the aim of making the
 index comparable. Here, we will apply the default min-max approach to
 all coins:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span></code></pre></div>
 <p>Now let’s examine the data set of the first coin. We’ll see what the
 max and min of a few indicators is:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co"># get normalised data of first coin in purse</span></span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(purse<span class="sc">$</span>coin[[<span class="dv">1</span>]], <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="co"># get min and max of first four indicators (exclude uCode col)</span></span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], min, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
-<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co">#&gt;       0       0       0       0</span></span>
-<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="co">#&gt;      LPI  Flights     Ship     Bord </span></span>
-<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co">#&gt; 83.98913 88.79325 85.91861 93.62416</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># get normalised data of first coin in purse</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(purse<span class="sc">$</span>coin[[<span class="dv">1</span>]], <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="co"># get min and max of first four indicators (exclude uCode col)</span></span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], min, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a><span class="co">#&gt;       0       0       0       0</span></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a><span class="co">#&gt;      LPI  Flights     Ship     Bord </span></span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a><span class="co">#&gt; 83.98913 88.79325 85.91861 93.62416</span></span></code></pre></div>
 <p>Here we see that the minimum values are zero, but the maximum values
 are <em>not</em> 100, because in other coins these indicators have
 higher values. To show that the global maximum is indeed 100, we can
 extract the whole normalised data set for all years and run the same
 check.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co"># get entire normalised data set for all coins in one df</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>x1_global <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="co"># get min and max of first four indicators (exclude Time and uCode cols)</span></span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="fu">sapply</span>(x1_global[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>], min, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt;       0       0       0       0</span></span>
-<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="fu">sapply</span>(x1_global[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>], max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
-<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co">#&gt;     100     100     100     100</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="co"># get entire normalised data set for all coins in one df</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>x1_global <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="co"># get min and max of first four indicators (exclude Time and uCode cols)</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="fu">sapply</span>(x1_global[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>], min, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">#&gt;       0       0       0       0</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="fu">sapply</span>(x1_global[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>], max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="co">#&gt;     100     100     100     100</span></span></code></pre></div>
 <p>And this confirms our expectations: that the global maximum and
 minimum are 0 and 100 respectively.</p>
 <p>Any type of normalisation can be performed on a purse in this
@@ -729,28 +836,28 @@ for all time points. Therefore, consider carefully if this fits the
 intended meaning.</p>
 <p>Normalisation can also be performed independently on each coin, by
 setting <code>global = FALSE</code>.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
-<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
-<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a></span>
-<span id="cb20-13"><a href="#cb20-13" tabindex="-1"></a><span class="co"># get normalised data of first coin in purse</span></span>
-<span id="cb20-14"><a href="#cb20-14" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(purse<span class="sc">$</span>coin[[<span class="dv">1</span>]], <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
-<span id="cb20-15"><a href="#cb20-15" tabindex="-1"></a></span>
-<span id="cb20-16"><a href="#cb20-16" tabindex="-1"></a><span class="co"># get min and max of first four indicators (exclude uCode col)</span></span>
-<span id="cb20-17"><a href="#cb20-17" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], min, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-18"><a href="#cb20-18" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
-<span id="cb20-19"><a href="#cb20-19" tabindex="-1"></a><span class="co">#&gt;       0       0       0       0</span></span>
-<span id="cb20-20"><a href="#cb20-20" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-21"><a href="#cb20-21" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
-<span id="cb20-22"><a href="#cb20-22" tabindex="-1"></a><span class="co">#&gt;     100     100     100     100</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>purse <span class="ot">&lt;-</span> <span class="fu">Normalise</span>(purse, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">global =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a><span class="co">#&gt; Written data set to .$Data$Normalised</span></span>
+<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a><span class="co">#&gt; (overwritten existing data set)</span></span>
+<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a><span class="co"># get normalised data of first coin in purse</span></span>
+<span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">get_dset</span>(purse<span class="sc">$</span>coin[[<span class="dv">1</span>]], <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
+<span id="cb23-15"><a href="#cb23-15" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" tabindex="-1"></a><span class="co"># get min and max of first four indicators (exclude uCode col)</span></span>
+<span id="cb23-17"><a href="#cb23-17" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], min, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-18"><a href="#cb23-18" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
+<span id="cb23-19"><a href="#cb23-19" tabindex="-1"></a><span class="co">#&gt;       0       0       0       0</span></span>
+<span id="cb23-20"><a href="#cb23-20" tabindex="-1"></a><span class="fu">sapply</span>(x1[<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], max, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-21"><a href="#cb23-21" tabindex="-1"></a><span class="co">#&gt;     LPI Flights    Ship    Bord </span></span>
+<span id="cb23-22"><a href="#cb23-22" tabindex="-1"></a><span class="co">#&gt;     100     100     100     100</span></span></code></pre></div>
 <p>Now the normalised data set in each coin will have a min and max of 0
 and 100 respectively, for each indicator.</p>
 </div>
@@ -763,52 +870,291 @@ arguments more visible (they are not wrapped in lists). This function
 applies the same normalisation method to all indicators. It is also a
 generic so can be used on data frames, coins and purses. Let’s
 demonstrate on a data frame:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># some made up data</span></span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">uCode =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>],</span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>                <span class="at">a =</span> <span class="fu">runif</span>(<span class="dv">10</span>),</span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>                <span class="at">b =</span> <span class="fu">runif</span>(<span class="dv">10</span>)<span class="sc">*</span><span class="dv">100</span>)</span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>X</span>
-<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a><span class="co">#&gt;    uCode         a         b</span></span>
-<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a><span class="co">#&gt; 1      a 0.5978053 27.840634</span></span>
-<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a><span class="co">#&gt; 2      b 0.5210077 22.953380</span></span>
-<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a><span class="co">#&gt; 3      c 0.4168349 64.783759</span></span>
-<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a><span class="co">#&gt; 4      d 0.5548105 94.965415</span></span>
-<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a><span class="co">#&gt; 5      e 0.5446098 60.739331</span></span>
-<span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a><span class="co">#&gt; 6      f 0.7403674 34.059239</span></span>
-<span id="cb21-14"><a href="#cb21-14" tabindex="-1"></a><span class="co">#&gt; 7      g 0.6394261 33.333917</span></span>
-<span id="cb21-15"><a href="#cb21-15" tabindex="-1"></a><span class="co">#&gt; 8      h 0.5303849 20.106878</span></span>
-<span id="cb21-16"><a href="#cb21-16" tabindex="-1"></a><span class="co">#&gt; 9      i 0.3747821  4.582959</span></span>
-<span id="cb21-17"><a href="#cb21-17" tabindex="-1"></a><span class="co">#&gt; 10     j 0.7808927 97.548393</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="co"># some made up data</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">uCode =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>],</span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>                <span class="at">a =</span> <span class="fu">runif</span>(<span class="dv">10</span>),</span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>                <span class="at">b =</span> <span class="fu">runif</span>(<span class="dv">10</span>)<span class="sc">*</span><span class="dv">100</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>X</span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a><span class="co">#&gt;    uCode         a         b</span></span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a><span class="co">#&gt; 1      a 0.3179556 25.341877</span></span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a><span class="co">#&gt; 2      b 0.1917927 54.717433</span></span>
+<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a><span class="co">#&gt; 3      c 0.5785375  1.261268</span></span>
+<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a><span class="co">#&gt; 4      d 0.6302498 30.292342</span></span>
+<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a><span class="co">#&gt; 5      e 0.3874103 64.065780</span></span>
+<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a><span class="co">#&gt; 6      f 0.8182025 61.125191</span></span>
+<span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a><span class="co">#&gt; 7      g 0.6723450 52.538502</span></span>
+<span id="cb24-15"><a href="#cb24-15" tabindex="-1"></a><span class="co">#&gt; 8      h 0.9993705 74.775695</span></span>
+<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a><span class="co">#&gt; 9      i 0.3583237 13.959335</span></span>
+<span id="cb24-17"><a href="#cb24-17" tabindex="-1"></a><span class="co">#&gt; 10     j 0.7046756 85.904824</span></span></code></pre></div>
 <p>By default, normalisation results in min-max on the <span class="math inline">\([0, 100]\)</span> interval:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">qNormalise</span>(X)</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="co">#&gt;    uCode         a         b</span></span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="co">#&gt; 1      a  54.91687  25.01755</span></span>
-<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="co">#&gt; 2      b  36.00636  19.76049</span></span>
-<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="co">#&gt; 3      c  10.35502  64.75611</span></span>
-<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co">#&gt; 4      d  44.32989  97.22157</span></span>
-<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">#&gt; 5      e  41.81809  60.40565</span></span>
-<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="co">#&gt; 6      f  90.02111  31.70671</span></span>
-<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="co">#&gt; 7      g  65.16551  30.92650</span></span>
-<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="co">#&gt; 8      h  38.31538  16.69859</span></span>
-<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="co">#&gt; 9      i   0.00000   0.00000</span></span>
-<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a><span class="co">#&gt; 10     j 100.00000 100.00000</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">qNormalise</span>(X)</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="co">#&gt;    uCode         a         b</span></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="co">#&gt; 1      a  15.62237  28.44943</span></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a><span class="co">#&gt; 2      b   0.00000  63.15444</span></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a><span class="co">#&gt; 3      c  47.88947   0.00000</span></span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a><span class="co">#&gt; 4      d  54.29286  34.29803</span></span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a><span class="co">#&gt; 5      e  24.22275  74.19881</span></span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a><span class="co">#&gt; 6      f  77.56650  70.72473</span></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a><span class="co">#&gt; 7      g  59.50539  60.58020</span></span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a><span class="co">#&gt; 8      h 100.00000  86.85177</span></span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a><span class="co">#&gt; 9      i  20.62105  15.00181</span></span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a><span class="co">#&gt; 10     j  63.50879 100.00000</span></span></code></pre></div>
 <p>We can pass another normalisation function if we like, and the syntax
 is a bit easier than <code>Normalise()</code>:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">qNormalise</span>(X, <span class="at">f_n =</span> <span class="st">&quot;n_dist2ref&quot;</span>, <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">iref =</span> <span class="dv">1</span>, <span class="at">cap_max =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="co">#&gt;    uCode         a         b</span></span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="co">#&gt; 1      a 1.0000000 1.0000000</span></span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="co">#&gt; 2      b 0.6556521 0.7898649</span></span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="co">#&gt; 3      c 0.1885581 1.0000000</span></span>
-<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="co">#&gt; 4      d 0.8072181 1.0000000</span></span>
-<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">#&gt; 5      e 0.7614797 1.0000000</span></span>
-<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="co">#&gt; 6      f 1.0000000 1.0000000</span></span>
-<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a><span class="co">#&gt; 7      g 1.0000000 1.0000000</span></span>
-<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a><span class="co">#&gt; 8      h 0.6976979 0.6674751</span></span>
-<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a><span class="co">#&gt; 9      i 0.0000000 0.0000000</span></span>
-<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a><span class="co">#&gt; 10     j 1.0000000 1.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">qNormalise</span>(X, <span class="at">f_n =</span> <span class="st">&quot;n_dist2ref&quot;</span>, <span class="at">f_n_para =</span> <span class="fu">list</span>(<span class="at">iref =</span> <span class="dv">1</span>, <span class="at">cap_max =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="co">#&gt;    uCode a        b</span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="co">#&gt; 1      a 1 1.000000</span></span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="co">#&gt; 2      b 0 1.000000</span></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="co">#&gt; 3      c 1 0.000000</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="co">#&gt; 4      d 1 1.000000</span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="co">#&gt; 5      e 1 1.000000</span></span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a><span class="co">#&gt; 6      f 1 1.000000</span></span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a><span class="co">#&gt; 7      g 1 1.000000</span></span>
+<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a><span class="co">#&gt; 8      h 1 1.000000</span></span>
+<span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a><span class="co">#&gt; 9      i 1 0.527315</span></span>
+<span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a><span class="co">#&gt; 10     j 1 1.000000</span></span></code></pre></div>
 <p>The <code>qNormalise()</code> function works in a similar way for
 coins and purses.</p>
+</div>
+<div id="built-in-normalisation-functions" class="section level1">
+<h1>Built-in normalisation functions</h1>
+<p>COINr has a number of normalisation functions built in (that can be
+used with <code>Normalise()</code> and friends), all of which are of the
+form <code>n_*()</code>, such as <code>n_minmax()</code>,
+<code>n_borda()</code>, etc. Type <code>n_</code> in the R Studio
+console and press the Tab key to see a list. Here these functions are
+also explained in a little more detail. In the following, <span class="math inline">\(x\)</span> is a vector of un-normalised indicator
+values, and <span class="math inline">\(x&#39;\)</span> is the
+corresponding normalised vector, using one of the methods below.</p>
+<div id="linear-methods" class="section level2">
+<h2>Linear methods</h2>
+<div id="min-max" class="section level3">
+<h3>Min-max</h3>
+<p>The <code>n_minmax()</code> function implements the min-max method,
+which is probably the most commonly-used normalisation approach in
+composite indicator construction. The indicator is simply rescaled to
+lie on an interval specified by upper and lower bounds <span class="math inline">\(u\)</span> and <span class="math inline">\(l\)</span>:</p>
+<p><span class="math display">\[
+x&#39; = \frac{x - x_{\text{min}} }{ x_{\text{max}} - x_{\text{min}} }
+\times (u - l) + l
+\]</span></p>
+<p>This results in a linear transformation with minimum value <span class="math inline">\(l\)</span> and maximum value <span class="math inline">\(u\)</span>:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="co"># example data</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">69</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">20</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;ggplot2&#39; was built under R version 4.3.3</span></span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a><span class="co"># generic plot function to use in the other examples</span></span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>nplot <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, <span class="at">plot_title =</span> <span class="cn">NULL</span>){</span>
+<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> <span class="cn">NULL</span>, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb27-10"><a href="#cb27-10" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb27-11"><a href="#cb27-11" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;x&quot;</span>) <span class="sc">+</span></span>
+<span id="cb27-12"><a href="#cb27-12" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;x (normalised)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb27-13"><a href="#cb27-13" tabindex="-1"></a>    <span class="fu">ggtitle</span>(plot_title)</span>
+<span id="cb27-14"><a href="#cb27-14" tabindex="-1"></a>}</span>
+<span id="cb27-15"><a href="#cb27-15" tabindex="-1"></a></span>
+<span id="cb27-16"><a href="#cb27-16" tabindex="-1"></a><span class="co"># rescale onto [50, 100] interval</span></span>
+<span id="cb27-17"><a href="#cb27-17" tabindex="-1"></a>xdash <span class="ot">&lt;-</span> <span class="fu">n_minmax</span>(x, <span class="at">l_u =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">100</span>))</span>
+<span id="cb27-18"><a href="#cb27-18" tabindex="-1"></a><span class="fu">nplot</span>(x, xdash, <span class="st">&quot;Min-max onto [50, 100]&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>The transformation is analogous for negative-direction
+indicators.</p>
+</div>
+<div id="z-score" class="section level3">
+<h3>Z-score</h3>
+<p>The z-score function <code>n_zscore()</code> calculates z-scores
+which rescales <span class="math inline">\(x\)</span> to have a
+specified mean <span class="math inline">\(\mu\)</span> and standard
+deviation <span class="math inline">\(\sigma\)</span> (by default 0 and
+1 respectively).</p>
+<p><span class="math display">\[
+x&#39; = \frac{x - \text{mean}(x)}{\text{std}(x)} \times \sigma + \mu
+\]</span></p>
+<p>where <span class="math inline">\(\text{mean}(x)}{\text{std}(x)\)</span> and (x) are
+the sample mean and standard deviation of <span class="math inline">\(x\)</span> respectively.</p>
+<p>For example, specifying to have mean 10 and standard deviation 2:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">nplot</span>(x, <span class="fu">n_zscore</span>(x, <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">2</span>)))</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="scaling" class="section level3">
+<h3>Scaling</h3>
+<p>The <code>n_scaled()</code> function is a generic linear scaling
+function with parameters <span class="math inline">\(u\)</span> and
+<span class="math inline">\(l\)</span> of the form:</p>
+<p><span class="math display">\[
+x&#39; = \frac{x-l}{u-l} \times 100
+\]</span></p>
+<p>Note this is <em>not</em> the min-max transformation and <span class="math inline">\(l\)</span> and <span class="math inline">\(u\)</span> do not generally represent the upper
+and lower bounds. This is a linear transformation with shift
+<code>u</code> and scaling factor <code>u-l</code>. The result looks as
+follows:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">nplot</span>(x, <span class="fu">n_scaled</span>(x, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">10</span>)), <span class="st">&quot;Linear scaling using c(1,10)&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="distance-to-maximum" class="section level3">
+<h3>Distance to maximum</h3>
+<p>Normalises as a measure of the distance to the maximum value, where
+the maximum value is the highest-scoring value. The formula used is:</p>
+<p><span class="math display">\[
+x&#39; = 1 - \frac{x_{max} - x}{x_{max} - x_{min}}
+\]</span></p>
+<p>This means that the closer a value is to the maximum, the higher its
+score will be. Scores will be in the range of 0 to 1.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">nplot</span>(x, <span class="fu">n_dist2max</span>(x), <span class="st">&quot;Distance to maximum&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="fraction-of-maximum" class="section level3">
+<h3>Fraction of maximum</h3>
+<p>The <code>n_fracmax()</code> function simply measures each point as a
+fraction of the maximum observed value in <span class="math inline">\(x\)</span>.</p>
+<p><span class="math display">\[
+x&#39; = \frac{x}{x_{max}}
+\]</span></p>
+<p>This looks as follows (not very exciting since <span class="math inline">\(x\)</span> is already on a <span class="math inline">\([0,1]\)</span> scale):</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">nplot</span>(x, <span class="fu">n_fracmax</span>(x), <span class="st">&quot;Fraction of max value&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+</div>
+<div id="rank-methods" class="section level2">
+<h2>Rank methods</h2>
+<div id="ranks" class="section level3">
+<h3>Ranks</h3>
+<p>The most simple rank-based approach is to directly take the rank.
+This can be done using base R functions, or using the wrapper
+<code>n_rank()</code>, set for the purposes of normalisation so that
+higher scores will give higher rank values, and sets ties to the minimum
+value by default.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">nplot</span>(x, <span class="fu">n_rank</span>(x), <span class="st">&quot;Rank&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="borda" class="section level3">
+<h3>Borda</h3>
+<p>The <code>n_borda()</code> function calculates <a href="https://en.wikipedia.org/wiki/Borda_count">Borda scores</a>
+as:</p>
+<p><span class="math display">\[
+x&#39; = \text{rank}(x) - 1
+\]</span></p>
+<p>where the rank is calculated by default as
+<code>rank(x, ties.method = &quot;min&quot;, na.last = &quot;keep&quot;)</code>. Borda
+ranking is a nonlinear transformation and may be useful for
+highly-skewed indicators as an alternative to :</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="co"># normalise</span></span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>xdash <span class="ot">&lt;-</span> <span class="fu">n_borda</span>(x)</span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a><span class="fu">nplot</span>(x, xdash, <span class="st">&quot;Borda&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Caution may be necessary with Borda scores when comparing indicators
+with different numbers of missing values. See the following discussion
+in <a href="#percentile-ranks">Percentile ranks</a>.</p>
+</div>
+<div id="percentile-ranks" class="section level3">
+<h3>Percentile ranks</h3>
+<p>The percentile rank function <code>n_prank()</code> converts an
+indicator to <a href="https://en.wikipedia.org/wiki/Percentile_rank">percentile
+ranks</a>, which are <em>the percentage of scores in its frequency
+distribution that are less than that score</em>.</p>
+<p>Percentile ranks act like ranks, but have the added nice property
+that they don’t depend on the number of observations. For example: if we
+convert an indicator with 100 observed values using <a href="#borda">Borda</a> scores we will end up with scores in the range
+<span class="math inline">\([0, 99]\)</span>. Another indicator in the
+same data set with only 75 observed values (the rest are
+<code>NA</code>) would on the other hand get scores in the range <span class="math inline">\([0,74]\)</span>! On the other hand, percentile
+ranks always scale onto the <span class="math inline">\([0, 1]\)</span>
+interval.</p>
+<p>An indicator normalised by percentile ranks looks as follows:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">nplot</span>(x, <span class="fu">n_prank</span>(x), <span class="st">&quot;Percentile ranks&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+</div>
+<div id="targets-and-references" class="section level2">
+<h2>Targets and references</h2>
+<div id="distance-to-a-reference" class="section level3">
+<h3>Distance to a reference</h3>
+<p>The <code>n_dist2ref()</code> function gives a measure of the
+distance to a specific value <span class="math inline">\(x_{\text{ref}}\)</span> found in <code>x</code>.
+The formula is:</p>
+<p><span class="math display">\[
+x&#39; = 1 - \frac{x_{\text{ref}} - x}{x_{\text{ref}} - x_{min}}
+\]</span></p>
+<p>In composite indicators, this is often used in the context of
+benchmarking scores against the scores of a specific country. The
+function therefore allows you to specify the index of the reference
+value as opposed to the value itself. Values exceeding
+x_ref<code>can be optionally capped at 1 if</code>cap_max = TRUE`.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>xdash <span class="ot">&lt;-</span> <span class="fu">n_dist2ref</span>(x, <span class="at">iref =</span> <span class="dv">3</span>, <span class="at">cap_max =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="fu">nplot</span>(x, xdash, <span class="st">&quot;Distance to reference (no cap)&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>With the cap, the result changes:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>xdash <span class="ot">&lt;-</span> <span class="fu">n_dist2ref</span>(x, <span class="at">iref =</span> <span class="dv">3</span>, <span class="at">cap_max =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="fu">nplot</span>(x, xdash, <span class="st">&quot;Distance to reference (no cap)&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p><em>Important note: at the time of writing, <code>n_dist2ref()</code>
+does not allow for direction adjustment. This will hopefully be included
+in a future update.</em></p>
+</div>
+<div id="distance-to-target" class="section level3">
+<h3>Distance to target</h3>
+<p>The <code>n_dist2targ()</code> function gives the distance of each
+point in <span class="math inline">\(x\)</span> to a specified numerical
+target. This is different from the previous <code>n_dist2ref()</code> in
+that the target is specified as a fixed value, rather than the index of
+a point in <span class="math inline">\(x\)</span>. Additionally, this
+function allows for adjustment by the direction of the indicator. For
+positive-direction indicators:</p>
+<p><span class="math display">\[
+x&#39; = \frac{x - x_{min}}{x_{targ} - x_{min}}
+\]</span></p>
+<p>else for negative direction indicators:</p>
+<p><span class="math display">\[
+x&#39; = \frac{x_{max} - x}{x_{max} - x_{targ}}
+\]</span></p>
+<p>The function also features the possibility to cap values that exceed
+the target, as <code>n_dist2ref()</code>. To see how this looks for a
+positive indicator (with cap):</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>xdash <span class="ot">&lt;-</span> <span class="fu">n_dist2targ</span>(x, <span class="at">targ =</span> <span class="fl">0.75</span>, <span class="at">direction =</span> <span class="dv">1</span>, <span class="at">cap_max =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a><span class="fu">nplot</span>(x, xdash, <span class="st">&quot;Distance to 0.75 target (positive direction: with cap)&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Similarly, with a negative direction and low target:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>xdash <span class="ot">&lt;-</span> <span class="fu">n_dist2targ</span>(x, <span class="at">targ =</span> <span class="fl">0.2</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">cap_max =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="fu">nplot</span>(x, xdash, <span class="st">&quot;Distance to 0.2 target (negative direction: with cap)&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>As explained in <a href="#goalposts-targets-and-imeta-specification">Goalposts, targets and
+iMeta specification</a>, when applying this function to a coin you can
+specify the targets in the <code>iMeta</code> data frame.</p>
+</div>
+<div id="goalposts" class="section level3">
+<h3>Goalposts</h3>
+<p>The goalposts function <code>n_goalposts()</code> normalises as the
+fraction of the distance of each value of <span class="math inline">\(x\)</span> from the lower “goalpost” to the upper
+one (these values are specified as function inputs). The direction of
+the function can be specified to measure positive or negative progress.
+Goalpost normalisation (sometimes known as “distance to frontier”) is
+often used when there is a logical lower and upper bound to the
+indicator.</p>
+<p>For a positive indicator with goalposts <span class="math inline">\(GP_{low}\)</span> and <span class="math inline">\(GP_{high}\)</span>:</p>
+<p><span class="math display">\[
+x&#39; = \frac{x - GP_{low}}{GP_{high} - GP_{low}}
+\]</span></p>
+<p>and for a negative directionality indicator:</p>
+<p><span class="math display">\[
+x&#39; = \frac{x - GP_{high}}{GP_{low} - GP_{high}}
+\]</span></p>
+<p>To see how this looks:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>xdash <span class="ot">&lt;-</span> <span class="fu">n_goalposts</span>(x, <span class="at">gposts =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.75</span>, <span class="dv">1</span>), <span class="at">direction =</span> <span class="dv">1</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a><span class="fu">nplot</span>(x, xdash, <span class="st">&quot;Goalposts with positive indicator&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>This is effectively a distance to target, but with upper and lower
+“targets”. The effect is analogous if the directionality is
+reversed:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>xdash <span class="ot">&lt;-</span> <span class="fu">n_goalposts</span>(x, <span class="at">gposts =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.75</span>, <span class="dv">1</span>), <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a><span class="fu">nplot</span>(x, xdash, <span class="st">&quot;Goalposts with negative indicator&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>This normalisation function is also supported such that goalposts can
+be directly entered in <code>iMeta</code>. See <a href="#goalposts-targets-and-imeta-specification">Goalposts, targets and
+iMeta specification</a>.</p>
+</div>
+</div>
 </div>
 
 

@@ -4,9 +4,10 @@
 #'
 #' This function imputes the target data set `dset` in each coin using the imputation function `f_i`. This is performed
 #' in the same way as the coin method [Impute.coin()], but with one "special case" for panel data. If `f_i = "impute_panel`,
-#' the data sets inside the purse are imputed using the last available data point, using the [impute_panel()]
+#' the data sets inside the purse are imputed using the [impute_panel()]
 #' function. In this case, coins are not imputed individually, but treated as a single data set. In this
-#' case, optionally set `f_i_para = list(max_time = .)` where `.` should be substituted with the maximum
+#' case, optionally set the imputation method as `f_i_para = list(imp_type = .)`
+#' and `f_i_para = list(max_time = .)` where `.` should be substituted with the maximum
 #' number of time points to search backwards for a non-`NA` value. See [impute_panel()] for more details.
 #' No further arguments need to be passed to [impute_panel()]. See `vignette("imputation")` for more
 #' details. See also [Impute.coin()] documentation.
@@ -30,6 +31,8 @@
 #' imputation. By default this is `FALSE` unless `impute_by = "row"`. See details.
 #' @param write_to Optional character string for naming the resulting data set in each coin. Data will be written to
 #' `.$Data[[write_to]]`. Default is `write_to == "Imputed"`.
+#' @param warn_on_NAs Logical: if `TRUE` will issue a warning if there are any `NA`s detected in the data frame
+#' after imputation has been applied. Set `FALSE` to suppress these warnings.
 #' @param ... arguments passed to or from other methods.
 #'
 #' @return An updated purse with imputed data sets added to each coin.
@@ -39,7 +42,7 @@
 #' # see vignette("imputation")
 Impute.purse <- function(x, dset, f_i = NULL, f_i_para = NULL, impute_by = "column",
                          group_level = NULL, use_group = NULL, normalise_first = NULL,
-                         write_to = NULL, ...){
+                         write_to = NULL, warn_on_NAs = TRUE, ...){
 
   # input check
   check_purse(x)
@@ -52,7 +55,7 @@ Impute.purse <- function(x, dset, f_i = NULL, f_i_para = NULL, impute_by = "colu
       iDatas <- get_dset(x, dset)
 
       # impute
-      l_imp <- impute_panel(iDatas, max_time = f_i_para$max_time)
+      l_imp <- impute_panel(iDatas, max_time = f_i_para$max_time, imp_type = f_i_para$imp_type)
 
       # extract imputed data
       iDatas_i <- l_imp$iData_imp
@@ -90,12 +93,12 @@ Impute.purse <- function(x, dset, f_i = NULL, f_i_para = NULL, impute_by = "colu
 
     } else {
 
-      # apply unit screening to each coin
+      # apply imputation to each coin
       x$coin <- lapply(x$coin, function(coin){
         Impute.coin(coin, dset = dset, f_i = f_i, f_i_para = f_i_para, impute_by = impute_by,
                     group_level = group_level, use_group = use_group,
                     normalise_first = normalise_first, out2 = "coin",
-                    write_to = write_to)})
+                    write_to = write_to, warn_on_NAs = warn_on_NAs)})
 
     }
 
@@ -132,6 +135,9 @@ Impute.purse <- function(x, dset, f_i = NULL, f_i_para = NULL, impute_by = "colu
 #' frame. Moreover, this function should return a vector or data frame identical to the vector/data frame passed to
 #' it except for `NA` values, which can be replaced. The function `f_i` is not required to replace *all* `NA`
 #' values.
+#'
+#' COINr has several built-in imputation functions of the form `i_*()` for vectors which can be called by [Impute()]. See the
+#' [online documentation](https://bluefoxr.github.io/COINr/articles/imputation.html#data-frames) for more details.
 #'
 #' When imputing row-wise, prior normalisation of the data is recommended. This is because imputation
 #' will use e.g. the mean of the unit values over all indicators (columns). If the indicators are on
@@ -176,6 +182,8 @@ Impute.purse <- function(x, dset, f_i = NULL, f_i_para = NULL, impute_by = "colu
 #' `.$Data[[write_to]]`. Default is `write_to == "Imputed"`.
 #' @param disable Logical: if `TRUE` will disable imputation completely and write the unaltered data set. This option is mainly useful
 #' in sensitivity and uncertainty analysis (to test the effect of turning imputation on/off).
+#' @param warn_on_NAs Logical: if `TRUE` will issue a warning if there are any `NA`s detected in the data frame
+#' after imputation has been applied. Set `FALSE` to suppress these warnings.
 #' @param ... arguments passed to or from other methods.
 #'
 #' @return An updated coin with imputed data set at `.$Data[[write_to]]`
@@ -192,7 +200,7 @@ Impute.purse <- function(x, dset, f_i = NULL, f_i_para = NULL, impute_by = "colu
 #'
 Impute.coin <- function(x, dset, f_i = NULL, f_i_para = NULL, impute_by = "column",
                         use_group = NULL, group_level = NULL, normalise_first = NULL, out2 = "coin",
-                        write_to = NULL, disable = FALSE, ...){
+                        write_to = NULL, disable = FALSE, warn_on_NAs = TRUE, ...){
 
   # WRITE LOG ---------------------------------------------------------------
 
@@ -252,7 +260,7 @@ Impute.coin <- function(x, dset, f_i = NULL, f_i_para = NULL, impute_by = "colum
     iData_i <- Impute.data.frame(iData_, f_i = f_i, f_i_para = f_i_para,
                                   impute_by = impute_by,
                                   normalise_first = normalise_first,
-                                  directions = directions)
+                                  directions = directions, warn_on_NAs = warn_on_NAs)
 
   } else {
 
@@ -275,7 +283,7 @@ Impute.coin <- function(x, dset, f_i = NULL, f_i_para = NULL, impute_by = "colum
       directions <- directions$Direction[match(colnames(dfi), directions$iCode)]
       Impute.data.frame(dfi, f_i = f_i, f_i_para = f_i_para,
                          impute_by = impute_by, normalise_first = normalise_first,
-                         directions = directions)
+                         directions = directions, warn_on_NAs = warn_on_NAs)
     })
 
     # reassemble
@@ -328,6 +336,9 @@ Impute.coin <- function(x, dset, f_i = NULL, f_i_para = NULL, impute_by = "colum
 #' it except for `NA` values, which can be replaced. The function `f_i` is not required to replace *all* `NA`
 #' values.
 #'
+#' COINr has several built-in imputation functions of the form `i_*()` for vectors which can be called by [Impute()]. See the
+#' [online documentation](https://bluefoxr.github.io/COINr/articles/imputation.html#data-frames) for more details.
+#'
 #' When imputing row-wise, prior normalisation of the data is recommended. This is because imputation
 #' will use e.g. the mean of the unit values over all indicators (columns). If the indicators are on
 #' very different scales, the result will likely make no sense. If the indicators are normalised first,
@@ -358,6 +369,8 @@ Impute.coin <- function(x, dset, f_i = NULL, f_i_para = NULL, impute_by = "colum
 #' imputation. By default this is `FALSE` unless `impute_by = "row"`. See details.
 #' @param directions A vector of directions: either -1 or 1 to indicate the direction of each column
 #' of `x` - this is only used if `normalise_first = TRUE`. See details.
+#' @param warn_on_NAs Logical: if `TRUE` will issue a warning if there are any `NA`s detected in the data frame
+#' after imputation has been applied. Set `FALSE` to suppress these warnings.
 #' @param ... arguments passed to or from other methods.
 #'
 #' @return An imputed data frame
@@ -381,7 +394,7 @@ Impute.coin <- function(x, dset, f_i = NULL, f_i_para = NULL, impute_by = "colum
 #'
 #'
 Impute.data.frame <- function(x, f_i = NULL, f_i_para = NULL, impute_by = "column",
-                               normalise_first = NULL, directions = NULL, ...){
+                               normalise_first = NULL, directions = NULL, warn_on_NAs = TRUE, ...){
 
   # CHECKS ------------------------------------------------------------------
 
@@ -461,7 +474,15 @@ Impute.data.frame <- function(x, f_i = NULL, f_i_para = NULL, impute_by = "colum
       f_args <- c(f_args, f_i_para)
     }
 
-    x_imp <- do.call(what = f_i, args = f_args)
+    # impute or give informative error
+    x_imp <- tryCatch(
+      expr = do.call(what = f_i, args = f_args),
+      error = function(e){
+        message("IMPUTATION ERORR: Tried to pass data frame to imputation function '", f_i, "' but received error:")
+        message(as.character(e))
+        stop("Imputation failed due to call to f_i. Please check the function is capable of handling and returning a data frame.", call. = FALSE)
+      }
+    )
 
     # Checks
     if(!is.data.frame(x_imp)){
@@ -533,6 +554,10 @@ Impute.data.frame <- function(x, f_i = NULL, f_i_para = NULL, impute_by = "colum
   # replace non-NA values with original values to avoid any numerical precision issues
   x_imp[!x_NAs] <- x[!x_NAs]
 
+  if(warn_on_NAs){
+    check_remaining_NAs(x_imp)
+  }
+
   x_imp
 
 }
@@ -547,6 +572,9 @@ Impute.data.frame <- function(x, f_i = NULL, f_i_para = NULL, impute_by = "colum
 #' This calls the function `f_i()`, with optionally further arguments `f_i_para`, to impute any missing
 #' values found in `x`. By default, `f_i = "i_mean()"`, which simply imputes `NA`s with the mean of the
 #' non-`NA` values in `x`.
+#'
+#' COINr has several built-in imputation functions of the form `i_*()` for vectors which can be called by [Impute()]. See the
+#' [online documentation](https://bluefoxr.github.io/COINr/articles/imputation.html#data-frames) for more details.
 #'
 #' You could also use one of the imputation functions directly (such as [i_mean()]). However, this
 #' function offers a few extra advantages, such as checking the input and output formats, and making
@@ -601,16 +629,25 @@ Impute.numeric <- function(x, f_i = NULL, f_i_para = NULL, ...){
   nas <- is.na(x)
 
   if(sum(nas) == length(x)){
-    stop("Input is all NAs - cannot impute.")
+    warning("Input is all NAs - cannot impute. Returning vector of NAs.")
+    return(x)
   }
 
   # call imputation function
   # if "none" or there are no NAs we skip entirely
-  if((f_i == "none") | (length(nas) == 0)){
-    return(x)
-  } else {
-    xi <- do.call(what = f_i, args = f_args)
-  }
+  if((f_i == "none") | (length(nas) == 0)) return(x)
+
+  # impute or give informative error
+  xi <- tryCatch(
+    expr = do.call(what = f_i, args = f_args),
+    error = function(e){
+      message("IMPUTATION ERORR: Tried to pass vector to imputation function '", f_i, "' but received error:")
+      message(as.character(e))
+      stop("Imputation failed due to call to f_i. Please check the function is capable of handling and returning a numeric vector.", call. = FALSE)
+    }
+  )
+
+  #xi <- do.call(what = f_i, args = f_args)
 
   # CHECK and OUTPUT --------------------------------------------------------
 
@@ -621,7 +658,7 @@ Impute.numeric <- function(x, f_i = NULL, f_i_para = NULL, ...){
     stop("imputed vector is not numeric")
   }
   if(!identical(xi[!nas], x[!nas])){
-    stop("One or more non-NA values of x has changed as a result of imputation. Check the behaviour of the imputation function.")
+    stop("One or more non-NA values of x has changed as a result of imputation. Check the behaviour of the imputation function.", call. = FALSE)
   }
 
   xi
@@ -761,6 +798,8 @@ i_mean_grp <- function(x, f, skip_f_na = TRUE){
 #' @param x A numeric vector
 #' @param f A grouping variable, of the same length of `x`, that specifies the group that each value
 #' of `x` belongs to. This will be coerced to a factor.
+#' @param skip_f_na If `TRUE`, will work around any `NA`s in `f` (the corresponding values of `x` will be excluded from the imputation
+#' and returned unaltered). Else if `FALSE`, will cause an error.
 #'
 #' @return A numeric vector
 #' @export
@@ -770,15 +809,37 @@ i_mean_grp <- function(x, f, skip_f_na = TRUE){
 #' f <- c(rep("a", 6), rep("b", 6))
 #' i_median_grp(x, f)
 #'
-i_median_grp <- function(x, f){
+i_median_grp <- function(x, f, skip_f_na = TRUE){
 
   stopifnot(is.numeric(x),
             length(x)==length(f))
 
+  # get any NAs in f
+  fna <- is.na(f)
+  if(sum(fna) == length(x)){
+    stop("f must have at least one non-NA value")
+  }
+
+  # extract x values with non-NA f values
+  if(skip_f_na){
+    x_use <- x[!fna]
+    f_use <- f[!fna]
+  } else {
+    if(any(fna)){
+      stop("NAs found in f. If skip_f_na = TRUE f cannot contain any NAs.")
+    }
+    x_use <- x
+    f_use <- f[!fna]
+  }
+
   # split by factors, apply func then unsplit
-  x_split <- split(x, f)
+  x_split <- split(x_use, f_use)
   x_split <- lapply(x_split, i_median)
-  unsplit(x_split, f)
+  x_imp <- unsplit(x_split, f_use)
+
+  # reassemble and output
+  x[!fna] <- x_imp
+  x
 }
 
 #' Impute panel data
@@ -787,7 +848,7 @@ i_median_grp <- function(x, f){
 #' columns using the entry from the latest available time point.
 #'
 #' This presumes that there are multiple observations for each unit code, i.e. one per time point. It then searches for any missing values in the target year, and replaces them with the equivalent points
-#' from previous time points. It will replace using the most recently available point.
+#' from previous time points. It will replace using the most recently available point or using linear interpolation: see `imp_type` argument.
 #'
 #' @param iData A data frame of indicator data, containing a time index column `time_col`, a unit code column `unit_col`,
 #' and other numerical columns to be imputed.
@@ -798,6 +859,12 @@ i_median_grp <- function(x, f){
 #' @param max_time The maximum number of time points to look backwards to impute from. E.g. if `max_time = 1`, if an
 #' `NA` is found at time \eqn{t}, it will only look for a replacement value at \eqn{t-1} but not in any time points before that.
 #' By default, searches all time points available.
+#' @param imp_type One of `"latest"` `"constant"` or `"linear"`. In the first case, missing points are imputed with the last non-`NA` observation for each
+#' time series, up to `max_time`. For `"constant"` or `"linear"`, missing points are imputed using [stats::approx()], passing  `"constant"` or `"linear"` to the
+#' `method` argument, and points outside of the range of observed values are replaced with the nearest non-`NA` point.
+#' This is equivalent to `rule = 2` in [stats::approx()] for each time series. The difference between `"latest"` and `"constant"` is that
+#' the latter allows control over the maximum number of time points to impute backwards (using `max_time`) whereas the former
+#' doesn't. Additionally, `"constant"` will impute outside of the observed range of values at the beginning of the time series, whereas `"latest"` won't.
 #'
 #' @examples
 #' # Copy example panel data
@@ -826,7 +893,7 @@ i_median_grp <- function(x, f){
 #' came from.
 #'
 #' @export
-impute_panel <- function(iData, time_col = NULL, unit_col = NULL, cols = NULL, max_time = NULL){
+impute_panel <- function(iData, time_col = NULL, unit_col = NULL, cols = NULL, imp_type = NULL, max_time = NULL){
 
 
   # DEFAULTS ----------------------------------------------------------------
@@ -836,6 +903,9 @@ impute_panel <- function(iData, time_col = NULL, unit_col = NULL, cols = NULL, m
   }
   if(is.null(unit_col)){
     unit_col <- "uCode"
+  }
+  if(is.null(imp_type)){
+    imp_type <- "latest"
   }
 
   # CHECKS ------------------------------------------------------------------
@@ -951,19 +1021,76 @@ impute_panel <- function(iData, time_col = NULL, unit_col = NULL, cols = NULL, m
 
   }
 
-  # apply function to all years of data
-  l_imp <- lapply(yrs, impute_year)
+  # IMPUTE ACCORDING TO METHOD SPECIFIED
 
-  # reassemble data frame
-  iData_imp <- lapply(rev(l_imp),  `[[`, "iData")
-  iData_imp <- Reduce(rbind, iData_imp)
+  if(imp_type == "latest"){
 
-  stopifnot(nrow(iData_imp) == nrow(iData),
-            ncol(iData_imp) == ncol(iData))
+    # apply function to all years of data
+    l_imp <- lapply(yrs, impute_year)
 
-  # get data times
-  DataT <- lapply(l_imp,  `[[`, "DataT")
-  DataT <- Reduce(rbind, DataT)
+    # reassemble data frame
+    iData_imp <- lapply(rev(l_imp),  `[[`, "iData")
+    iData_imp <- Reduce(rbind, iData_imp)
+
+    stopifnot(nrow(iData_imp) == nrow(iData),
+              ncol(iData_imp) == ncol(iData))
+
+    # get data times
+    DataT <- lapply(l_imp,  `[[`, "DataT")
+    DataT <- Reduce(rbind, DataT)
+
+  } else if (imp_type %in% c("constant", "linear")){
+
+    # linear imputation: work by col
+    iCodes <- names(iData)[names(iData) %nin% c(unit_col, time_col)]
+    uCodes <- unique(iData[[unit_col]])
+
+    # copy of data
+    iData_imp <- iData
+
+    for (uCode in uCodes){
+
+      # filter to uCode
+      iData_u <- iData_imp[iData_imp[[unit_col]] == uCode, ]
+      iData_u <- iData_u[order(iData_u[[time_col]]), ]
+
+      x <- iData_u[[time_col]]
+
+      for (iCode in iCodes){
+
+        y <- iData_u[[iCode]]
+
+        na_positions <- is.na(y)
+
+        if(length(na_positions) == 0){
+          # no missing values so skip
+          next
+        }
+        if(all(is.na(y))){
+          message("NOTE: cannot impute for unit ", uCode, " and iCode ", iCode, " because all NA values.")
+          next
+        }
+
+        # impute with linear, and extremes are imputed with the closest value
+        y_imp <- stats::approx(x, y, xout = x, rule = 2, method = imp_type)$y
+        # check nothing changed in non-NA
+        stopifnot(identical(y_imp[!na_positions], y[!na_positions]))
+
+        # subst vector back in
+        iData_u[[iCode]] <- y_imp
+
+      }
+
+      # subst df back in
+      iData_imp[iData_imp[[unit_col]] == uCode, ] <- iData_u
+
+    }
+    DataT <- NULL
+
+  } else {
+    stop("imp_type must be either 'latest', 'constant' or 'linear'")
+  }
+
 
   # return iData to its full form if cols was specified
   iData_imp_full <- iData_orig
@@ -973,4 +1100,14 @@ impute_panel <- function(iData, time_col = NULL, unit_col = NULL, cols = NULL, m
   list(iData_imp = iData_imp_full,
        DataT = DataT)
 
+}
+
+# Helper to send warning if any NAs still present - to be used at the end of
+# imputation functions.
+# x_imp can be a vector or a data frame.
+check_remaining_NAs <- function(x_imp){
+  remaining_NAs <- sum(is.na(x_imp))
+  if(remaining_NAs > 0){
+    warning("After imputation there are still ", remaining_NAs, " NAs (missing values) present.", call. = FALSE)
+  }
 }

@@ -125,19 +125,25 @@ test_that("agg_functions", {
 
   # geometric
   x <- c(1, 2, 3)
-  y1 <- a_gmean(x)
+  yg <- a_gmean(x)
 
-  expect_equal(y1, (1*2*3)^(1/3))
+  expect_equal(yg, (1*2*3)^(1/3))
   expect_error(a_gmean(c(1, 2, -1)))
   expect_error(a_gmean(c(1, 2, 0)))
 
-  y1 <- a_gmean(x, c(1,1,2))
-  expect_equal(y1, (1*2*3^2)^(1/4))
+  yg2 <- a_gmean(x, c(1,1,2))
+  expect_equal(yg2, (1*2*3^2)^(1/4))
 
   # harmonic
   x <- c(1, 2, 3)
-  y1 <- a_hmean(x, c(2, 1, 1))
-  expect_equal(y1, 4/(2/1 + 1/2 + 1/3))
+  yh <- a_hmean(x, c(2, 1, 1))
+  expect_equal(yh, 4/(2/1 + 1/2 + 1/3))
+
+  # generalised
+  ygen <- a_genmean(x, c(2,1,1), p = -1)
+  expect_equal(ygen, yh)
+  ygen <- a_genmean(x, p = 1)
+  expect_equal(ygen, 2) # simple arithmetic av.
 
 })
 
@@ -178,10 +184,111 @@ test_that("copeland", {
 
   orm <- outrankMatrix(X)$OutRankMatrix
   orm[orm > 0.5] <- 1
-  orm[orm == 0.5] <- 0
   orm[orm < 0.5] <- -1
+  orm[orm == 0.5] <- 0
   diag(orm) <- 0
 
   expect_equal(y, rowSums(orm))
+
+  # test equal units correctly assigned
+  X <- data.frame(
+    x1 = c(1,2),
+    x2 = c(2,1)
+  )
+
+  orm <- outrankMatrix(X)$OutRankMatrix
+  expect_equal(orm[1,2], 0.5)
+  expect_equal(orm[2,1], 0.5)
+
+  y <- a_copeland(X)
+  expect_equal(y, c(0,0))
+
+})
+
+test_that("aggregation by level", {
+
+  coin <- build_example_coin(up_to = "new_coin")
+
+  # Testing:
+  # - different aggregation functions by level
+  # - different parameter sets by level
+  # - passing vectors or data frames to functions at different levels
+  # note: silly_aggregate is a function in utils.R
+  coin <- Aggregate(coin, dset = "Raw", f_ag = c("a_amean", "a_gmean", "silly_aggregate"),
+                    f_ag_para = list(NULL, NULL, list(start_at = 10)), by_df = c(FALSE, FALSE, TRUE)
+                    )
+
+  # check results
+  X <- get_dset(coin, dset = "Aggregated")
+
+  imeta <- coin$Meta$Ind
+
+  # test lev 1 to 2
+  imeta_grp <- imeta[which(imeta$Parent == "Physical"), ]
+  x <- X[1, imeta_grp$iCode] |> as.numeric()
+  y <- a_amean(x, w = imeta_grp$Weight)
+  expect_equal(X[1, "Physical"], y)
+
+  # test lev 2 to 3
+  imeta_grp <- imeta[which(imeta$Parent == "Conn"), ]
+  x <- X[1, imeta_grp$iCode] |> as.numeric()
+  y <- a_gmean(x, w = imeta_grp$Weight)
+  expect_equal(X[1, "Conn"], y)
+
+  # test lev 3 to 4
+  expect_equal(X[["Index"]], 10:(nrow(X) + 9))
+
+
+  # Now test using different weight specs at different levels
+  coin <- Aggregate(coin, dset = "Raw", f_ag = c("a_amean", "silly_aggregate_no_wts", "silly_aggregate"),
+                    f_ag_para = list(NULL, NULL, list(start_at = 10)), by_df = c(FALSE, TRUE, TRUE), w = list(NULL, "none", NULL))
+
+  # check results
+  X <- get_dset(coin, dset = "Aggregated")
+
+  # test lev 1 to 2
+  imeta_grp <- imeta[which(imeta$Parent == "Physical"), ]
+  x <- X[1, imeta_grp$iCode] |> as.numeric()
+  y <- a_amean(x, w = imeta_grp$Weight)
+  expect_equal(X[1, "Physical"], y)
+
+  # test lev 2 to 3: expect the Conn group to be aggregated as simply the first indicator
+  imeta_grp <- imeta[which(imeta$Parent == "Conn"), ]
+  expect_equal(X[["Conn"]], X[[imeta_grp$iCode[1]]])
+
+  # test lev 3 to 4
+  expect_equal(X[["Index"]], 10:(nrow(X) + 9))
+
+})
+
+# test passing no weights to aggregation function...
+test_that("sum_by_level", {
+
+  coin <- build_example_coin(up_to = "new_coin")
+
+  # test as sum of indicators in each group (weights NOT passed)
+  coin <- Aggregate(coin, dset = "Raw", f_ag = "sum",
+                    f_ag_para = list(na.rm = TRUE), w = "none"
+  )
+
+  # checks - pick a selected value
+  CHN_phys <- get_data(coin, dset = "Aggregated", iCodes = "Physical", Level = 2, uCodes = "CHN", also_get = "none") |>
+    as.numeric()
+
+  CHN_phys_man <- get_data(coin, dset = "Raw", iCodes = "Physical", Level = 1, uCodes = "CHN", also_get = "none") |>
+    as.numeric() |>
+    sum(na.rm = TRUE)
+
+  expect_equal(CHN_phys, CHN_phys_man)
+
+  # another
+  IND_conn <- get_data(coin, dset = "Aggregated", iCodes = "Conn", Level = 3, uCodes = "IND", also_get = "none") |>
+    as.numeric()
+
+  IND_conn_man <- get_data(coin, dset = "Aggregated", iCodes = "Conn", Level = 2, uCodes = "IND", also_get = "none") |>
+    as.numeric() |>
+    sum(na.rm = TRUE)
+
+  expect_equal(IND_conn, IND_conn_man)
 
 })

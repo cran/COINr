@@ -74,7 +74,19 @@ Again, the z-score transformation is linear. It simply puts the resulting indica
 
 Notice the syntax of `global_specs`. If specified, it takes entries `f_n` (the name of the function to apply to each column) and `f_n_para` (any further arguments to `f_n`, not including `x`). Importantly, `f_n_para` *must* be specified as a list, even if it only contains one parameter.
 
-Note that **COINr has a number of normalisation functions built in**, all of which are of the form `n_*()`, such as `n_minmax()`, `n_borda()`, etc. Type `n_` in the R Studio console and press the Tab key to see a list, or else browse the COINr functions alphabetically.
+Note that **COINr has a number of normalisation functions built in**, all of which are of the form `n_*()`, such as `n_minmax()`, `n_borda()`, etc. Type `n_` in the R Studio console and press the Tab key to see a list, or else browse the COINr functions alphabetically. These are also listed explicitly in [Built-in normalisation functions].
+
+* `n_borda()`: Calculates [Borda scores](https://en.wikipedia.org/wiki/Borda_count) scaled on  
+* `n_dist2max()`: 
+* `n_dist2ref()`: 
+* `n_dist2targ()`: 
+* `n_fracmax()`: 
+* `n_goalposts()`: 
+* `n_minmax()`: 
+* `n_prank()`: 
+* `n_rank()`: 
+* `n_scaled()`: 
+* `n_zscore()`: 
 
 ## Calling external functions
 
@@ -125,6 +137,103 @@ directions$Direction[directions$iCode == "Goods"] <- -1
 coin <- Normalise(coin, dset = "Raw", directions = directions)
 ```
 
+## Goalposts, targets and iMeta specification
+
+For some normalisation methods we may use the same basic normalisation function for all indicators but use different parameters for each indicator - for example, using distance to target normalisation or goalpost normalisation. COINr now supports specifying these parameters in the `iMeta` table. This is intended to give an easier interface to these normalisation methods, as opposed to using the full individual specifications list (see the next section on that).
+
+The basic idea is that you specify the parameters as columns in the `iMeta` data frame. COINr currently supports this for a selected subset of inbuilt normalisation functions:
+
+* `n_minmax()`
+* `n_scaled()`
+* `n_zscore()`
+* `n_dist2targ()`
+* `n_goalposts()`
+
+To use this approach, you have to (a) add the relevant columns to `iMeta` *before* building the coin, and (b) set `f_n_para = "use_iMeta"` within the `global_specs` list when calling `Normalise()`.
+
+Let's clarify this with an example. We will apply distance to target normalisation using individual targets contained within `iMeta`. In fact, the example data with COINr already has a "Target" column which can be used for this purpose:
+
+```{r}
+# show first few rows of iCode and Target cols in built-in iMeta
+head(ASEM_iMeta[c("iCode", "Target")])
+```
+
+The [documentation](https://bluefoxr.github.io/COINr/reference/n_dist2targ.html?q=n_dist#null) for the `n_dist2targ()` function explains that the required `iMeta` columns for this function are `Target`, and `dist2targ_cap_max`. This latter parameter (which specifies whether to cap values that surpass the target) is included for completeness, even though it is unlikely you would want to vary it from one indicator to another. Since the Target column is already present, we will just add the missing column:
+
+```{r}
+# copy built in data
+iMeta <- ASEM_iMeta
+# set cap_max
+iMeta$dist2targ_cap_max <- TRUE
+```
+
+
+Now we build the coin and normalise.
+
+```{r}
+# build coin
+coin <- new_coin(ASEM_iData, iMeta, quietly = TRUE)
+
+# normalise, referencing iMeta columns
+coin <- Normalise(coin, dset = "Raw", global_specs = list(f_n = "n_dist2targ", f_n_para = "use_iMeta"))
+```
+
+Note that the `global_specs$f_n_para` is set to `"use_iMeta"`, telling the function to use the `iMeta` columns. Let us visualise the result for a selected indicator:
+
+```{r}
+plot_scatter(coin, dsets = c("Raw", "Normalised"), iCodes = "LPI")
+```
+
+This simply shows that (a) the indicator is now scaled between 0 and 1, and any raw values of LPI above the target of 4.1 are capped at a value of 1.
+
+We now take another example using the "goalposts" approach, also known as "distance to frontier". In this method, each indicator is scaled as a distance between an upper and lower bound. The following equation is for a positive direction indicator.
+
+$$ x_n = \frac{x - G_{low}}{G_{high} - G_{low}} $$
+
+where $x_n$ is the normalised indicator value and $G_{low}$ and $G_{high}$ are respectively the lower and upper goalpost values. The negative direction formula is analogous.
+
+To use this approach we again need to define the necessary columns in `iMeta`. Referencing again the documentation of the relevant function `n_goalposts()`, we need to add columns `goalpost_lower`, `goalpost_upper`, `goalpost_scale` and `goalpost_trunc2posts`, which correspond to arguments to the `n_goalposts()` function.
+
+For the sake of this example, we just define goalposts as 5% of the range from the maximum and minimum of each indicator. We set the scaling to 1 and truncation to `TRUE`.
+
+```{r}
+# get iCodes and raw data
+iCodes <- iMeta$iCode[iMeta$Type == "Indicator"]
+
+# set general parameters
+iMeta$goalpost_scale <- 1
+iMeta$goalpost_trunc2posts <- TRUE
+
+# set goalposts for each indicator
+for(iCode in iCodes){
+  maxx <- max(ASEM_iData[[iCode]], na.rm = TRUE)
+  minx <- min(ASEM_iData[[iCode]], na.rm = TRUE)
+  rx <- maxx - minx
+  # fake goalposts in 5% of range
+  iMeta$goalpost_lower[iMeta$iCode == iCode] <- minx + 0.05*rx
+  iMeta$goalpost_upper[iMeta$iCode == iCode] <- maxx - 0.05*rx
+}
+
+# build coin
+coin <- new_coin(ASEM_iData, iMeta, quietly = TRUE)
+
+# normalise using minmax
+coin <- Normalise(coin, dset = "Raw", 
+                  global_specs = list(f_n = "n_goalposts", f_n_para = "use_iMeta"))
+```
+
+Again, let's plot an indicator before and after normalisation:
+
+```{r}
+plot_scatter(coin, dsets = c("Raw", "Normalised"), iCodes = "Cov4G")
+```
+
+Here we see that goalposts act like distance to target, but also cap at both ends.
+
+For both the distance to target method and the goalposts method, *directionality is automatically accounted for*. That is, if an indicator has Direction -1 in `iMeta`, the distance to target function will assume that values higher than the target are worse and will give lower scores. , and values below the target will get a full score. Similarly, the goalposts function will measure the progress from the higher goalpost to the lower one for negative directionality indicators. This means that in defining the goalposts in `iMeta`, always assign the goalpost with the higher value to "goalpost_upper" - COINr will account for the directionality.
+
+Importantly, all of the functions mentioned in this section can also be used without the special columns in `iMeta`, either by specifying a single set of parameters to apply to all indicators using `global_specs`, OR by providing detailed individual specifications via the `indiv_specs` argument (see the next section).
+
 ## Individual normalisation
 
 Finally let's explore how to specify different normalisation methods for different indicators. The `indiv_specs` argument takes a named list for each indicator, and will override the specifications in `global_specs`. If `indiv_specs` is specified, we only need to include sub-lists for indicators that differ from `global_specs`.
@@ -152,34 +261,6 @@ get_dset(coin, "Normalised")[1:4] |>
 This example is meant to be illustrative of the functionality of `Normalise()`, rather than being a sensible normalisation strategy, because the indicators are now on very different ranges.
 
 In practice, if different normalisation strategies are selected, it is a good idea to keep the indicators on similar ranges, otherwise the effects will be very unequal in the aggregation step.
-
-## Use of targets
-
-A particular type of normalisation is "distance to target". This normalises indicators by the distance of each value to a specified target. Targets may often have a political or business meaning, such as e.g. emissions targets or sales targets.
-
-Targets should be input into a coin using the `iMeta` argument when building the coin using `new_coin()`. In fact, the built-in example data has targets for all indicators:
-
-```{r}
-head(ASEM_iMeta[c("iCode", "Target")])
-```
-
-*(Note that these targets are fabricated just for the purposes of an example)*
-
-To use distance-to-target normalisation, we call the `n_dist2targ()` function. Like other built in normalisation functions, this normalises a vector using a specified target. We can't use the `f_n_para` entry in `Normalise()` here because this would only pass a single target value, whereas we need to use a different target for each indicator.
-
-However, COINr has a special case built in so that targets from `iMeta` can be used automatically. Simply set `global_specs = list(f_n = "n_dist2targ")`, and the `Normalise()` function will automatically retrieve targets from `iMeta$Target`. If targets are not present, this will generate an error. Note that the directions of indicators are also passed to `n_dist2targ()` - see that function documentation for how the normalisation is performed depending on the direction specified.
-
-Our normalisation will then look like this:
-
-```{r, eval=FALSE}
-coin <- Normalise(coin, dset = "Raw", global_specs = list(f_n = "n_dist2targ"))
-```
-
-It is also possible to specify the `cap_max` parameter of `n_dist2targ()` as follows:
-
-```{r, eval=FALSE}
-coin <- Normalise(coin, dset = "Raw", global_specs = list(f_n = "n_dist2targ", f_n_para = list(cap_max = TRUE)))
-```
 
 # Data frames and vectors
 
@@ -307,3 +388,231 @@ qNormalise(X, f_n = "n_dist2ref", f_n_para = list(iref = 1, cap_max = TRUE))
 ```
 
 The `qNormalise()` function works in a similar way for coins and purses.
+
+# Built-in normalisation functions
+
+COINr has a number of normalisation functions built in (that can be used with `Normalise()` and friends), all of which are of the form `n_*()`, such as `n_minmax()`, `n_borda()`, etc. Type `n_` in the R Studio console and press the Tab key to see a list. Here these functions are also explained in a little more detail. In the following, $x$ is a vector of un-normalised indicator values, and $x'$ is the corresponding normalised vector, using one of the methods below.
+
+## Linear methods
+
+### Min-max
+
+The `n_minmax()` function implements the min-max method, which is probably the most commonly-used normalisation approach in composite indicator construction. The indicator is simply rescaled to lie on an interval specified by upper and lower bounds $u$ and $l$:
+
+$$
+x' = \frac{x - x_{\text{min}} }{ x_{\text{max}} - x_{\text{min}} } \times (u - l) + l
+$$
+
+This results in a linear transformation with minimum value $l$ and maximum value $u$:
+
+```{r}
+# example data
+set.seed(69)
+x <- runif(20)
+
+library(ggplot2)
+# generic plot function to use in the other examples
+nplot <- function(x, y, plot_title = NULL){
+  ggplot(data = NULL, aes(x = x, y = y)) +
+    geom_point() +
+    xlab("x") +
+    ylab("x (normalised)") +
+    ggtitle(plot_title)
+}
+
+# rescale onto [50, 100] interval
+xdash <- n_minmax(x, l_u = c(50, 100))
+nplot(x, xdash, "Min-max onto [50, 100]")
+```
+
+The transformation is analogous for negative-direction indicators.
+
+### Z-score
+
+The z-score function `n_zscore()` calculates z-scores which rescales $x$ to have a specified mean $\mu$ and standard deviation $\sigma$ (by default 0 and 1 respectively).
+
+$$
+x' = \frac{x - \text{mean}(x)}{\text{std}(x)} \times \sigma + \mu
+$$
+
+where $\text{mean}(x)}{\text{std}(x)$ and \text{std}(x) are the sample mean and standard deviation of $x$ respectively.
+
+For example, specifying to have mean 10 and standard deviation 2:
+
+```{r}
+nplot(x, n_zscore(x, c(10, 2)))
+```
+
+### Scaling
+
+The `n_scaled()` function is a generic linear scaling function with parameters $u$ and $l$ of the form:
+
+$$
+x' = \frac{x-l}{u-l} \times 100 
+$$
+
+Note this is *not* the min-max transformation and $l$ and $u$ do not generally represent the upper and lower bounds.  This is a linear transformation with shift `u` and scaling factor `u-l`. The result looks as follows:
+
+```{r}
+nplot(x, n_scaled(x, c(1,10)), "Linear scaling using c(1,10)")
+```
+
+### Distance to maximum
+
+Normalises as a measure of the distance to the maximum value, where the maximum value is the highest-scoring value. The formula used is:
+
+$$
+x' = 1 - \frac{x_{max} - x}{x_{max} - x_{min}}
+$$
+
+This means that the closer a value is to the maximum, the higher its score will be. Scores will be in the range of 0 to 1.
+
+```{r}
+nplot(x, n_dist2max(x), "Distance to maximum")
+```
+
+### Fraction of maximum
+
+The `n_fracmax()` function simply measures each point as a fraction of the maximum observed value in $x$.
+
+$$
+x' = \frac{x}{x_{max}}
+$$
+
+This looks as follows (not very exciting since $x$ is already on a $[0,1]$ scale):
+
+```{r}
+nplot(x, n_fracmax(x), "Fraction of max value")
+```
+
+## Rank methods
+
+### Ranks
+
+The most simple rank-based approach is to directly take the rank. This can be done using base R functions, or using the wrapper `n_rank()`, set for the purposes of normalisation so that higher scores will give higher rank values, and sets ties to the minimum value by default.
+
+```{r}
+nplot(x, n_rank(x), "Rank")
+```
+
+
+### Borda
+
+The  `n_borda()` function calculates [Borda scores](https://en.wikipedia.org/wiki/Borda_count) as:
+
+$$
+x' = \text{rank}(x) - 1
+$$
+
+where the rank is calculated by default as `rank(x, ties.method = "min", na.last = "keep")`. Borda ranking is a nonlinear transformation and may be useful for highly-skewed indicators as an alternative to :
+
+```{r}
+# normalise
+xdash <- n_borda(x)
+nplot(x, xdash, "Borda")
+```
+
+Caution may be necessary with Borda scores when comparing indicators with different numbers of missing values. See the following discussion in [Percentile ranks].
+
+### Percentile ranks
+
+The percentile rank function `n_prank()` converts an indicator to [percentile ranks](https://en.wikipedia.org/wiki/Percentile_rank), which are *the percentage of scores in its frequency distribution that are less than that score*. 
+
+Percentile ranks act like ranks, but have the added nice property that they don't depend on the number of observations. For example: if we convert an indicator with 100 observed values using [Borda] scores we will end up with scores in the range $[0, 99]$. Another indicator in the same data set with only 75 observed values (the rest are `NA`) would on the other hand get scores in the range $[0,74]$! On the other hand, percentile ranks always scale onto the $[0, 1]$ interval.
+
+An indicator normalised by percentile ranks looks as follows:
+
+```{r}
+nplot(x, n_prank(x), "Percentile ranks")
+```
+
+## Targets and references
+
+
+### Distance to a reference
+
+The `n_dist2ref()` function gives a measure of the distance to a specific value $x_{\text{ref}}$ found in `x`. The formula is:
+
+$$
+x' = 1 - \frac{x_{\text{ref}} - x}{x_{\text{ref}} - x_{min}}
+$$
+
+In composite indicators, this is often used in the context of benchmarking scores against the scores of a specific country. The function therefore allows you to specify the index of the reference value as opposed to the value itself. Values exceeding x_ref` can be optionally capped at 1 if `cap_max = TRUE`.
+
+```{r}
+xdash <- n_dist2ref(x, iref = 3, cap_max = FALSE)
+nplot(x, xdash, "Distance to reference (no cap)")
+```
+
+With the cap, the result changes:
+
+```{r}
+xdash <- n_dist2ref(x, iref = 3, cap_max = TRUE)
+nplot(x, xdash, "Distance to reference (no cap)")
+```
+
+*Important note: at the time of writing, `n_dist2ref()` does not allow for direction adjustment. This will hopefully be included in a future update.*
+
+### Distance to target
+
+The `n_dist2targ()` function gives the distance of each point in $x$ to a specified numerical target. This is different from the previous `n_dist2ref()` in that the target is specified as a fixed value, rather than the index of a point in $x$. Additionally, this function allows for adjustment by the direction of the indicator. For positive-direction indicators:
+
+$$
+x' = \frac{x - x_{min}}{x_{targ} - x_{min}}
+$$
+
+else for negative direction indicators:
+
+$$
+x' = \frac{x_{max} - x}{x_{max} - x_{targ}}
+$$
+
+The function also features the possibility to cap values that exceed the target, as `n_dist2ref()`. To see how this looks for a positive indicator (with cap):
+
+```{r}
+xdash <- n_dist2targ(x, targ = 0.75, direction = 1, cap_max = TRUE)
+nplot(x, xdash, "Distance to 0.75 target (positive direction: with cap)")
+```
+
+Similarly, with a negative direction and low target:
+
+```{r}
+xdash <- n_dist2targ(x, targ = 0.2, direction = -1, cap_max = TRUE)
+nplot(x, xdash, "Distance to 0.2 target (negative direction: with cap)")
+```
+
+As explained in [Goalposts, targets and iMeta specification], when applying this function to a coin you can specify the targets in the `iMeta` data frame.
+
+
+
+### Goalposts
+
+The goalposts function `n_goalposts()` normalises as the fraction of the distance of each value of $x$ from the lower "goalpost" to the upper one (these values are specified as function inputs). The direction of the function can be specified to measure positive or negative progress. Goalpost normalisation (sometimes known as "distance to frontier") is often used when there is a logical lower and upper bound to the indicator.
+
+For a positive indicator with goalposts $GP_{low}$ and $GP_{high}$:
+
+$$
+x' = \frac{x - GP_{low}}{GP_{high} - GP_{low}}
+$$
+
+and for a negative directionality indicator:
+
+$$
+x' = \frac{x - GP_{high}}{GP_{low} - GP_{high}}
+$$
+
+To see how this looks:
+
+```{r}
+xdash <- n_goalposts(x, gposts = c(0.2, 0.75, 1), direction = 1)
+nplot(x, xdash, "Goalposts with positive indicator")
+```
+
+This is effectively a distance to target, but with upper and lower "targets". The effect is analogous if the directionality is reversed:
+
+```{r}
+xdash <- n_goalposts(x, gposts = c(0.2, 0.75, 1), direction = -1)
+nplot(x, xdash, "Goalposts with negative indicator")
+```
+
+This normalisation function is also supported such that goalposts can be directly entered in `iMeta`. See [Goalposts, targets and iMeta specification].

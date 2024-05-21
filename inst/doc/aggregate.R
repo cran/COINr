@@ -33,36 +33,39 @@ coin <- Aggregate(coin, dset = "Normalised",
                    f_ag = "a_gmean")
 
 ## -----------------------------------------------------------------------------
-ms_installed <- requireNamespace("matrixStats", quietly = TRUE)
-ms_installed
+# ms_installed <- requireNamespace("matrixStats", quietly = TRUE)
+# ms_installed
 
-ci_installed <- requireNamespace("Compind", quietly = TRUE)
-ci_installed
+# ci_installed <- requireNamespace("Compind", quietly = TRUE)
+# ci_installed
 
 ## ---- eval=F------------------------------------------------------------------
 #  # RESTORE above eval=ms_installed
 #  # load matrixStats package
-#  library(matrixStats)
-#  
-#  # aggregate using weightedMedian()
-#  coin <- Aggregate(coin, dset = "Normalised",
-#                     f_ag = "weightedMedian",
-#                     f_ag_para = list(na.rm = TRUE))
+#  # library(matrixStats)
+#  #
+#  # # aggregate using weightedMedian()
+#  # coin <- Aggregate(coin, dset = "Normalised",
+#  #                    f_ag = "weightedMedian",
+#  #                    f_ag_para = list(na.rm = TRUE))
 
 ## ---- eval= F-----------------------------------------------------------------
 #  # RESTORE ABOVE eval= ci_installed
+#  
+#  # NOTE: this chunk disabled - see comments above.
+#  
 #  # load Compind
-#  suppressPackageStartupMessages(library(Compind))
-#  
-#  # wrapper to get output of interest from ci_bod
-#  # also suppress messages about missing values
-#  ci_bod2 <- function(x){
-#    suppressMessages(Compind::ci_bod(x)$ci_bod_est)
-#  }
-#  
-#  # aggregate
-#  coin <- Aggregate(coin, dset = "Normalised",
-#                     f_ag = "ci_bod2", by_df = TRUE, w = "none")
+#  # suppressPackageStartupMessages(library(Compind))
+#  #
+#  # # wrapper to get output of interest from ci_bod
+#  # # also suppress messages about missing values
+#  # ci_bod2 <- function(x){
+#  #   suppressMessages(Compind::ci_bod(x)$ci_bod_est)
+#  # }
+#  #
+#  # # aggregate
+#  # coin <- Aggregate(coin, dset = "Normalised",
+#  #                    f_ag = "ci_bod2", by_df = TRUE, w = "none")
 
 ## -----------------------------------------------------------------------------
 # data with all NAs except 1 value

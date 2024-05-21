@@ -11,6 +11,7 @@
   impute_by = "column",
   normalise_first = NULL,
   directions = NULL,
+  warn_on_NAs = TRUE,
   ...
 )
 }
@@ -32,6 +33,9 @@ imputation. By default this is \code{FALSE} unless \code{impute_by = "row"}. See
 \item{directions}{A vector of directions: either -1 or 1 to indicate the direction of each column
 of \code{x} - this is only used if \code{normalise_first = TRUE}. See details.}
 
+\item{warn_on_NAs}{Logical: if \code{TRUE} will issue a warning if there are any \code{NA}s detected in the data frame
+after imputation has been applied. Set \code{FALSE} to suppress these warnings.}
+
 \item{...}{arguments passed to or from other methods.}
 }
 \value{
@@ -52,6 +56,9 @@ Clearly, the function \code{f_i} needs to be able to accept with the data class 
 frame. Moreover, this function should return a vector or data frame identical to the vector/data frame passed to
 it except for \code{NA} values, which can be replaced. The function \code{f_i} is not required to replace \emph{all} \code{NA}
 values.
+
+COINr has several built-in imputation functions of the form \verb{i_*()} for vectors which can be called by \code{\link[=Impute]{Impute()}}. See the
+\href{https://bluefoxr.github.io/COINr/articles/imputation.html#data-frames}{online documentation} for more details.
 
 When imputing row-wise, prior normalisation of the data is recommended. This is because imputation
 will use e.g. the mean of the unit values over all indicators (columns). If the indicators are on
